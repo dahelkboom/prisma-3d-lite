@@ -131,6 +131,74 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 #errBanner[hidden]{display:none}
 @media (prefers-reduced-motion:reduce){.busy-bar.indeterminate #busyFill{animation:none;width:100%!important;opacity:.6}}
 </style>
+
+<style id="iphone-layout-styles">
+/* Responsive phone layout: desktop layout remains unchanged above 760px. */
+#mobileToolsBtn,#closeMobileTools,#mobileToolsBackdrop{display:none}
+@media (max-width:760px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+  body{font-size:13px;min-height:100vh;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom)}
+  header{position:sticky;top:0;z-index:160;display:flex;align-items:center;gap:7px;min-height:48px;padding:7px 9px;font-size:13px;white-space:nowrap}
+  header span{display:none!important}
+  #mobileToolsBtn{display:inline-flex;align-items:center;justify-content:center;float:none!important;margin:0!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
+  #projectMenuBtn{float:none!important;margin:0 0 0 auto!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
+  .app{display:flex;flex-direction:column;min-height:calc(100dvh - 48px);height:auto}
+  .main{width:100%;min-width:0;min-height:0;flex:1}
+  aside{display:none;position:fixed;left:0;top:48px;bottom:0;z-index:150;width:min(88vw,360px);max-width:360px;max-height:none;height:auto;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:#20232a;border-right:1px solid #4a5666;box-shadow:16px 0 36px #0008;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+  body.mobile-tools-open aside{display:block}
+  #mobileToolsBackdrop{display:none;position:fixed;inset:48px 0 0;z-index:140;background:#05070acc;border:0;padding:0}
+  body.mobile-tools-open #mobileToolsBackdrop{display:block}
+  #closeMobileTools{display:flex;position:sticky;top:-12px;z-index:2;width:100%;align-items:center;justify-content:space-between;margin:-12px 0 10px;padding:10px 12px;background:#293544;border:1px solid #52647a;border-radius:0 0 8px 8px;color:#fff;font-weight:700}
+  .toolbar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:6px;padding:7px 8px;min-height:45px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .toolbar button{flex:0 0 auto;padding:7px 9px;font-size:12px;white-space:nowrap}
+  .toolbar .note{display:none}
+  .toolbar .spacer{display:none}
+  #mobileTimelineBtn{display:inline-flex;background:#344b6b;border-color:#78aaff}
+  .stage{height:48dvh;min-height:230px;max-height:58dvh;flex:0 0 auto;width:100%}
+  .stage canvas{touch-action:none}
+  .hint{left:7px;top:7px;padding:5px 7px;font-size:10px}
+  .hint.bottom{right:7px;bottom:7px;max-width:72%;font-size:9px;line-height:1.35}
+  #performancePanel{transform:scale(.82);transform-origin:top right;right:5px!important;top:5px!important}
+  .timeline{padding:7px 8px;max-height:36dvh;overflow:hidden}
+  .timeline.mobile-collapsed{max-height:none;padding-bottom:7px}
+  .timeline.mobile-collapsed>:not(.tl-controls){display:none!important}
+  .tl-controls{flex-wrap:nowrap;overflow-x:auto;gap:5px;max-height:76px;padding-bottom:3px;-webkit-overflow-scrolling:touch}
+  .tl-controls button,.tl-controls .filebtn{flex:0 0 auto;font-size:11px;padding:6px 8px;white-space:nowrap}
+  .tl-controls label{flex:0 0 auto;white-space:nowrap}
+  .tl-controls input[type=number]{width:58px;font-size:12px}
+  .tl-track{height:150px;max-height:20dvh;min-height:90px}
+  .tl-lane-label{flex-basis:135px;max-width:135px}
+  .tl-bone-tools{gap:5px}
+  .tl-bone-tools input[type=search]{min-width:0;width:45%;flex:1}
+  .status{font-size:11px;padding:7px 9px;min-height:30px;overflow-wrap:anywhere}
+  button,.filebtn,input[type=text],input[type=number],select{font-size:13px}
+  input,select,button{max-width:100%}
+  .row{gap:6px}
+  .row input[type=range]{width:min(42vw,145px)}
+  .row input[type=color]{width:42px}
+  .preset-overlay{padding:8px;align-items:stretch}
+  .preset-dialog{width:100%!important;max-height:calc(100dvh - 16px);padding:14px;border-radius:10px;overflow-y:auto}
+  .preset-head h2{font-size:17px}
+  .preset-cards,.project-menu-grid{grid-template-columns:1fr;gap:8px}
+  .project-menu-action{min-height:88px;padding:12px}
+  .saved-project-card{grid-template-columns:1fr}
+  .saved-project-actions{justify-content:stretch}
+  .saved-project-actions button{flex:1 1 42%}
+  .disclaimer-card{padding:18px!important;max-height:90dvh;overflow-y:auto}
+  #errBanner{left:7px;right:7px;bottom:calc(7px + env(safe-area-inset-bottom));max-width:none;flex-wrap:wrap}
+}
+@media (max-width:380px){
+  header{gap:5px;padding-left:7px;padding-right:7px}
+  #mobileToolsBtn,#projectMenuBtn{font-size:11px;padding:6px 7px}
+  .toolbar button{padding:6px 8px;font-size:11px}
+  .stage{height:44dvh;min-height:210px}
+}
+@media (max-height:500px) and (max-width:760px){
+  .stage{height:42dvh;min-height:160px}
+  .timeline:not(.mobile-collapsed){max-height:42dvh}
+}
+</style>
+
 </head><body>
 <div id="busyOverlay" hidden role="alertdialog" aria-live="polite" aria-labelledby="busyTitle"><div class="busy-card"><div id="busyTitle">Please wait…</div><div id="busySub"></div><div class="busy-bar indeterminate" id="busyBar"><div id="busyFill"></div></div><div id="busyDetail"></div><div class="busy-actions" id="busyActions" hidden><button id="busyCopy" type="button">Copy details</button><button id="busyClose" type="button">Close</button></div></div></div>
 <div id="errBanner" hidden role="alert"><span id="errText"></span><button id="errCopy" type="button">Copy details</button><button id="errClose" type="button" aria-label="Dismiss">×</button></div>
@@ -141,9 +209,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <button id="acceptDisclaimer" type="button">I Understand — Enter Studio</button>
   </div>
 </div>
-<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="projectMenuBtn" style="float:right;margin-top:-4px">▤ Project Menu</button></header>
+<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="projectMenuBtn" style="float:right;margin-top:-4px">▤ Projects</button></header>
+<button id="mobileToolsBackdrop" type="button" aria-label="Close tools panel"></button>
 <div class="app">
 <aside>
+<button id="closeMobileTools" type="button">Tools &amp; Settings <span>✕ Close</span></button>
 <div class="section quality-section"><h2>Graphics Quality</h2>
 <div class="row"><label for="qualityPreset">Quality preset</label><select id="qualityPreset"><option value="standard">Standard</option><option value="enhanced">Enhanced</option><option value="hyper">Hyper-Realism</option><option value="omega">Omega Realism</option></select></div>
 <p class="note" id="qualityDescription" aria-live="polite">Standard · Lower rendering resolution and no real-time shadows to help conserve graphics memory.</p>
@@ -238,7 +308,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
 <main class="main"><div class="toolbar">
-<button id="move" class="active" data-mode="translate">Move (M)</button><button id="rotate" data-mode="rotate">Rotate (R)</button><button id="scale" data-mode="scale">Scale (S)</button><button id="saveModelBtn" disabled>Save Model</button><button id="savedModelsBtn">Saved Models</button><button id="dustToggle" aria-pressed="false">Dust FX: Off</button><button id="presetMapsBtn">Preset Maps</button><button id="resetCam">Reset camera</button><span class="spacer"></span><span class="note">Left-drag orbit · Right-drag pan · Wheel zoom · Larger rotation rings for finer posing</span>
+<button id="move" class="active" data-mode="translate">Move (M)</button><button id="rotate" data-mode="rotate">Rotate (R)</button><button id="scale" data-mode="scale">Scale (S)</button><button id="saveModelBtn" disabled>Save Model</button><button id="savedModelsBtn">Saved Models</button><button id="dustToggle" aria-pressed="false">Dust FX: Off</button><button id="presetMapsBtn">Preset Maps</button><button id="resetCam">Reset camera</button><button id="mobileTimelineBtn" type="button" aria-expanded="false">Timeline ▾</button><span class="spacer"></span><span class="note">Left-drag orbit · Right-drag pan · Wheel zoom · Larger rotation rings for finer posing</span>
 </div>
 <div class="stage" id="stage"><div id="performancePanel" aria-live="polite"><strong>Live Performance</strong><div class="performance-grid"><span>FPS</span><b id="perfFps">—</b><span>Frame time</span><b id="perfFrame">—</b><span>Draw calls</span><b id="perfCalls">—</b><span>Triangles</span><b id="perfTriangles">—</b><span>Model meshes</span><b id="perfMeshes">—</b><span>Geometries / textures</span><b id="perfResources">—</b><span>Geometry buffers</span><b id="perfGeoMb">—</b></div><div class="performance-foot" id="perfHint">Renderer counters update while the scene runs.</div></div><div class="hint">Perspective · 3D scene</div><div class="hint bottom">Click object or bone to select<br>M = Move · R = Rotate · S = Scale<br>F = FK rig · I = IK rig · D = Delete</div></div>
 <div class="preset-overlay" id="presetOverlay" role="dialog" aria-modal="true" aria-labelledby="presetTitle">
@@ -2148,4 +2218,31 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
 (function(){const overlay=document.getElementById('startupDisclaimer');const button=document.getElementById('acceptDisclaimer');if(button&&overlay){button.addEventListener('click',function(){overlay.style.display='none';});button.focus();}})();
 </script>
 <div class="preset-overlay" id="replayOverlay" role="dialog" aria-modal="true" aria-labelledby="replayTitle"><div class="preset-dialog" style="width:min(900px,100%)"><div class="preset-head"><div><h2 id="replayTitle">Would you like to rewatch your animation?</h2><p class="note">Your animation has been exported. You can preview the rendered video here.</p></div><button id="closeReplay" aria-label="Close playback">✕</button></div><video id="exportReplayVideo" controls playsinline style="display:block;width:100%;max-height:65vh;background:#05070a;border-radius:8px;margin-top:12px"></video></div></div>
+
+<script id="iphone-layout-controller">
+(function(){
+  const body=document.body;
+  const toolsBtn=document.getElementById('mobileToolsBtn');
+  const closeBtn=document.getElementById('closeMobileTools');
+  const backdrop=document.getElementById('mobileToolsBackdrop');
+  const timeline=document.getElementById('timeline');
+  const timelineBtn=document.getElementById('mobileTimelineBtn');
+  if(!toolsBtn||!closeBtn||!backdrop||!timeline||!timelineBtn)return;
+  const mobileQuery=window.matchMedia('(max-width:760px)');
+  function closeTools(){body.classList.remove('mobile-tools-open');toolsBtn.setAttribute('aria-expanded','false');}
+  function syncLayout(){
+    body.classList.toggle('mobile-layout',mobileQuery.matches);
+    if(mobileQuery.matches){timeline.classList.add('mobile-collapsed');timelineBtn.setAttribute('aria-expanded','false');timelineBtn.textContent='Timeline ▾';}
+    else{timeline.classList.remove('mobile-collapsed');closeTools();}
+  }
+  toolsBtn.addEventListener('click',function(){const open=!body.classList.contains('mobile-tools-open');body.classList.toggle('mobile-tools-open',open);toolsBtn.setAttribute('aria-expanded',String(open));});
+  closeBtn.addEventListener('click',closeTools);
+  backdrop.addEventListener('click',closeTools);
+  timelineBtn.addEventListener('click',function(){const collapsed=timeline.classList.toggle('mobile-collapsed');timelineBtn.setAttribute('aria-expanded',String(!collapsed));timelineBtn.textContent=collapsed?'Timeline ▾':'Hide Timeline ▴';});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTools();});
+  if(mobileQuery.addEventListener)mobileQuery.addEventListener('change',syncLayout);else mobileQuery.addListener(syncLayout);
+  syncLayout();
+})();
+</script>
+
 </body></html>
