@@ -205,7 +205,88 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .effect-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.effect-controls .wide{grid-column:1/-1}.effect-timebar{height:7px;border-radius:6px;background:#273746;overflow:hidden;margin:5px 4px}.effect-timebar>span{display:block;height:100%;background:linear-gradient(90deg,#55c8ff,#b18cff);border-radius:6px}.tl-effect-span{position:absolute;left:0;top:5px;height:18px;border-radius:4px;background:linear-gradient(90deg,rgba(65,190,255,.65),rgba(177,120,255,.65));border:1px solid rgba(180,220,255,.8);pointer-events:none;z-index:1}.tl-effect-span{outline:0}
 @media(max-width:760px){.effect-controls{grid-template-columns:1fr 1fr}.effect-controls .wide{grid-column:1/-1}}
 </style>
+
+<style id="p3dl-main-menu-styles">
+#p3dlMainMenu{position:fixed;inset:0;z-index:100000;background:#080d16;color:#eef4ff;overflow:hidden;display:flex;align-items:center;isolation:isolate;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;opacity:1;transition:opacity .9s ease;}
+#p3dlMainMenu.p3dl-menu-exit{opacity:0;pointer-events:none}
+#p3dlMainMenu:before{content:"";position:absolute;inset:0;z-index:-3;background:radial-gradient(ellipse at 78% 48%,rgba(28,119,174,.27),transparent 40%),radial-gradient(ellipse at 15% 90%,rgba(30,75,112,.24),transparent 45%),linear-gradient(115deg,#090e18 0%,#101b2a 55%,#07101b 100%);}
+#p3dlMainMenu:after{content:"";position:absolute;inset:0;z-index:-2;opacity:.19;background-image:linear-gradient(rgba(130,190,220,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(130,190,220,.09) 1px,transparent 1px);background-size:52px 52px;mask-image:linear-gradient(90deg,#000,transparent 80%)}
+.p3dl-menu-glow{position:absolute;width:55vw;height:55vw;right:-10vw;top:5%;border-radius:50%;background:radial-gradient(circle,rgba(39,159,213,.16),transparent 68%);filter:blur(12px);z-index:-1}
+.p3dl-menu-shell{width:min(1400px,100%);height:100%;margin:auto;padding:clamp(24px,5vw,76px);display:grid;grid-template-columns:minmax(300px, .88fr) minmax(360px,1.12fr);align-items:center;gap:3vw;position:relative}
+.p3dl-menu-left{max-width:540px;z-index:2;opacity:0;transform:translateX(-24px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.8,.2,1)}
+#p3dlMainMenu.menu-reveal .p3dl-menu-left{opacity:1;transform:translateX(0)}
+.p3dl-brandline{display:flex;align-items:center;gap:12px;color:#8fdcff;text-transform:uppercase;letter-spacing:.24em;font-size:11px;font-weight:800;margin-bottom:22px}
+.p3dl-brandmark{width:34px;height:34px;border:1px solid rgba(121,213,255,.8);border-radius:10px;display:grid;place-items:center;box-shadow:0 0 24px rgba(61,181,235,.2);font-size:17px}
+.p3dl-menu-title{font-size:clamp(42px,6vw,78px);line-height:.94;letter-spacing:-.065em;font-weight:850;margin:0;text-shadow:0 8px 40px #0008}
+.p3dl-menu-title span{display:block;color:#8bdcff}
+.p3dl-menu-subtitle{color:#a9bbcb;max-width:420px;line-height:1.65;font-size:14px;margin:22px 0 30px}
+.p3dl-menu-actions{display:grid;gap:11px;max-width:390px}
+.p3dl-menu-btn{appearance:none;border:1px solid rgba(160,204,230,.2);background:linear-gradient(110deg,rgba(22,42,61,.92),rgba(13,25,39,.84));color:#edf7ff;border-radius:12px;min-height:62px;padding:12px 17px;display:flex;align-items:center;gap:15px;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;box-shadow:0 8px 28px #0003}
+.p3dl-menu-btn:hover,.p3dl-menu-btn:focus-visible{transform:translateX(6px);border-color:rgba(112,213,255,.8);background:linear-gradient(110deg,rgba(29,77,105,.96),rgba(16,38,57,.94));box-shadow:0 0 24px rgba(55,173,223,.15);outline:none}
+.p3dl-menu-btn.primary{background:linear-gradient(105deg,#167db0,#14527e);border-color:#62caff;box-shadow:0 8px 30px rgba(0,128,190,.2)}
+.p3dl-menu-icon{width:34px;height:34px;flex:0 0 34px;border-radius:9px;background:rgba(130,205,239,.12);display:grid;place-items:center;color:#9be2ff;font-size:18px}
+.p3dl-menu-btn strong{display:block;font-size:15px;letter-spacing:.01em}.p3dl-menu-btn small{display:block;color:#a9c0d1;font-size:11px;margin-top:3px}
+.p3dl-menu-footer{display:flex;gap:14px;align-items:center;flex-wrap:wrap;color:#7892a8;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:26px}
+.p3dl-menu-footer span:first-child{color:#9bdfff}
+.p3dl-menu-character{height:min(78vh,760px);min-height:420px;position:relative;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(36px) scale(.97);transition:opacity 1.1s ease,transform 1.4s cubic-bezier(.16,.8,.2,1);}
+#p3dlMainMenu.character-arrive .p3dl-menu-character{opacity:1;transform:translateX(0) scale(1)}
+.p3dl-character-aura{position:absolute;width:75%;height:80%;border-radius:50%;background:radial-gradient(ellipse,rgba(39,166,218,.2),rgba(21,65,95,.06) 45%,transparent 70%);filter:blur(18px)}
+.p3dl-character-placeholder{position:relative;width:min(82%,440px);height:88%;max-height:690px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 24px 55px rgba(0,0,0,.55));animation:p3dlCharacterIdle 5s ease-in-out infinite;}
+.p3dl-figure{position:relative;width:70%;height:100%;}
+.p3dl-figure-body{position:absolute;bottom:0;left:8%;width:84%;height:63%;background:linear-gradient(110deg,#111f2e,#253d50 48%,#0c1724);clip-path:polygon(27% 0,73% 0,100% 26%,88% 100%,12% 100%,0 26%);border:1px solid #5dbde4;box-shadow:inset 0 0 35px #55bce322}
+.p3dl-figure-chest{position:absolute;left:35%;top:49%;width:30%;height:24%;border:1px solid #66d4ff;border-radius:10px;background:linear-gradient(145deg,#183e55,#0c1726);box-shadow:0 0 28px #28b9f455,inset 0 0 18px #4cc9ff33}
+.p3dl-figure-head{position:absolute;z-index:2;left:24%;top:8%;width:54%;height:33%;border-radius:40% 42% 34% 34%;background:linear-gradient(110deg,#0c1722,#314b5d 58%,#101b29);border:2px solid #76d9ff;box-shadow:inset -12px -6px 22px #0008,0 0 28px #28a9dc55;transform:rotate(-8deg);transform-origin:60% 60%;animation:p3dlLookLeft 2.2s cubic-bezier(.2,.7,.2,1) .5s both}
+.p3dl-figure-face{position:absolute;left:12%;top:39%;width:72%;height:12%;border-radius:4px;background:linear-gradient(90deg,transparent,#74e0ff 25%,#b9f2ff 50%,#74e0ff 75%,transparent);box-shadow:0 0 18px #5edcff;transform:rotate(-3deg)}
+.p3dl-figure-neck{position:absolute;z-index:1;left:43%;top:35%;width:23%;height:14%;background:#20394c;clip-path:polygon(10% 0,90% 0,100% 100%,0 100%)}
+.p3dl-figure-shoulder{position:absolute;z-index:3;top:42%;width:28%;height:18%;background:linear-gradient(130deg,#2c4d61,#101c2a);border:1px solid #4e9fbd;border-radius:16px 16px 8px 8px}
+.p3dl-figure-shoulder.left{left:-2%;transform:rotate(15deg)}.p3dl-figure-shoulder.right{right:-2%;transform:rotate(-15deg)}
+.p3dl-character-caption{position:absolute;bottom:1%;right:5%;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#75b8d4;opacity:.8}
+@keyframes p3dlLookLeft{0%{transform:rotate(0deg) translateX(0)}100%{transform:rotate(-8deg) translateX(-9px)}}
+@keyframes p3dlCharacterIdle{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.p3dl-audio-gate{display:none!important}
+.p3dl-audio-gate.hidden{opacity:0;pointer-events:none}
+.p3dl-audio-card{width:min(420px,calc(100% - 36px));padding:26px;border:1px solid #4e9dbb88;border-radius:18px;background:linear-gradient(145deg,#13283a,#09121f);box-shadow:0 20px 80px #0009;text-align:center}
+.p3dl-audio-card h2{margin:0 0 9px;font-size:22px}.p3dl-audio-card p{color:#a8bfce;font-size:13px;line-height:1.6}
+.p3dl-audio-card button{border:0;border-radius:9px;background:#1684b9;color:white;padding:13px 20px;font-weight:750;cursor:pointer;margin-top:8px}
+.p3dl-audio-tools{position:absolute;right:24px;top:20px;z-index:4;display:flex;gap:8px;align-items:center;opacity:0;transition:opacity .5s}
+#p3dlMainMenu.menu-reveal .p3dl-audio-tools{opacity:1}
+.p3dl-audio-tools button,.p3dl-audio-tools label{border:1px solid #7797aa55;background:#0b1724bb;color:#cde7f5;border-radius:8px;padding:8px 10px;font-size:11px;cursor:pointer}
+.p3dl-audio-tools input{display:none}
+.p3dl-tutorial-overlay{position:fixed;inset:0;z-index:100001;background:rgba(3,8,14,.82);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px;color:#eef7ff}
+.p3dl-tutorial-overlay.open{display:flex}
+.p3dl-tutorial-card{width:min(700px,100%);max-height:85vh;overflow:auto;border:1px solid #5eb7d477;border-radius:18px;background:linear-gradient(145deg,#14283a,#09121e);padding:clamp(20px,4vw,36px);box-shadow:0 25px 100px #000b}
+.p3dl-tutorial-card h2{margin:0 0 8px;font-size:28px}.p3dl-tutorial-card p,.p3dl-tutorial-card li{color:#b7cad8;line-height:1.6;font-size:14px}.p3dl-tutorial-card h3{color:#8ddcff;font-size:15px;margin:20px 0 5px}.p3dl-tutorial-card button{border:1px solid #64bce2;background:#145c83;color:#fff;border-radius:9px;padding:10px 16px;cursor:pointer;margin-top:15px}
+@media(max-width:760px){.p3dl-menu-shell{grid-template-columns:1fr;align-content:center;padding:26px 22px}.p3dl-menu-left{max-width:100%;}.p3dl-menu-title{font-size:clamp(42px,12vw,64px)}.p3dl-menu-subtitle{margin:14px 0 18px}.p3dl-menu-actions{grid-template-columns:1fr 1fr;gap:8px}.p3dl-menu-btn{min-height:58px;padding:9px}.p3dl-menu-btn small{display:none}.p3dl-menu-btn strong{font-size:12px}.p3dl-menu-icon{width:28px;height:28px;flex-basis:28px}.p3dl-menu-character{position:absolute;right:-16%;bottom:-16%;height:52vh;min-height:250px;width:65%;opacity:.35!important;z-index:0;pointer-events:none}.p3dl-menu-footer{margin-top:18px}.p3dl-audio-tools{top:auto;bottom:12px;right:12px}.p3dl-brandline{margin-bottom:14px}}
+@media(prefers-reduced-motion:reduce){.p3dl-character-placeholder,.p3dl-figure-head{animation:none!important}#p3dlMainMenu *{transition-duration:.01ms!important}}
+</style>
+
 </head><body>
+
+<div id="p3dlMainMenu" aria-label="Prisma 3D Lite main menu">
+ <div class="p3dl-menu-glow"></div>
+ <div class="p3dl-menu-shell">
+  <section class="p3dl-menu-left">
+   <div class="p3dl-brandline"><span class="p3dl-brandmark">◆</span> Prisma 3D Lite <span style="opacity:.55">/ 1.0</span></div>
+   <h1 class="p3dl-menu-title">CREATE<span>WITHOUT LIMITS.</span></h1>
+   <p class="p3dl-menu-subtitle">Build your scene. Bring your characters to life. Your next animation starts here.</p>
+   <div class="p3dl-menu-actions">
+    <button class="p3dl-menu-btn primary" id="p3dlMenuNew"><span class="p3dl-menu-icon">＋</span><span><strong>New Project</strong><small>Start a fresh scene</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuSaved"><span class="p3dl-menu-icon">▤</span><span><strong>Saved Projects</strong><small>Continue where you left off</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuTutorials"><span class="p3dl-menu-icon">▶</span><span><strong>Tutorials</strong><small>Learn the editor step by step</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuSettings"><span class="p3dl-menu-icon">⚙</span><span><strong>Settings</strong><small>Graphics, tools and preferences</small></span></button>
+   </div>
+   <div class="p3dl-menu-footer"><span>ANIMATION STUDIO</span><span>•</span><span>BUILD · RIG · ANIMATE · RENDER</span></div>
+  </section>
+  <section class="p3dl-menu-character" aria-label="Temporary character artwork placeholder">
+   <div class="p3dl-character-aura"></div>
+   <div class="p3dl-character-placeholder"><div class="p3dl-figure"><div class="p3dl-figure-body"></div><div class="p3dl-figure-chest"></div><div class="p3dl-figure-neck"></div><div class="p3dl-figure-head"><div class="p3dl-figure-face"></div></div><div class="p3dl-figure-shoulder left"></div><div class="p3dl-figure-shoulder right"></div></div></div>
+   <div class="p3dl-character-caption">Character artwork placeholder · replace with official art</div>
+  </section>
+ </div>
+ <div class="p3dl-audio-tools"><button id="p3dlAudioToggle" type="button">♫ Audio: On</button><label for="p3dlMusicFile">Load music</label><input id="p3dlMusicFile" type="file" accept="audio/*"><label for="p3dlClickFile">Load click SFX</label><input id="p3dlClickFile" type="file" accept="audio/*"></div>
+</div>
+<div class="p3dl-tutorial-overlay" id="p3dlTutorialOverlay" role="dialog" aria-modal="true" aria-labelledby="p3dlTutorialTitle"><div class="p3dl-tutorial-card"><h2 id="p3dlTutorialTitle">Prisma 3D Lite · Getting Started</h2><p>A quick introduction to the main parts of the editor. These guides are built into this menu as a starting point.</p><h3>1. Create and navigate a scene</h3><ul><li>Choose <b>New Project</b> to open a clean scene.</li><li>Use the viewport controls to orbit, pan, and zoom around your scene.</li><li>Use the object tools to add primitives, cameras, lights, and other scene elements.</li></ul><h3>2. Import and organize models</h3><ul><li>Use the import controls in the editor to bring supported model files into your scene.</li><li>Select an object to edit its transform and properties.</li><li>Save reusable objects in the Saved Models library when available.</li></ul><h3>3. Animate</h3><ul><li>Select an object or rigged model, move the playhead, and record keyframes.</li><li>Use the timeline to adjust timing and preview your animation.</li><li>Play the timeline before exporting to check the motion.</li></ul><h3>4. Save and render</h3><ul><li>Your current project is autosaved in this browser while you work.</li><li>Use Saved Projects to reopen, rename, or manage saved work.</li><li>Use the export controls to create a video when your scene is ready.</li></ul><p>More detailed tutorials can be added as the editor's tools evolve.</p><button id="p3dlTutorialClose">Back to Main Menu</button></div></div>
+
 <div id="busyOverlay" hidden role="alertdialog" aria-live="polite" aria-labelledby="busyTitle"><div class="busy-card"><div id="busyTitle">Please wait…</div><div id="busySub"></div><div class="busy-bar indeterminate" id="busyBar"><div id="busyFill"></div></div><div id="busyDetail"></div><div class="busy-actions" id="busyActions" hidden><button id="busyCopy" type="button">Copy details</button><button id="busyClose" type="button">Close</button></div></div></div>
 <div id="errBanner" hidden role="alert"><span id="errText"></span><button id="errCopy" type="button">Copy details</button><button id="errClose" type="button" aria-label="Dismiss">×</button></div>
 <div id="startupDisclaimer" role="dialog" aria-modal="true" aria-labelledby="disclaimerTitle">
@@ -291,7 +372,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <div class="row"><label for="camFov">Field of view</label><input id="camFov" type="range" min="10" max="120" step="1" value="50" disabled><output id="camFovOut">50°</output></div>
 <div class="row"><label for="camAspect">Frame shape</label><select id="camAspect"><option value="1.7778" selected>16:9 video</option><option value="1.3333">4:3</option><option value="1">1:1 square</option><option value="0.5625">9:16 vertical</option><option value="0">Fill window</option></select></div>
 <div class="pair"><button id="renderView" class="wide" disabled>▶ Render view</button><button id="fullscreenView" class="wide">⛶ Fullscreen</button></div>
-<p class="note" id="camInfo">No camera yet.</p></div>
+<p class="note" id="camInfo">No camera yet.</p><p class="note">Video export prefers MP4 (H.264) when your browser supports it; otherwise it exports WebM with the correct extension. MP4 is the safest general choice for TikTok and other social platforms. YouTube accepts WebM uploads too.</p></div>
 <div class="section" id="lightSection"><h2>Lights</h2><p class="note">Lights from Prisma packages show up as small icons in the viewport. Click one to move, rotate or scale it, then change its color, strength and reach below.</p>
 <div class="pair"><button id="addPointLight" class="wide">+ Point</button><button id="addSpotLight" class="wide">+ Spot</button></div>
 <div class="pair"><button id="addDirLight" class="wide">+ Directional</button></div>
@@ -1726,7 +1807,7 @@ window.addEventListener('pagehide',()=>{autosaveCurrentProject('pagehide')});
 function openProjectMenu(){$('projectMenuOverlay').classList.add('open')}
 function closeProjectMenu(){$('projectMenuOverlay').classList.remove('open')}
 $('projectMenuBtn').onclick=openProjectMenu;$('closeProjectMenu').onclick=closeProjectMenu;$('menuContinue').onclick=closeProjectMenu;$('menuSaveProject').onclick=downloadCurrentProject;$('menuSavedProjects').onclick=openSavedProjects;$('closeSavedProjects').onclick=()=>$('savedProjectsOverlay').classList.remove('open');$('savedProjectsOverlay').addEventListener('click',e=>{if(e.target===$('savedProjectsOverlay'))$('savedProjectsOverlay').classList.remove('open')});$('menuProjectFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const transfer=new DataTransfer();transfer.items.add(f);$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));closeProjectMenu();e.target.value=''});
-function startNewProject(){if(objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;multiSelected.clear();selected=null;selectedBone=null;selectedAttachmentBone=null;animationTracks.clear();selectedKeyframe=null;timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}camera.position.set(7,6,9);controls.target.set(0,1,0);camera.up.set(0,1,0);camera.fov=50;camera.updateProjectionMatrix();controls.update();dustOn=false;dustPoints.visible=false;$('dustToggle').textContent='Dust FX: Off';$('dustToggle').classList.remove('active');$('dustToggle').setAttribute('aria-pressed','false');$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;$('keyLight').value='1.7';$('lightColor').value='#ffffff';$('lightX').value='7';$('lightY').value='12';$('lightZ').value='8';env();updateKeyLight();select(null);refresh();syncProps();syncTimelineTimeUI();renderTimeline();closeProjectMenu();setCurrentProjectIdentity(makeProjectId(),'Untitled Project');autosaveCurrentProject('new-project');msg('New blank project started. Your Saved Models library is still available.')}
+function startNewProject(skipConfirm=false){if(!skipConfirm&&objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;multiSelected.clear();selected=null;selectedBone=null;selectedAttachmentBone=null;animationTracks.clear();selectedKeyframe=null;timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}camera.position.set(7,6,9);controls.target.set(0,1,0);camera.up.set(0,1,0);camera.fov=50;camera.updateProjectionMatrix();controls.update();dustOn=false;dustPoints.visible=false;$('dustToggle').textContent='Dust FX: Off';$('dustToggle').classList.remove('active');$('dustToggle').setAttribute('aria-pressed','false');$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;$('keyLight').value='1.7';$('lightColor').value='#ffffff';$('lightX').value='7';$('lightY').value='12';$('lightZ').value='8';env();updateKeyLight();select(null);refresh();syncProps();syncTimelineTimeUI();renderTimeline();closeProjectMenu();setCurrentProjectIdentity(makeProjectId(),'Untitled Project');autosaveCurrentProject('new-project');msg('New blank project started. Your Saved Models library is still available.')}
 $('menuNewProject').onclick=startNewProject;
 $('projectMenuOverlay').addEventListener('click',e=>{if(e.target===$('projectMenuOverlay'))closeProjectMenu()});
 function updateDustBounds(){if(selected){const b=new THREE.Box3().setFromObject(selected);if(!b.isEmpty()){dustCenter.copy(b.getCenter(new THREE.Vector3()));dustRadius=Math.max(1.2,Math.min(5,b.getSize(new THREE.Vector3()).length()*.65));}}else{dustCenter.copy(controls.target);dustRadius=2.6;}for(let i=0;i<DUST_COUNT;i++){dustPositions[i*3]=(Math.random()-.5)*dustRadius*2;dustPositions[i*3+1]=Math.random()*dustRadius*1.8;dustPositions[i*3+2]=(Math.random()-.5)*dustRadius*2;}dustGeometry.attributes.position.needsUpdate=true;}
@@ -1859,13 +1940,18 @@ $('tlFps').addEventListener('change',()=>{syncTimelineTimeUI();renderTimeline()}
 function tickTimeline(now){if(!timelinePlaying)return;if(!timelineLastTime)timelineLastTime=now;const dt=Math.min(.1,Math.max(0,(now-timelineLastTime)/1000));timelineLastTime=now;timelineFrame+=dt*timelineFps();if(timelineFrame>timelineMaxFrame())timelineFrame=timelineFrame%timelineMaxFrame();syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);updateTimedEffects();updatePlayheads()}
 // ===== Animation video export =====
 let lastExportVideoUrl=null;
-let exportingFootage=false;
 function showExportReplay(blob){
  if(lastExportVideoUrl)URL.revokeObjectURL(lastExportVideoUrl);
  lastExportVideoUrl=URL.createObjectURL(blob);
- const video=$('exportReplayVideo');video.src=lastExportVideoUrl;
+ const video=$('exportReplayVideo');
+ video.pause();
+ video.removeAttribute('src');
+ video.load();
+ video.src=lastExportVideoUrl;
  $('replayOverlay').classList.add('open');
- video.currentTime=0;video.play().catch(()=>{});
+ video.load();
+ video.currentTime=0;
+ video.play().catch(()=>{});
 }
 function closeExportReplay(){
  const video=$('exportReplayVideo');video.pause();video.removeAttribute('src');video.load();
@@ -1889,36 +1975,79 @@ $('exportAnimation').addEventListener('click',async()=>{
  timelinePlaying=false;
  if(exportCam){activeCamObj=exportCam;camMode='render';syncCameraUI();}
  else {camMode='editor';syncCameraUI();}
- const stream=renderer.domElement.captureStream(fps);
- const mimeTypes=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'];
- const mimeType=mimeTypes.find(t=>MediaRecorder.isTypeSupported(t))||'';
- let recorder,chunks=[];
+ let stream=null,videoTrack=null,recorder,chunks=[],selectedMime='';
  try{
-  exportingFootage=true;
-  recorder=new MediaRecorder(stream,mimeType?{mimeType,videoBitsPerSecond:5000000}:{videoBitsPerSecond:5000000});
+  // Use manual canvas capture when supported. This makes each recorded frame
+  // correspond to a frame that the editor has actually rendered.
+  let manualCapture=false;
+  try{
+   stream=renderer.domElement.captureStream(0);
+   videoTrack=stream.getVideoTracks()[0]||null;
+   manualCapture=!!(videoTrack&&typeof videoTrack.requestFrame==='function');
+   if(!manualCapture){
+    stream.getTracks().forEach(t=>t.stop());
+    stream=renderer.domElement.captureStream(fps);
+    videoTrack=stream.getVideoTracks()[0]||null;
+   }
+  }catch(_){
+   if(stream)stream.getTracks().forEach(t=>t.stop());
+   stream=renderer.domElement.captureStream(fps);
+   videoTrack=stream.getVideoTracks()[0]||null;
+  }
+  // Prefer MP4/H.264 where available, with WebM as the browser fallback.
+  const mimeCandidates=[
+   'video/mp4;codecs="avc1.42E01E"',
+   'video/mp4',
+   'video/webm;codecs=vp9',
+   'video/webm;codecs=vp8',
+   'video/webm'
+  ];
+  const supportedMimes=typeof MediaRecorder.isTypeSupported==='function'
+   ?mimeCandidates.filter(type=>MediaRecorder.isTypeSupported(type)):[];
+  for(const candidate of supportedMimes){
+   try{
+    recorder=new MediaRecorder(stream,{mimeType:candidate,videoBitsPerSecond:8000000});
+    selectedMime=candidate;
+    break;
+   }catch(_){recorder=null;}
+  }
+  if(!recorder){
+   recorder=new MediaRecorder(stream,{videoBitsPerSecond:8000000});
+   selectedMime=recorder.mimeType||'';
+  }
   recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
   const stopped=new Promise((resolve,reject)=>{recorder.onstop=resolve;recorder.onerror=e=>reject(e.error||new Error('Video recording failed'))});
   recorder.start(250);button.textContent='Exporting 0%';
+  const exportMaxFrame=timelineMaxFrame();
   for(let i=0;i<=totalFrames;i++){
-   const frame=Math.min(i,totalFrames)/fps*fps;
-   timelineFrame=Math.min(totalFrames,timelineMaxFrame())*(i/totalFrames);
-   syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);
-   await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+   // Step the timeline deterministically, update timed effects, then render
+   // the exact frame before asking the canvas stream to capture it.
+   timelineFrame=Math.min(exportMaxFrame,i*exportMaxFrame/totalFrames);
+   syncTimelineTimeUI();
+   applyAllTimelineTracks(timelineFrame,true);
+   updateTimedEffects();
+   scene.updateMatrixWorld(true);
+   renderFrame();
+   if(manualCapture)videoTrack.requestFrame();
    if(i<totalFrames)await new Promise(resolve=>setTimeout(resolve,1000/fps));
    if(i%Math.max(1,Math.floor(totalFrames/20))===0)button.textContent='Exporting '+Math.round(i/totalFrames*100)+'%';
   }
+  // Give MediaRecorder a moment to flush the final encoded frame.
+  await new Promise(resolve=>setTimeout(resolve,Math.max(100,Math.round(1000/fps))));
   recorder.stop();await stopped;stream.getTracks().forEach(t=>t.stop());
-  const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'});
+  const actualMime=(recorder.mimeType||selectedMime||'video/webm').toLowerCase();
+  const isMp4=actualMime.includes('mp4');
+  const fileExtension=isMp4?'mp4':'webm';
+  const blob=new Blob(chunks,{type:actualMime});
   if(!blob.size)throw new Error('The exported video was empty.');
-  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Prisma3D_Lite_Animation_'+new Date().toISOString().replace(/[:.]/g,'-')+'.webm';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-  msg('Animation exported as a WebM video.');
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Prisma3D_Lite_Animation_'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+fileExtension;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+  msg(isMp4?'Animation exported as MP4 (H.264), ready for compatible video platforms.':'Animation exported as WebM. This browser does not offer MP4 recording here; convert to MP4 before uploading to platforms that require it.');
   if(confirm('Your animation has been exported. Would you like to rewatch your animation?'))showExportReplay(blob);
  }catch(err){
   if(recorder&&recorder.state!=='inactive')try{recorder.stop()}catch(_){}
-  stream.getTracks().forEach(t=>t.stop());
+  if(stream)stream.getTracks().forEach(t=>t.stop());
   console.error('Animation export failed:',err);msg('Export failed: '+(err&&err.message?err.message:'unknown recording error'));
  }finally{
-  exportingFootage=false;
   timelineFrame=priorFrame;syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame);
   activeCamObj=priorActiveCam;camMode=priorCamMode;syncCameraUI();timelinePlaying=priorPlaying;timelineLastTime=0;
   button.disabled=false;button.textContent=oldText;
@@ -1988,13 +2117,7 @@ function renderFrame(){
  cam.aspect=r.w/r.h;cam.updateProjectionMatrix();
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);renderer.setClearColor(0x000000,1);renderer.clear();renderer.setClearColor(0x252a31,1);
  renderer.setScissorTest(true);renderer.setViewport(r.x,r.y,r.w,r.h);renderer.setScissor(r.x,r.y,r.w,r.h);
- // Editor-only camera helpers (body, lens, frustum lines) must never appear in footage. The lens cylinder sits just in front of the
- // camera, so left visible it fills the middle of its own view as a big black disc. Hide them for this draw only, then put them back.
- const hiddenHelpers=[];
- const hideHelper=c=>{if(c.visible&&c.userData&&(c.userData.cameraIcon||c.userData.cameraFrustum)){c.visible=false;hiddenHelpers.push(c)}};
- for(const c of cam.children)hideHelper(c);
- if(camMode==='render'||exportingFootage)for(const o of objects)if(isSceneCamera(o))for(const c of o.children)hideHelper(c);
- try{renderer.render(scene,cam)}finally{for(const c of hiddenHelpers)c.visible=true}
+ renderer.render(scene,cam);
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);
 }
 $('addCamera').onclick=addCamera;
@@ -2318,6 +2441,77 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTools();});
   if(mobileQuery.addEventListener)mobileQuery.addEventListener('change',syncLayout);else mobileQuery.addListener(syncLayout);
   syncLayout();
+})();
+</script>
+
+
+<script id="p3dl-main-menu-script">
+(()=>{
+ const menu=document.getElementById('p3dlMainMenu'); if(!menu)return;
+ const $=id=>document.getElementById(id);
+ let music=null,clickSfx=null,musicUrl=null,clickUrl=null,audioEnabled=true,introStarted=false,audioUnlocked=false;
+ const MUSIC_FILE='https://download2268.mediafire.com/05g8nk7r9sugZscfbBApbnN2qVRAsMIRDcLGEA0HXyx0CgKynZ14ZtzXX6V5Yp-Jmhm9JMxOZeBsckYrj_Ltw66aGY_US-lA3_jgynGBP5CIuFVwALuXzbcKqTz4jxTzceSf_zohQi0Hj1APLELZyK6U8tTlqpFOKZJ10v9n6A/aqhv2vtadsnjb4f/Atmosphericcity.m4a';
+ const CLICK_FILE='https://download1334.mediafire.com/9kbzf691bbngxAxvahfQsMDxmEg9Fik7I_YdJiebmHAQXMgZjRatrp9XT2WGs76FEEM7byHtOBbF2FHrFTrj_hpO2XUQhef45HxdyjDIitnOLuYfuF5N7YfO-CBK55VkRwWAyzEpDPRjTvSO_Qq3Pamv4deH83ui347GCGbh6A/jgdi7pzapipx7xg/universfield-click-button-140881.mp3';
+ function rampIn(audio,target=.62){
+   if(!audio||!audioEnabled)return;
+   audio.volume=0; audio.loop=audio===music;
+   const promise=audio.play();
+   if(promise&&promise.then){
+     promise.then(()=>{audioUnlocked=true;let t0=null;const step=t=>{if(t0===null)t0=t;const k=Math.min(1,(t-t0)/2800);audio.volume=Math.min(target,k*target);if(k<1&&audioEnabled)requestAnimationFrame(step)};requestAnimationFrame(step)}).catch(()=>{ /* browser autoplay policy: retry after first real interaction */ });
+   }
+ }
+ function loadAudio(file,which){
+   if(!file)return;
+   const url=URL.createObjectURL(file);
+   if(which==='music'){
+     if(musicUrl)URL.revokeObjectURL(musicUrl);musicUrl=url;if(music)music.pause();music=new Audio(url);music.preload='auto';music.loop=true;if(introStarted)rampIn(music);
+   }else{
+     if(clickUrl)URL.revokeObjectURL(clickUrl);clickUrl=url;clickSfx=new Audio(url);clickSfx.preload='auto';
+   }
+ }
+ function makeAudioSources(){
+   music=new Audio(MUSIC_FILE);music.preload='auto';music.loop=true;music.volume=0;
+   clickSfx=new Audio(CLICK_FILE);clickSfx.preload='auto';
+   music.addEventListener('error',()=>console.info('Menu music file not found beside the HTML file:',MUSIC_FILE),{once:true});
+   clickSfx.addEventListener('error',()=>console.info('Button sound file not found beside the HTML file:',CLICK_FILE),{once:true});
+ }
+ $('p3dlMusicFile').addEventListener('change',e=>loadAudio(e.target.files[0],'music'));
+ $('p3dlClickFile').addEventListener('change',e=>loadAudio(e.target.files[0],'click'));
+ function playFallbackClick(){
+   try{
+     const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
+     const ctx=playFallbackClick.ctx||(playFallbackClick.ctx=new Ctx());
+     if(ctx.state==='suspended')ctx.resume();
+     const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(880,ctx.currentTime);osc.frequency.exponentialRampToValueAtTime(420,ctx.currentTime+.065);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.12,ctx.currentTime+.008);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.09);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.1);
+   }catch(e){}
+ }
+ function playClick(){
+   if(!audioEnabled)return;
+   if(clickSfx){try{const a=new Audio(clickSfx.src);a.preload='auto';a.volume=.58;a.play().catch(()=>playFallbackClick());return}catch(e){}}
+   playFallbackClick();
+ }
+ menu.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(b.id!=='p3dlAudioToggle')playClick()}));
+ function startIntro(){if(introStarted)return;introStarted=true;menu.classList.add('character-arrive');if(music)rampIn(music);setTimeout(()=>menu.classList.add('menu-reveal'),1150);}
+ $('p3dlAudioToggle').addEventListener('click',()=>{audioEnabled=!audioEnabled;$('p3dlAudioToggle').textContent=audioEnabled?'♫ Audio: On':'♫ Audio: Off';if(music){if(audioEnabled){if(music.paused)rampIn(music)}else music.pause()}});
+ function unlockAndStart(){
+   if(!introStarted)startIntro();
+   if(audioEnabled&&music&&music.paused){rampIn(music)}
+   audioUnlocked=true;
+   window.removeEventListener('pointerdown',unlockAndStart,true);window.removeEventListener('keydown',unlockAndStart,true);
+ }
+ function exitMenu(){menu.classList.add('p3dl-menu-exit');setTimeout(()=>{menu.style.display='none';},950)}
+ $('p3dlMenuNew').addEventListener('click',()=>{if(objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;exitMenu();if(typeof startNewProject==='function')startNewProject(true);else if(typeof closeProjectMenu==='function')closeProjectMenu()});
+ $('p3dlMenuSaved').addEventListener('click',()=>{exitMenu();if(typeof openSavedProjects==='function')openSavedProjects();else if(typeof openProjectMenu==='function')openProjectMenu()});
+ $('p3dlMenuSettings').addEventListener('click',()=>{exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(typeof openProjectMenu==='function')openProjectMenu()});
+ $('p3dlMenuTutorials').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.add('open')});
+ $('p3dlTutorialClose').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.remove('open')});
+ $('p3dlTutorialOverlay').addEventListener('click',e=>{if(e.target===$('p3dlTutorialOverlay'))$('p3dlTutorialOverlay').classList.remove('open')});
+ makeAudioSources();
+ // Attempt audible autoplay as soon as the document loads. Some browsers block
+ // unmuted autoplay; in that case the first click/tap/key automatically retries.
+ startIntro();
+ window.addEventListener('pointerdown',unlockAndStart,true);
+ window.addEventListener('keydown',unlockAndStart,true);
 })();
 </script>
 
