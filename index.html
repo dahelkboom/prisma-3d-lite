@@ -1810,6 +1810,18 @@ $('projectMenuBtn').onclick=openProjectMenu;$('closeProjectMenu').onclick=closeP
 function startNewProject(skipConfirm=false){if(!skipConfirm&&objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;multiSelected.clear();selected=null;selectedBone=null;selectedAttachmentBone=null;animationTracks.clear();selectedKeyframe=null;timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}camera.position.set(7,6,9);controls.target.set(0,1,0);camera.up.set(0,1,0);camera.fov=50;camera.updateProjectionMatrix();controls.update();dustOn=false;dustPoints.visible=false;$('dustToggle').textContent='Dust FX: Off';$('dustToggle').classList.remove('active');$('dustToggle').setAttribute('aria-pressed','false');$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;$('keyLight').value='1.7';$('lightColor').value='#ffffff';$('lightX').value='7';$('lightY').value='12';$('lightZ').value='8';env();updateKeyLight();select(null);refresh();syncProps();syncTimelineTimeUI();renderTimeline();closeProjectMenu();setCurrentProjectIdentity(makeProjectId(),'Untitled Project');autosaveCurrentProject('new-project');msg('New blank project started. Your Saved Models library is still available.')}
 $('menuNewProject').onclick=startNewProject;
 $('projectMenuOverlay').addEventListener('click',e=>{if(e.target===$('projectMenuOverlay'))closeProjectMenu()});
+// Public bridge for the main-menu script. Scene data stays private to this editor IIFE.
+window.p3dlMainMenuApi={
+ async startNewProject(){
+  if(objects.length&&!confirm('Start a new project? Your current project will be saved in Saved Projects. Your Saved Models library will not be deleted.'))return false;
+  const saved=await autosaveCurrentProject('before-new-project');
+  if(!saved){msg('Your current project could not be saved, so New Project was cancelled to protect your work. Check the Autosave status and try again.');return false;}
+  startNewProject(true);
+  return true;
+ },
+ openSavedProjects,
+ openProjectMenu
+};
 function updateDustBounds(){if(selected){const b=new THREE.Box3().setFromObject(selected);if(!b.isEmpty()){dustCenter.copy(b.getCenter(new THREE.Vector3()));dustRadius=Math.max(1.2,Math.min(5,b.getSize(new THREE.Vector3()).length()*.65));}}else{dustCenter.copy(controls.target);dustRadius=2.6;}for(let i=0;i<DUST_COUNT;i++){dustPositions[i*3]=(Math.random()-.5)*dustRadius*2;dustPositions[i*3+1]=Math.random()*dustRadius*1.8;dustPositions[i*3+2]=(Math.random()-.5)*dustRadius*2;}dustGeometry.attributes.position.needsUpdate=true;}
 $('dustToggle').onclick=()=>{dustOn=!dustOn;dustPoints.visible=dustOn;$('dustToggle').textContent=dustOn?'Dust FX: On':'Dust FX: Off';$('dustToggle').classList.toggle('active',dustOn);$('dustToggle').setAttribute('aria-pressed',String(dustOn));if(dustOn){updateDustBounds();msg('Dust particles enabled — click Dust FX again to turn them off')}else msg('Dust particles disabled')};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{if(selectedBone){setBoneTransformMode(b.dataset.mode);return;}gizmo.setMode(b.dataset.mode);setGizmoSize(b.dataset.mode==='rotate'?1.15:.68);document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));msg(b.textContent.replace(/ \([MRS]\)/,'')+' mode — drag the smaller handles on the selected object')});
@@ -2410,7 +2422,7 @@ $('fxStart').value='0';$('fxEnd').value='2';$('fxColor').value=fxDefaultColor($(
 }catch(effectInitError){console.warn('Effects Studio controls could not initialize; core editor will continue:',effectInitError);const status=document.getElementById('fxStatus');if(status)status.textContent='Effects controls could not initialize. The rest of the editor is still available.'}
 
 let studioLastTick=performance.now();
-function animate(){requestAnimationFrame(animate);const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
+function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studioLastTick=performance.now();return;}const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
 })();
 </script>
 <script>
@@ -2500,9 +2512,19 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
    window.removeEventListener('pointerdown',unlockAndStart,true);window.removeEventListener('keydown',unlockAndStart,true);
  }
  function exitMenu(){menu.classList.add('p3dl-menu-exit');setTimeout(()=>{menu.style.display='none';},950)}
- $('p3dlMenuNew').addEventListener('click',()=>{if(objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;exitMenu();if(typeof startNewProject==='function')startNewProject(true);else if(typeof closeProjectMenu==='function')closeProjectMenu()});
- $('p3dlMenuSaved').addEventListener('click',()=>{exitMenu();if(typeof openSavedProjects==='function')openSavedProjects();else if(typeof openProjectMenu==='function')openProjectMenu()});
- $('p3dlMenuSettings').addEventListener('click',()=>{exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(typeof openProjectMenu==='function')openProjectMenu()});
+ $('p3dlMenuNew').addEventListener('click',async()=>{
+   const api=window.p3dlMainMenuApi;
+   if(!api||typeof api.startNewProject!=='function'){console.error('Prisma 3D Lite editor actions are not ready yet.');return;}
+   try{const started=await api.startNewProject();if(started)exitMenu();}
+   catch(err){console.error('Could not start a new project from the main menu:',err);const status=document.getElementById('status');if(status)status.textContent='Could not start a new project: '+(err.message||err);}
+ });
+ $('p3dlMenuSaved').addEventListener('click',async()=>{
+   const api=window.p3dlMainMenuApi;if(!api||typeof api.openSavedProjects!=='function'){console.error('Saved Projects is not ready yet.');return;}
+   exitMenu();try{await api.openSavedProjects();}catch(err){console.error('Could not open Saved Projects:',err);}
+ });
+ $('p3dlMenuSettings').addEventListener('click',()=>{
+   exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(window.p3dlMainMenuApi&&window.p3dlMainMenuApi.openProjectMenu)window.p3dlMainMenuApi.openProjectMenu();
+ });
  $('p3dlMenuTutorials').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.add('open')});
  $('p3dlTutorialClose').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.remove('open')});
  $('p3dlTutorialOverlay').addEventListener('click',e=>{if(e.target===$('p3dlTutorialOverlay'))$('p3dlTutorialOverlay').classList.remove('open')});
@@ -2512,6 +2534,110 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
  startIntro();
  window.addEventListener('pointerdown',unlockAndStart,true);
  window.addEventListener('keydown',unlockAndStart,true);
+})();
+</script>
+
+
+<style id="p3dl-marketplace-styles">
+#p3dlOpenStore{position:fixed;right:20px;bottom:20px;z-index:90000;border:1px solid rgba(120,255,166,.8);border-radius:14px;padding:13px 19px;background:linear-gradient(135deg,#0d8b50,#16b86b);color:#fff;font:800 14px system-ui,sans-serif;letter-spacing:.2px;box-shadow:0 0 12px rgba(33,255,130,.48),0 0 32px rgba(33,255,130,.22);cursor:pointer;display:none;transition:transform .18s,box-shadow .18s}
+#p3dlOpenStore:hover{transform:translateY(-2px);box-shadow:0 0 18px rgba(33,255,130,.7),0 0 42px rgba(33,255,130,.3)}
+#p3dlMarketplace{position:fixed;inset:0;z-index:200000;background:#080d16;color:#edf4ff;display:none;overflow:auto;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+#p3dlMarketplace.open{display:block;animation:p3dlStoreIn .22s ease-out}
+@keyframes p3dlStoreIn{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:scale(1)}}
+#p3dlMarketplace:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 85% 0%,rgba(24,139,100,.17),transparent 42%),radial-gradient(ellipse at 0% 100%,rgba(32,91,150,.16),transparent 48%)}
+.p3dl-store-wrap{position:relative;max-width:1320px;margin:0 auto;padding:25px clamp(16px,3vw,42px) 50px}
+.p3dl-store-top{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #253447;padding-bottom:20px}
+.p3dl-store-brand{font-weight:900;font-size:20px;letter-spacing:.4px}.p3dl-store-brand span{color:#35d889}
+.p3dl-store-back{border:1px solid #43546a;background:#172333;color:#eef5ff;border-radius:10px;padding:10px 15px;font-weight:750;cursor:pointer}.p3dl-store-back:hover{background:#22344a}
+.p3dl-store-hero{padding:42px 0 25px}.p3dl-store-hero h1{font-size:clamp(30px,5vw,52px);line-height:1.04;margin:0 0 12px;letter-spacing:-1.6px}.p3dl-store-hero h1 span{color:#39dc91}.p3dl-store-hero p{color:#9eafc3;margin:0;max-width:660px;line-height:1.6}
+.p3dl-store-tools{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.p3dl-store-search{flex:1 1 260px;min-width:0;border:1px solid #35475e;background:#111b29;color:#f4f7fb;border-radius:11px;padding:13px 15px;font:inherit;outline:none}.p3dl-store-search:focus{border-color:#35d889;box-shadow:0 0 0 3px rgba(53,216,137,.12)}
+.p3dl-store-action{border:1px solid #2e8d66;background:#123d30;color:#dffff0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.p3dl-store-action:hover{background:#18533e}
+.p3dl-store-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 22px}.p3dl-store-tab{border:1px solid #34465b;background:#121d2b;color:#b9c7d8;border-radius:999px;padding:8px 14px;cursor:pointer}.p3dl-store-tab.active{background:#164b37;border-color:#39c987;color:#e3fff1}
+.p3dl-store-empty{border:1px dashed #40546a;border-radius:18px;background:rgba(18,29,43,.8);padding:48px 22px;text-align:center}.p3dl-store-empty .symbol{font-size:38px;margin-bottom:12px}.p3dl-store-empty h2{font-size:21px;margin:0 0 9px}.p3dl-store-empty p{color:#9eafc3;max-width:560px;margin:0 auto 18px;line-height:1.6}.p3dl-store-status{font-size:12px;color:#8194aa;margin-top:25px;text-align:center}
+.p3dl-store-info{display:none;margin:18px 0 0;padding:14px 16px;border:1px solid #52627a;border-radius:12px;background:#172333;color:#d9e6f5;line-height:1.55}.p3dl-store-info.open{display:block}
+@media(max-width:650px){#p3dlOpenStore{right:12px;bottom:12px;padding:12px 15px}.p3dl-store-top{align-items:flex-start}.p3dl-store-brand{font-size:17px}.p3dl-store-hero{padding-top:30px}.p3dl-store-empty{padding:35px 17px}}
+</style>
+<button id="p3dlOpenStore" type="button" aria-label="Open Marketplace">🟢 Open Store</button>
+<section id="p3dlMarketplace" aria-label="Prisma 3D Lite Marketplace" aria-hidden="true">
+ <div class="p3dl-store-wrap">
+  <header class="p3dl-store-top"><div class="p3dl-store-brand">◆ PRISMA 3D <span>LITE / MARKETPLACE</span></div><button class="p3dl-store-back" id="p3dlBackToEditor" type="button">← Back to Editor</button></header>
+  <div class="p3dl-store-hero"><h1>THE CREATOR <span>MARKETPLACE.</span></h1><p>Discover models made by the Prisma 3D Lite community. Share your creations, explore other creators' work, and build something new.</p></div>
+  <div class="p3dl-store-tools"><input id="p3dlStoreSearch" class="p3dl-store-search" type="search" placeholder="Search models and creators…" aria-label="Search marketplace"><button id="p3dlStoreUpload" class="p3dl-store-action" type="button">＋ Upload a Model</button><button id="p3dlStoreAccount" class="p3dl-store-action" type="button">My Account</button></div>
+
+  <section id="p3dlSupabaseSetup" class="p3dl-store-info open" style="display:block;margin:18px 0;padding:18px">
+    <h2 style="margin:0 0 8px">Connect your Supabase project</h2>
+    <p style="margin:0 0 14px;color:#b9c7d8">Enter your Project URL and Publishable key here. This setup uses only the browser-safe publishable key. Never enter a secret key or database password.</p>
+    <label for="p3dlSupabaseUrl" style="display:block;margin:10px 0 5px;font-weight:700">Project URL</label>
+    <input id="p3dlSupabaseUrl" type="url" autocomplete="url" placeholder="https://your-project.supabase.co" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+    <label for="p3dlSupabasePublishable" style="display:block;margin:12px 0 5px;font-weight:700">Publishable key</label>
+    <input id="p3dlSupabasePublishable" type="password" autocomplete="off" placeholder="sb_publishable_..." style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <button id="p3dlSupabaseConnect" class="p3dl-store-action" type="button">Save & Test Connection</button>
+      <button id="p3dlSupabaseClear" class="p3dl-store-back" type="button">Clear saved settings</button>
+    </div>
+    <p id="p3dlSupabaseStatus" role="status" aria-live="polite" style="margin:12px 0 0;color:#b9c7d8">Not connected yet.</p>
+  </section>
+  <nav class="p3dl-store-tabs" aria-label="Marketplace categories"><button class="p3dl-store-tab active" type="button">All Models</button><button class="p3dl-store-tab" type="button">Characters</button><button class="p3dl-store-tab" type="button">Maps & Environments</button><button class="p3dl-store-tab" type="button">Props</button><button class="p3dl-store-tab" type="button">Rigs</button></nav>
+  <div class="p3dl-store-empty"><div class="symbol">◇</div><h2>The Marketplace is being connected</h2><p>The Store screen is ready, but community listings, accounts, uploads, comments, and downloads will appear after we connect this app to your Supabase project. No sample listings are shown as real community content.</p><button id="p3dlStoreSetupInfo" class="p3dl-store-action" type="button">What needs to be connected?</button><div id="p3dlStoreInfo" class="p3dl-store-info">Next, we'll connect Prisma 3D Lite using your Supabase project URL and publishable (anon) key, then build sign-in and model browsing/upload. Never put your database password or service_role secret in this HTML file or share it here.</div></div>
+  <div class="p3dl-store-status">PRISMA 3D LITE · COMMUNITY MARKETPLACE · EARLY DEVELOPMENT</div>
+ </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script id="p3dl-marketplace-script">
+(()=>{
+ const store=document.getElementById('p3dlMarketplace'),openBtn=document.getElementById('p3dlOpenStore'),backBtn=document.getElementById('p3dlBackToEditor');
+ if(!store||!openBtn||!backBtn)return;
+ const menu=document.getElementById('p3dlMainMenu');
+ function editorIsVisible(){return !menu||menu.style.display==='none'||getComputedStyle(menu).display==='none';}
+ function syncButton(){openBtn.style.display=editorIsVisible()&&!store.classList.contains('open')?'block':'none';}
+ function openStore(){window.p3dlStoreOpen=true;store.classList.add('open');store.setAttribute('aria-hidden','false');openBtn.style.display='none';store.scrollTop=0;}
+ function closeStore(){store.classList.remove('open');store.setAttribute('aria-hidden','true');window.p3dlStoreOpen=false;syncButton();}
+ openBtn.addEventListener('click',openStore);backBtn.addEventListener('click',closeStore);
+ document.getElementById('p3dlStoreSetupInfo').addEventListener('click',()=>document.getElementById('p3dlStoreInfo').classList.toggle('open'));
+ for(const id of ['p3dlStoreUpload','p3dlStoreAccount'])document.getElementById(id).addEventListener('click',()=>{const info=document.getElementById('p3dlStoreInfo');info.classList.add('open');info.scrollIntoView({behavior:'smooth',block:'center'});});
+ document.querySelectorAll('.p3dl-store-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.p3dl-store-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');}));
+ const observer=new MutationObserver(syncButton);if(menu)observer.observe(menu,{attributes:true,attributeFilter:['style','class']});
+ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&store.classList.contains('open'))closeStore();});
+
+ // Supabase connection setup: only the Project URL and browser-safe publishable key are accepted.
+ const urlInput=document.getElementById('p3dlSupabaseUrl');
+ const keyInput=document.getElementById('p3dlSupabasePublishable');
+ const connectBtn=document.getElementById('p3dlSupabaseConnect');
+ const clearBtn=document.getElementById('p3dlSupabaseClear');
+ const statusEl=document.getElementById('p3dlSupabaseStatus');
+ const configStoreKey='p3dl_supabase_public_config_v1';
+ function setConnectionStatus(message,good=false){if(statusEl){statusEl.textContent=message;statusEl.style.color=good?'#6ee7a8':'#ffd18a';}}
+ function readSavedConfig(){
+   try{return JSON.parse(localStorage.getItem(configStoreKey)||'null');}catch(e){return null;}
+ }
+ const savedConfig=readSavedConfig();
+ if(savedConfig&&urlInput&&keyInput){urlInput.value=savedConfig.url||'';keyInput.value=savedConfig.key||'';keyInput.type='password';setConnectionStatus('Saved settings found. Press “Save & Test Connection” to verify them.');}
+ if(connectBtn)connectBtn.addEventListener('click',async()=>{
+   const projectUrl=(urlInput?.value||'').trim().replace(/\/+$/,'');
+   const publishableKey=(keyInput?.value||'').trim();
+   if(!/^https:\/\/[a-zA-Z0-9-]+\.supabase\.co$/.test(projectUrl)){setConnectionStatus('Please enter the Project URL from Supabase. It should look like https://your-project.supabase.co');return;}
+   if(!publishableKey.startsWith('sb_publishable_')){setConnectionStatus('That does not look like a new Supabase Publishable key. Use the key beginning sb_publishable_. Do not use a secret key.');return;}
+   if(!window.supabase||typeof window.supabase.createClient!=='function'){setConnectionStatus('The Supabase library did not load. Check your internet connection, then reload this page.');return;}
+   connectBtn.disabled=true;connectBtn.textContent='Testing…';setConnectionStatus('Contacting Supabase…');
+   try{
+     const client=window.supabase.createClient(projectUrl,publishableKey);
+     const {error}=await client.from('profiles').select('id').limit(1);
+     if(error)throw error;
+     localStorage.setItem(configStoreKey,JSON.stringify({url:projectUrl,key:publishableKey}));
+     window.p3dlSupabase=client;
+     setConnectionStatus('Connection successful! Prisma 3D Lite can reach your Supabase profiles table. Your settings are saved in this browser.',true);
+   }catch(err){
+     const msg=(err&&err.message)?err.message:String(err);
+     setConnectionStatus('Connection test failed: '+msg+' Check the URL/key and confirm the profiles table and its read policy exist.');
+   }finally{connectBtn.disabled=false;connectBtn.textContent='Save & Test Connection';}
+ });
+ if(clearBtn)clearBtn.addEventListener('click',()=>{
+   try{localStorage.removeItem(configStoreKey);}catch(e){}
+   if(urlInput)urlInput.value='';if(keyInput)keyInput.value='';
+   window.p3dlSupabase=null;setConnectionStatus('Saved browser settings cleared.');
+ });
+
+ syncButton();setTimeout(syncButton,1100);
 })();
 </script>
 
