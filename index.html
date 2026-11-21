@@ -2169,8 +2169,11 @@ function setViewMode(mode){
  if(mode!=='editor'&&!usableCam()){msg('Add or select a camera first.');return}
  camMode=mode;const inCam=mode!=='editor',clean=mode==='render',wasClean=prev==='render';
  controls.enabled=!inCam;gizmo.enabled=!inCam;if(inCam)gizmo.visible=false;else if(gizmo.object)gizmo.visible=true;
- if(clean&&!wasClean){camSaved.rig=showRigBones;camSaved.ik=ikMarker.visible;showRigBones=false;ikMarker.visible=false;grid.visible=false;setCameraIconsVisible(false)}
- if(!clean&&wasClean){showRigBones=camSaved.rig;ikMarker.visible=camSaved.ik;grid.visible=$('gridToggle').checked;setCameraIconsVisible(true)}
+ // Camera body, lens and frustum are editor-only helpers. Hide them in BOTH
+ // camera-preview and render modes so the active camera cannot see its own lens.
+ setCameraIconsVisible(!inCam);
+ if(clean&&!wasClean){camSaved.rig=showRigBones;camSaved.ik=ikMarker.visible;showRigBones=false;ikMarker.visible=false;grid.visible=false}
+ if(!clean&&wasClean){showRigBones=camSaved.rig;ikMarker.visible=camSaved.ik;grid.visible=$('gridToggle').checked}
  syncCameraUI();
  msg(mode==='editor'?'Back to the editor view':(clean?'Render view through '+activeCamObj.name+'. Esc exits, Space plays or pauses.':'Looking through '+activeCamObj.name+'. Esc exits.'));
 }
@@ -2188,7 +2191,11 @@ function renderFrame(){
  cam.aspect=r.w/r.h;cam.updateProjectionMatrix();
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);renderer.setClearColor(0x000000,1);renderer.clear();renderer.setClearColor(0x252a31,1);
  renderer.setScissorTest(true);renderer.setViewport(r.x,r.y,r.w,r.h);renderer.setScissor(r.x,r.y,r.w,r.h);
- renderer.render(scene,cam);
+ // Defensive per-frame guard: even if a UI transition or fullscreen resize
+ // leaves a helper visible, never draw camera helper meshes through a scene camera.
+ const hiddenCameraHelpers=[];
+ scene.traverse(node=>{if(node.userData&&(node.userData.cameraIcon||node.userData.cameraFrustum)){hiddenCameraHelpers.push([node,node.visible]);node.visible=false;}});
+ try{renderer.render(scene,cam)}finally{for(const [node,wasVisible] of hiddenCameraHelpers)node.visible=wasVisible;}
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);
 }
 $('addCamera').onclick=addCamera;
