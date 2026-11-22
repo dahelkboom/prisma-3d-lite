@@ -142,7 +142,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   header{position:sticky;top:0;z-index:160;display:flex;align-items:center;gap:7px;min-height:48px;padding:7px 9px;font-size:13px;white-space:nowrap}
   header span{display:none!important}
   #mobileToolsBtn{display:inline-flex;align-items:center;justify-content:center;float:none!important;margin:0!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
-  #backToMainMenu{float:none!important;margin:0 0 0 auto!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
+  #projectMenuBtn{float:none!important;margin:0 0 0 auto!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
   .app{display:flex;flex-direction:column;min-height:calc(100dvh - 48px);height:auto}
   .main{width:100%;min-width:0;min-height:0;flex:1}
   aside{display:none;position:fixed;left:0;top:48px;bottom:0;z-index:150;width:min(88vw,360px);max-width:360px;max-height:none;height:auto;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:#20232a;border-right:1px solid #4a5666;box-shadow:16px 0 36px #0008;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 }
 @media (max-width:380px){
   header{gap:5px;padding-left:7px;padding-right:7px}
-  #mobileToolsBtn,#backToMainMenu{font-size:11px;padding:6px 7px}
+  #mobileToolsBtn,#projectMenuBtn{font-size:11px;padding:6px 7px}
   .toolbar button{padding:6px 8px;font-size:11px}
   .stage{height:44dvh;min-height:210px}
 }
@@ -220,8 +220,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .p3dl-menu-title{font-size:clamp(42px,6vw,78px);line-height:.94;letter-spacing:-.065em;font-weight:850;margin:0;text-shadow:0 8px 40px #0008}
 .p3dl-menu-title span{display:block;color:#8bdcff}
 .p3dl-menu-subtitle{color:#a9bbcb;max-width:420px;line-height:1.65;font-size:14px;margin:22px 0 30px}
-.p3dl-menu-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-width:620px}
-.p3dl-menu-btn{appearance:none;border:1px solid rgba(160,204,230,.2);background:linear-gradient(110deg,rgba(22,42,61,.92),rgba(13,25,39,.84));color:#edf7ff;border-radius:12px;min-height:58px;padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;box-shadow:0 8px 28px #0003}
+.p3dl-menu-actions{display:grid;gap:11px;max-width:390px}
+.p3dl-menu-btn{appearance:none;border:1px solid rgba(160,204,230,.2);background:linear-gradient(110deg,rgba(22,42,61,.92),rgba(13,25,39,.84));color:#edf7ff;border-radius:12px;min-height:62px;padding:12px 17px;display:flex;align-items:center;gap:15px;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;box-shadow:0 8px 28px #0003}
 .p3dl-menu-btn:hover,.p3dl-menu-btn:focus-visible{transform:translateX(6px);border-color:rgba(112,213,255,.8);background:linear-gradient(110deg,rgba(29,77,105,.96),rgba(16,38,57,.94));box-shadow:0 0 24px rgba(55,173,223,.15);outline:none}
 .p3dl-menu-btn.primary{background:linear-gradient(105deg,#167db0,#14527e);border-color:#62caff;box-shadow:0 8px 30px rgba(0,128,190,.2)}
 .p3dl-menu-icon{width:34px;height:34px;flex:0 0 34px;border-radius:9px;background:rgba(130,205,239,.12);display:grid;place-items:center;color:#9be2ff;font-size:18px}
@@ -271,13 +271,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
    <p class="p3dl-menu-subtitle">Build your scene. Bring your characters to life. Your next animation starts here.</p>
    <div class="p3dl-menu-actions">
     <button class="p3dl-menu-btn primary" id="p3dlMenuNew"><span class="p3dl-menu-icon">＋</span><span><strong>New Project</strong><small>Start a fresh scene</small></span></button>
-    <button class="p3dl-menu-btn" id="p3dlMenuOpen"><span class="p3dl-menu-icon">📂</span><span><strong>Open Project</strong><small>Load a project JSON file</small></span></button>
-    <button class="p3dl-menu-btn" id="p3dlMenuDownload"><span class="p3dl-menu-icon">💾</span><span><strong>Download Project</strong><small>Save a portable JSON backup</small></span></button>
-    <button class="p3dl-menu-btn" id="p3dlMenuSaved"><span class="p3dl-menu-icon">▤</span><span><strong>Saved Projects</strong><small>Open, rename or delete projects</small></span></button>
-    <button class="p3dl-menu-btn" id="p3dlMenuContinue"><span class="p3dl-menu-icon">🎬</span><span><strong>Continue Editing</strong><small>Return to your current scene</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuSaved"><span class="p3dl-menu-icon">▤</span><span><strong>Saved Projects</strong><small>Continue where you left off</small></span></button>
     <button class="p3dl-menu-btn" id="p3dlMenuTutorials"><span class="p3dl-menu-icon">▶</span><span><strong>Tutorials</strong><small>Learn the editor step by step</small></span></button>
     <button class="p3dl-menu-btn" id="p3dlMenuSettings"><span class="p3dl-menu-icon">⚙</span><span><strong>Settings</strong><small>Graphics, tools and preferences</small></span></button>
-    <input id="p3dlMenuProjectFile" type="file" accept=".json,application/json" hidden>
    </div>
    <div class="p3dl-menu-footer"><span>ANIMATION STUDIO</span><span>•</span><span>BUILD · RIG · ANIMATE · RENDER</span></div>
   </section>
@@ -300,7 +296,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <button id="acceptDisclaimer" type="button">I Understand — Enter Studio</button>
   </div>
 </div>
-<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="backToMainMenu" type="button" style="float:right;margin-top:-4px">⌂ Main Menu</button></header>
+<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="projectMenuBtn" style="float:right;margin-top:-4px">▤ Projects</button></header>
 <button id="mobileToolsBackdrop" type="button" aria-label="Close tools panel"></button>
 <div class="app">
 <aside>
@@ -400,7 +396,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="absoluteIKMode" class="wide" disabled>Absolute IK Mode (AIKM): Off</button><p class="note">With AIKM on, click any number of bone handles to anchor or unanchor them. Anchored bones stay fixed in world space while the active IK target moves.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
@@ -426,6 +422,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   <button class="preset-card" data-preset="forest"><span class="preset-art" style="background:linear-gradient(#9ec9a0,#244c3d)">🌲 🌿</span><strong>Forest Clearing</strong><small>A green outdoor setting with trees and a clear central space for characters.</small><span class="choose">Use this map</span></button>
   <button class="preset-card" data-preset="arena"><span class="preset-art" style="background:linear-gradient(#382c5d,#e07c52)">⚔️ 🔮</span><strong>Sci-Fi Arena</strong><small>A circular combat platform with pillars and luminous accents.</small><span class="choose">Use this map</span></button>
  </div><p class="preset-foot">Loading a map replaces only the previous map scenery. Your characters/models and animation keyframes stay in the scene. The selected map is included when you save a project.</p></div></div>
+<div class="preset-overlay" id="projectMenuOverlay" role="dialog" aria-modal="true" aria-labelledby="projectMenuTitle"><div class="preset-dialog" style="width:min(760px,100%)"><div class="preset-head"><div><h2 id="projectMenuTitle">Projects</h2><p class="note">Start a new scene, open a saved project, or save your current work. Your Saved Models library is separate from individual projects.</p></div><button id="closeProjectMenu" aria-label="Close project menu">✕</button></div><div class="project-menu-grid"><button class="project-menu-action primary" id="menuNewProject"><span class="project-menu-icon">＋</span><strong>New Project</strong><span>Start with a clean scene. Your saved model library stays available.</span></button><label class="project-menu-action" for="menuProjectFile"><span class="project-menu-icon">📂</span><strong>Open Project</strong><span>Load a Prisma 3D Lite JSON project you saved earlier.</span><input id="menuProjectFile" type="file" accept=".json,application/json" style="margin-top:6px;max-width:100%"></label><button class="project-menu-action" id="menuSaveProject"><span class="project-menu-icon">💾</span><strong>Download Project</strong><span>Export a portable JSON copy to your device.</span></button><button class="project-menu-action" id="menuSavedProjects"><span class="project-menu-icon">▤</span><strong>Saved Projects</strong><span>Open, rename, or delete projects stored in this browser.</span></button><button class="project-menu-action" id="menuContinue"><span class="project-menu-icon">🎬</span><strong>Continue Editing</strong><span>Close this menu and return to the current scene.</span></button></div><p class="preset-foot">Your projects are automatically saved in this browser while you work. Download a JSON backup when you want a portable copy. Saved Models remain separate.</p><p class="autosave-indicator" id="autosaveMenuStatus" aria-live="polite">Autosave is preparing…</p></div></div>
 <div class="preset-overlay" id="savedProjectsOverlay" role="dialog" aria-modal="true" aria-labelledby="savedProjectsTitle"><div class="preset-dialog" style="width:min(760px,100%)"><div class="preset-head"><div><h2 id="savedProjectsTitle">Saved Projects</h2><p class="note">Projects are stored locally in this browser. Open one to continue, rename it, or delete it. Download JSON backups if you want to move projects to another device.</p></div><button id="closeSavedProjects" aria-label="Close saved projects">✕</button></div><div class="saved-project-list" id="savedProjectsList"><div class="saved-project-empty">Loading saved projects…</div></div><p class="autosave-indicator" id="savedProjectsStatus" aria-live="polite">Autosave keeps the current project up to date.</p></div></div>
 <div class="preset-overlay" id="savedModelsOverlay" role="dialog" aria-modal="true" aria-labelledby="savedModelsTitle"><div class="preset-dialog" style="width:min(650px,100%)"><div class="preset-head"><div><h2 id="savedModelsTitle">Saved Models</h2><p class="note">Save a selected object to keep a reusable copy in your model library. Rename saved copies here, or add a saved copy back into the scene.</p></div><button id="closeSavedModels" aria-label="Close saved models">✕</button></div><div id="savedModelsList" class="saved-model-list"></div><p class="preset-foot">Your model library is separate from the current project. Save the project as a JSON file to preserve the scene and reopen it later.</p></div></div>
 <div class="preset-overlay" id="movementOverlay" role="dialog" aria-modal="true" aria-labelledby="movementTitle"><div class="preset-dialog"><div class="preset-head"><div><h2 id="movementTitle">Preset Movements</h2><p class="note">Choose a movement for the selected model. Orange Justice is first so you can test whether your character's rig works with it. Motion is generated from bone names, so results vary by rig and bone orientation.</p></div><button id="closeMovements" aria-label="Close preset movements">✕</button></div><div class="preset-cards"><button class="preset-card" data-movement="orange"><span class="preset-art" style="background:linear-gradient(#3b285d,#e69a48)">🕺 🟠</span><strong>Orange Justice</strong><small>Fast cross-body arm pumps, bent elbows, side-to-side torso sway, and knee bounce.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="walk"><span class="preset-art" style="background:linear-gradient(#203b4c,#5797a8)">🚶</span><strong>Realistic Walk</strong><small>Alternating arm and leg swing with a subtle torso bob.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="dance"><span class="preset-art" style="background:linear-gradient(#40294c,#a25c91)">💃</span><strong>Dance Groove</strong><small>Rhythmic shoulder, arm, hip, and torso movement.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="idle"><span class="preset-art" style="background:linear-gradient(#244a3d,#73a98a)">🌬️</span><strong>Idle / Breathing</strong><small>Gentle torso and shoulder motion for a standing character.</small><span class="choose">Apply movement</span></button></div><p class="preset-foot">Applying a movement replaces existing keyframes on the selected model's bone tracks so you can test the preset cleanly. Use the timeline Play button to preview it. Save a project to keep the result.</p></div></div>
@@ -1317,7 +1314,7 @@ const light=new THREE.DirectionalLight(0xffffff,1.7);light.position.set(7,12,8);
 light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.near=.5;light.shadow.camera.far=120;light.shadow.bias=-.00025;light.shadow.normalBias=.02;scene.add(light);
 const floorMat=new THREE.MeshLambertMaterial({color:'#f4f4f4'}),floor=new THREE.Mesh(new THREE.PlaneGeometry(2000,2000),floorMat);floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;scene.add(floor);
 const grid=new THREE.GridHelper(2000,200,0xc9cdd3,0xe3e6eb);grid.position.y=.002;scene.add(grid);
-const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK',absoluteIKEnabled=false;const absoluteIKAnchors=new Map();const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
+const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK';const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
 // Transform-only keyframe animation. Tracks store plain numbers so they are safe to save as JSON.
 const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let selectedKeyframe=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
 const ikTarget=new THREE.Object3D();scene.add(ikTarget);const fkMoveProxy=new THREE.Object3D();scene.add(fkMoveProxy);let fkMoveLast=new THREE.Vector3();
@@ -1343,11 +1340,11 @@ gizmo.addEventListener('dragging-changed',e=>{controls.enabled=!e.value;if(e.val
 });
 const markerGeo=new THREE.SphereGeometry(1,16,12);
 const boneLineMaterial=new THREE.LineBasicMaterial({color:0x8aa9c8,depthTest:false,transparent:true,opacity:.9});
-function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;absoluteIKAnchors.clear();absoluteIKEnabled=false;if($('absoluteIKMode')){$('absoluteIKMode').disabled=true;$('absoluteIKMode').textContent='Absolute IK Mode (AIKM): Off';$('absoluteIKMode').classList.remove('active')}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
+function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
 function showRigFor(root){clearBoneMarkers();rigRoot=root;const bones=[];root.traverse(o=>{if(o.isBone)bones.push(o)});if(bones.length>2500){const total=bones.length;bones.length=2500;setTimeout(()=>msg('This rig has '+total+' bones. Handles are shown for the first 2500; the animation still uses all of them.'),0)}if(!bones.length){$('rigInfo').textContent='No bones detected. Create a root bone to begin building a rig.';$('addRootBone').disabled=false;$('addChildBone').disabled=true;$('boneBuildInfo').textContent='No skeleton yet. Create a root bone to start.';return}
 const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),diam=Math.max(size.x,size.y,size.z,1),radius=Math.max(.009,Math.min(.052,diam*.0085));rigTrueDiag=Math.max(size.x,size.y,size.z,1e-6);root.updateMatrixWorld(true);rigBaseScale=root.matrixWorld.getMaxScaleOnAxis()||1;
 bones.forEach((bone,i)=>{const outline=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0x252a32,depthTest:false}));outline.scale.setScalar(radius*1.22);outline.renderOrder=998;outline.userData.bone=bone;const ball=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false}));ball.scale.setScalar(radius);ball.renderOrder=999;ball.userData.bone=bone;let line=null;if(bone.parent&&bone.parent.isBone){const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]);line=new THREE.Line(geo,boneLineMaterial);line.renderOrder=997;line.frustumCulled=false;scene.add(line)}scene.add(outline,ball);boneMarkers.push({bone,outline,ball,radius,line});boneRayTargets.push(ball)});
-$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('absoluteIKMode').disabled=false;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
+$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
 
 function topObject(hit){let o=hit;while(o&&o!==scene){if(objects.includes(o))return o;o=o.parent}return null}
 function refresh(){
@@ -1401,7 +1398,7 @@ function selectedMaterials(){const mats=[];if(selected)selected.traverse(o=>{if(
 function syncProps(){syncCameraUI();syncLightUI();enableProps(!!selected);if(!selected)return;$('objName').value=selected.name||'Object';let color='#b9c6d8',rough=.8,metal=0,opacity=1,found=false;selected.traverse(o=>{if(o.isMesh){const m=Array.isArray(o.material)?o.material[0]:o.material;if(m){if(m.color)color='#'+m.color.getHexString();if(!found){rough=Number.isFinite(m.roughness)?m.roughness:rough;metal=Number.isFinite(m.metalness)?m.metalness:metal;opacity=Number.isFinite(m.opacity)?m.opacity:opacity;found=true}}}});$('objColor').value=color;$('matRoughness').value=rough;$('matMetalness').value=metal;$('matOpacity').value=opacity;$('matRoughnessOut').textContent=rough.toFixed(2);$('matMetalnessOut').textContent=metal.toFixed(2);$('matOpacityOut').textContent=opacity.toFixed(2);['x','y','z'].forEach(a=>{$('p'+a).value=selected.position[a].toFixed(2);$('r'+a).value=THREE.Math.radToDeg(selected.rotation[a]).toFixed(1);$('s'+a).value=selected.scale[a].toFixed(2)})}
 function select(o){selected=o;selectedLightNode=null;selectedBone=null;selectedKeyframe=null;if(typeof syncEffectUI==='function'){try{syncEffectUI(o)}catch(effectUiError){console.warn('Effects UI sync skipped:',effectUiError)}}$('addRootBone').disabled=!o;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;if(o&&!multiSelected.has(o)){multiSelected.clear();multiSelected.add(o);}gizmo.detach();if(o){gizmo.attach(o);showRigFor(o)}else clearBoneMarkers();refresh();syncProps();updateBoneMarkers();renderTimeline();syncEditorTools();msg(o?'Selected: '+o.name:'Ready')}
 gizmo.addEventListener('objectChange',()=>{if((selected&&gizmo.object===selected)||(selectedLightNode&&gizmo.object===selectedLightNode))updateCurrentKeyIfPresent()});
-function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;if(absoluteIKEnabled&&rigMode==='IK'){toggleAbsoluteIKAnchor(bone);return;}selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
+function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
 function isBodyRootBone(bone){
   const n=(bone&&bone.name||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   return /^(root|hips?|pelvis|spine[0-9]*|torso|body|armature|skeleton|mixamorighips|mixamorigspine[0-9]*)$/.test(n)||/(pelvis|hips|spine|torso|armature|skeleton)/.test(n);
@@ -1435,35 +1432,6 @@ function setIKTargetToBone(){
   ikTarget.quaternion.identity();ikTarget.scale.set(1,1,1);
   ikMarker.position.copy(ikTarget.position);
 }
-function captureAbsoluteIKAnchor(bone){
- if(!bone||!bone.isBone)return;rigRoot&&rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- absoluteIKAnchors.set(bone,{position:bone.getWorldPosition(new THREE.Vector3()),quaternion:bone.getWorldQuaternion(new THREE.Quaternion())});
-}
-function applyAbsoluteIKAnchors(){
- if(!absoluteIKEnabled||!absoluteIKAnchors.size)return;
- for(const [bone,pose] of absoluteIKAnchors){
-  if(!bone||!bone.parent)continue;
-  bone.parent.updateWorldMatrix(true,false);
-  const parentQ=bone.parent.getWorldQuaternion(new THREE.Quaternion());
-  bone.position.copy(bone.parent.worldToLocal(pose.position.clone()));
-  bone.quaternion.copy(parentQ.invert().multiply(pose.quaternion)).normalize();
-  bone.updateMatrixWorld(true);
- }
-}
-function toggleAbsoluteIKAnchor(bone){
- if(absoluteIKAnchors.has(bone)){absoluteIKAnchors.delete(bone);msg('Released anchor: '+(bone.name||'Unnamed bone'));}
- else{captureAbsoluteIKAnchor(bone);msg('Anchored: '+(bone.name||'Unnamed bone'));}
- updateBoneMarkers();
-}
-function setAbsoluteIKMode(on){
- if(on&&rigMode!=='IK'){msg('Switch to IK Rig before enabling Absolute IK Mode.');return;}
- absoluteIKEnabled=!!on;
- if(!on)absoluteIKAnchors.clear();
- const b=$('absoluteIKMode');if(b){b.textContent='Absolute IK Mode (AIKM): '+(on?'On':'Off');b.classList.toggle('active',on);}
- updateBoneMarkers();
- $('rigInfo').textContent=on?'Absolute IK is active. Click bone handles to anchor or release them. Drag the blue IK target; anchored bones stay fixed.':'IK rig: drag the blue target. Enable Absolute IK Mode to anchor multiple bones in place.';
- msg(on?'Absolute IK Mode enabled — click bones to anchor them.':'Absolute IK Mode disabled.');
-}
 function solveIK(){
   if(!selectedBone||!rigRoot||!ikEffectorBone)return;
   const target=ikTarget.position.clone();
@@ -1483,10 +1451,10 @@ function solveIK(){
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
       joint.quaternion.copy(parentWorldQ.invert().multiply(desiredWorldQ)).normalize();
-      joint.updateMatrixWorld(true);applyAbsoluteIKAnchors();
+      joint.updateMatrixWorld(true);
     }
   }
-  applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
+  rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
 }
 function setBoneTransformMode(mode){if(!selectedBone)return;if(rigMode==='IK'){gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));msg('IK mode uses Move to drag the blue target');return;}if(mode==='translate'){selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);fkMoveProxy.quaternion.identity();fkMoveProxy.scale.set(1,1,1);fkMoveLast.copy(fkMoveProxy.position);gizmo.attach(fkMoveProxy);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='FK Move: moving this joint changes only this bone and its connected descendants; the character root and unrelated limbs stay put.';msg('FK bone move — only this bone and its descendants should move');}else{gizmo.attach(selectedBone);gizmo.setSpace('local');gizmo.setMode(mode);setGizmoSize(mode==='rotate'?1.15:.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));msg(({rotate:'Rotate',scale:'Scale'})[mode]+' selected bone');}}
 function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
@@ -1687,7 +1655,7 @@ $('presetMapsBtn').onclick=()=>$('presetOverlay').classList.add('open');$('close
 ['bg','floorColor','fog','bright','ambient','gridToggle'].forEach(id=>$(id).addEventListener('input',env));
 $('resetEnv').onclick=()=>{$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;env();msg('Environment reset')};
 $('addCube').onclick=addCube;$('delete').onclick=del;$('duplicate').onclick=duplicate;
-$('fkMode').onclick=()=>{setAbsoluteIKMode(false);setRigMode('FK')};$('ikMode').onclick=()=>setRigMode('IK');$('absoluteIKMode').onclick=()=>setAbsoluteIKMode(!absoluteIKEnabled);
+$('fkMode').onclick=()=>setRigMode('FK');$('ikMode').onclick=()=>setRigMode('IK');
 $('showBones').onclick=()=>{showRigBones=true;updateBoneMarkers();msg('Bone handles shown')};
 $('hideBones').onclick=()=>{showRigBones=false;updateBoneMarkers();msg('Bone handles hidden')};
 document.addEventListener('keydown',e=>{
@@ -1825,7 +1793,7 @@ async function autosaveCurrentProject(reason='timer'){
 }
 async function refreshSavedProjects(){const list=$('savedProjectsList');if(!list)return;list.innerHTML='';try{const records=(await listSavedProjects()).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));if(!records.length){list.innerHTML='<div class="saved-project-empty">No saved projects yet. Your current work will appear here after the first autosave.</div>';return}for(const record of records){const card=document.createElement('div');card.className='saved-project-card';const meta=document.createElement('div');meta.className='saved-project-meta';const name=document.createElement('div');name.className='saved-project-name';name.textContent=record.title||'Untitled Project';const sub=document.createElement('div');sub.className='saved-project-sub';const size=Math.max(1,Math.round((record.data||'').length/1024));sub.textContent='Last saved '+prettyProjectDate(record.updatedAt)+' · '+size+' KB'+(record.id===currentSavedProjectId?' · Current project':'');meta.append(name,sub);const actions=document.createElement('div');actions.className='saved-project-actions';const open=document.createElement('button');open.textContent='Open';open.addEventListener('click',()=>openSavedProject(record.id));const rename=document.createElement('button');rename.textContent='Rename';rename.addEventListener('click',()=>renameSavedProject(record.id,record.title||'Untitled Project'));const download=document.createElement('button');download.textContent='Download';download.addEventListener('click',()=>downloadSavedProject(record));const del=document.createElement('button');del.textContent='Delete';del.addEventListener('click',()=>deleteSavedProject(record.id,record.title));actions.append(open,rename,download,del);card.append(meta,actions);list.appendChild(card)}}catch(err){console.error(err);list.innerHTML='<div class="saved-project-empty">Saved Projects could not be opened: '+String(err.message||err).replace(/[<>&]/g,'')+'</div>'}}
 async function openSavedProjects(){await autosaveCurrentProject('open-menu');$('savedProjectsOverlay').classList.add('open');await refreshSavedProjects()}
-async function openSavedProject(id){try{const record=await projectStore('readonly',store=>store.get(id));if(!record||!record.data)throw new Error('That saved project could not be found.');if(objects.length&&!confirm('Open “'+(record.title||'Untitled Project')+'”? Your current work is autosaved first.'))return;await autosaveCurrentProject('before-open');setCurrentProjectIdentity(record.id,record.title);const file=new File([record.data],(record.title||'Prisma Project')+'.json',{type:'application/json'});const transfer=new DataTransfer();transfer.items.add(file);openingStoredProject=true;$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));$('savedProjectsOverlay').classList.remove('open')}catch(err){console.error(err);msg('Could not open saved project: '+(err.message||err))}}
+async function openSavedProject(id){try{const record=await projectStore('readonly',store=>store.get(id));if(!record||!record.data)throw new Error('That saved project could not be found.');if(objects.length&&!confirm('Open “'+(record.title||'Untitled Project')+'”? Your current work is autosaved first.'))return;await autosaveCurrentProject('before-open');setCurrentProjectIdentity(record.id,record.title);const file=new File([record.data],(record.title||'Prisma Project')+'.json',{type:'application/json'});const transfer=new DataTransfer();transfer.items.add(file);openingStoredProject=true;$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));$('savedProjectsOverlay').classList.remove('open');$('projectMenuOverlay').classList.remove('open')}catch(err){console.error(err);msg('Could not open saved project: '+(err.message||err))}}
 async function renameSavedProject(id,oldTitle){const next=prompt('Enter a new project name:',oldTitle);if(next===null)return;const title=next.trim();if(!title){msg('Project name cannot be empty.');return}try{const record=await projectStore('readonly',store=>store.get(id));if(!record)throw new Error('Project not found');record.title=title;record.updatedAt=Date.now();await projectStore('readwrite',store=>store.put(record));if(id===currentSavedProjectId)setCurrentProjectIdentity(id,title);await refreshSavedProjects();msg('Project renamed to '+title)}catch(err){msg('Could not rename project: '+(err.message||err))}}
 async function deleteSavedProject(id,title){if(id===currentSavedProjectId){msg('This project is currently open. Start a new project first, then delete this saved copy.');return}if(!confirm('Delete “'+(title||'Untitled Project')+'”? This cannot be undone.'))return;try{await projectStore('readwrite',store=>store.delete(id));await refreshSavedProjects();msg('Saved project deleted.')}catch(err){msg('Could not delete project: '+(err.message||err))}}
 function downloadSavedProject(record){try{const blob=new Blob([record.data],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=(record.title||'Prisma3D-Lite-Project').replace(/[^a-z0-9_-]+/gi,'_')+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}catch(err){msg('Could not download backup: '+(err.message||err))}}
@@ -1836,26 +1804,12 @@ setTimeout(restoreOrStartAutosave,2500);
 setInterval(()=>{if(!document.hidden)autosaveCurrentProject('timer')},12000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')autosaveCurrentProject('hidden')});
 window.addEventListener('pagehide',()=>{autosaveCurrentProject('pagehide')});
-function openProjectMenu(){window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}
-function closeProjectMenu(){const m=$('p3dlMainMenu');if(m){m.classList.add('p3dl-menu-exit');setTimeout(()=>{m.style.display='none'},950)}}
-$('backToMainMenu').addEventListener('click',async()=>{try{await autosaveCurrentProject('before-main-menu')}catch(e){console.warn('Autosave before returning to menu failed',e)}if(window.p3dlShowMainMenu)window.p3dlShowMainMenu()});
-$('closeSavedProjects').onclick=()=>{$('savedProjectsOverlay').classList.remove('open');if(window.p3dlSavedProjectsReturnToMenu){window.p3dlSavedProjectsReturnToMenu=false;window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}};$('savedProjectsOverlay').addEventListener('click',e=>{if(e.target===$('savedProjectsOverlay')){$('savedProjectsOverlay').classList.remove('open');if(window.p3dlSavedProjectsReturnToMenu){window.p3dlSavedProjectsReturnToMenu=false;window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}}});
+function openProjectMenu(){$('projectMenuOverlay').classList.add('open')}
+function closeProjectMenu(){$('projectMenuOverlay').classList.remove('open')}
+$('projectMenuBtn').onclick=openProjectMenu;$('closeProjectMenu').onclick=closeProjectMenu;$('menuContinue').onclick=closeProjectMenu;$('menuSaveProject').onclick=downloadCurrentProject;$('menuSavedProjects').onclick=openSavedProjects;$('closeSavedProjects').onclick=()=>$('savedProjectsOverlay').classList.remove('open');$('savedProjectsOverlay').addEventListener('click',e=>{if(e.target===$('savedProjectsOverlay'))$('savedProjectsOverlay').classList.remove('open')});$('menuProjectFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const transfer=new DataTransfer();transfer.items.add(f);$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));closeProjectMenu();e.target.value=''});
 function startNewProject(skipConfirm=false){if(!skipConfirm&&objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;multiSelected.clear();selected=null;selectedBone=null;selectedAttachmentBone=null;animationTracks.clear();selectedKeyframe=null;timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}camera.position.set(7,6,9);controls.target.set(0,1,0);camera.up.set(0,1,0);camera.fov=50;camera.updateProjectionMatrix();controls.update();dustOn=false;dustPoints.visible=false;$('dustToggle').textContent='Dust FX: Off';$('dustToggle').classList.remove('active');$('dustToggle').setAttribute('aria-pressed','false');$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;$('keyLight').value='1.7';$('lightColor').value='#ffffff';$('lightX').value='7';$('lightY').value='12';$('lightZ').value='8';env();updateKeyLight();select(null);refresh();syncProps();syncTimelineTimeUI();renderTimeline();closeProjectMenu();setCurrentProjectIdentity(makeProjectId(),'Untitled Project');autosaveCurrentProject('new-project');msg('New blank project started. Your Saved Models library is still available.')}
-// Public bridge for the main-menu script. Scene data stays private to this editor IIFE.
-window.p3dlMainMenuApi={
- async startNewProject(){
-  if(objects.length&&!confirm('Start a new project? Your current project will be saved in Saved Projects. Your Saved Models library will not be deleted.'))return false;
-  const saved=await autosaveCurrentProject('before-new-project');
-  if(!saved){msg('Your current project could not be saved, so New Project was cancelled to protect your work. Check the Autosave status and try again.');return false;}
-  startNewProject(true);
-  return true;
- },
- openSavedProjects,
- openProjectMenu,
- downloadCurrentProject,
- async openProjectFile(file){if(!file)return false;const transfer=new DataTransfer();transfer.items.add(file);$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));return true},
- async continueEditing(){const saved=await autosaveCurrentProject('continue-editing');return saved!==false}
-};
+$('menuNewProject').onclick=startNewProject;
+$('projectMenuOverlay').addEventListener('click',e=>{if(e.target===$('projectMenuOverlay'))closeProjectMenu()});
 function updateDustBounds(){if(selected){const b=new THREE.Box3().setFromObject(selected);if(!b.isEmpty()){dustCenter.copy(b.getCenter(new THREE.Vector3()));dustRadius=Math.max(1.2,Math.min(5,b.getSize(new THREE.Vector3()).length()*.65));}}else{dustCenter.copy(controls.target);dustRadius=2.6;}for(let i=0;i<DUST_COUNT;i++){dustPositions[i*3]=(Math.random()-.5)*dustRadius*2;dustPositions[i*3+1]=Math.random()*dustRadius*1.8;dustPositions[i*3+2]=(Math.random()-.5)*dustRadius*2;}dustGeometry.attributes.position.needsUpdate=true;}
 $('dustToggle').onclick=()=>{dustOn=!dustOn;dustPoints.visible=dustOn;$('dustToggle').textContent=dustOn?'Dust FX: On':'Dust FX: Off';$('dustToggle').classList.toggle('active',dustOn);$('dustToggle').setAttribute('aria-pressed',String(dustOn));if(dustOn){updateDustBounds();msg('Dust particles enabled — click Dust FX again to turn them off')}else msg('Dust particles disabled')};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{if(selectedBone){setBoneTransformMode(b.dataset.mode);return;}gizmo.setMode(b.dataset.mode);setGizmoSize(b.dataset.mode==='rotate'?1.15:.68);document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));msg(b.textContent.replace(/ \([MRS]\)/,'')+' mode — drag the smaller handles on the selected object')});
@@ -2232,11 +2186,11 @@ function updateBoneMarkers(){
   _bmP.setFromMatrixPosition(m.bone.matrixWorld);m.ball.position.copy(_bmP);m.outline.position.copy(_bmP);
   m.radius=boneRadius(_bmC.distanceTo(_bmP),vc.fov,stage.clientHeight,diag,BONE_PX,boneSizeMul);
   if(m.line&&m.bone.parent&&m.bone.parent.isBone){_bmQ.setFromMatrixPosition(m.bone.parent.matrixWorld);const a=m.line.geometry.attributes.position;a.setXYZ(0,_bmQ.x,_bmQ.y,_bmQ.z);a.setXYZ(1,_bmP.x,_bmP.y,_bmP.z);a.needsUpdate=true;m.line.visible=showRigBones}
-  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=absoluteIKAnchors.has(m.bone);
-  m.ball.material.color.set(anchored?0x39e6a2:(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff)));
-  m.ball.scale.setScalar(m.radius*(anchored?1.65:(attachFocus?1.9:(poseFocus?1.35:1))));
-  m.outline.scale.setScalar(m.radius*(anchored?2.05:(attachFocus?2.35:1.22)));
-  m.outline.material.color.set(anchored?0x087b58:(attachFocus?0x087f95:0x252a32));
+  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone;
+  m.ball.material.color.set(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff));
+  m.ball.scale.setScalar(m.radius*(attachFocus?1.9:(poseFocus?1.35:1)));
+  m.outline.scale.setScalar(m.radius*(attachFocus?2.35:1.22));
+  m.outline.material.color.set(attachFocus?0x087f95:0x252a32);
   m.ball.visible=showRigBones;m.outline.visible=showRigBones;
  }
 }
@@ -2546,24 +2500,9 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
    window.removeEventListener('pointerdown',unlockAndStart,true);window.removeEventListener('keydown',unlockAndStart,true);
  }
  function exitMenu(){menu.classList.add('p3dl-menu-exit');setTimeout(()=>{menu.style.display='none';},950)}
- window.p3dlShowMainMenu=function(){menu.style.display='flex';menu.classList.remove('p3dl-menu-exit');menu.classList.add('character-arrive','menu-reveal');if(audioEnabled&&music&&music.paused)rampIn(music)};
- $('p3dlMenuNew').addEventListener('click',async()=>{
-   const api=window.p3dlMainMenuApi;
-   if(!api||typeof api.startNewProject!=='function'){console.error('Prisma 3D Lite editor actions are not ready yet.');return;}
-   try{const started=await api.startNewProject();if(started)exitMenu();}
-   catch(err){console.error('Could not start a new project from the main menu:',err);const status=document.getElementById('status');if(status)status.textContent='Could not start a new project: '+(err.message||err);}
- });
- $('p3dlMenuSaved').addEventListener('click',async()=>{
-   const api=window.p3dlMainMenuApi;if(!api||typeof api.openSavedProjects!=='function'){console.error('Saved Projects is not ready yet.');return;}
-   window.p3dlSavedProjectsReturnToMenu=true;exitMenu();try{await api.openSavedProjects();}catch(err){window.p3dlSavedProjectsReturnToMenu=false;console.error('Could not open Saved Projects:',err);}
- });
- $('p3dlMenuOpen').addEventListener('click',()=>{$('p3dlMenuProjectFile').click()});
- $('p3dlMenuProjectFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;const api=window.p3dlMainMenuApi;if(!api||typeof api.openProjectFile!=='function'){console.error('Project loading is not ready yet.');return;}try{await api.openProjectFile(file);exitMenu()}catch(err){console.error('Could not open project:',err)}finally{e.target.value=''}});
- $('p3dlMenuDownload').addEventListener('click',()=>{const api=window.p3dlMainMenuApi;if(api&&typeof api.downloadCurrentProject==='function'){api.downloadCurrentProject();}else console.error('Project download is not ready yet.')});
- $('p3dlMenuContinue').addEventListener('click',async()=>{const api=window.p3dlMainMenuApi;try{if(api&&api.continueEditing)await api.continueEditing();exitMenu()}catch(err){console.error('Could not continue editing:',err)}});
- $('p3dlMenuSettings').addEventListener('click',()=>{
-   exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(window.p3dlMainMenuApi&&window.p3dlMainMenuApi.openProjectMenu)window.p3dlMainMenuApi.openProjectMenu();
- });
+ $('p3dlMenuNew').addEventListener('click',()=>{if(objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;exitMenu();if(typeof startNewProject==='function')startNewProject(true);else if(typeof closeProjectMenu==='function')closeProjectMenu()});
+ $('p3dlMenuSaved').addEventListener('click',()=>{exitMenu();if(typeof openSavedProjects==='function')openSavedProjects();else if(typeof openProjectMenu==='function')openProjectMenu()});
+ $('p3dlMenuSettings').addEventListener('click',()=>{exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(typeof openProjectMenu==='function')openProjectMenu()});
  $('p3dlMenuTutorials').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.add('open')});
  $('p3dlTutorialClose').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.remove('open')});
  $('p3dlTutorialOverlay').addEventListener('click',e=>{if(e.target===$('p3dlTutorialOverlay'))$('p3dlTutorialOverlay').classList.remove('open')});
@@ -2604,36 +2543,24 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
   <div class="p3dl-store-tools"><input id="p3dlStoreSearch" class="p3dl-store-search" type="search" placeholder="Search models and creators…" aria-label="Search marketplace"><button id="p3dlStoreUpload" class="p3dl-store-action" type="button">＋ Upload a Model</button><button id="p3dlStoreAccount" class="p3dl-store-action" type="button">My Account</button></div>
 
   <section id="p3dlSupabaseSetup" class="p3dl-store-info open" style="display:block;margin:18px 0;padding:18px">
-    <h2 style="margin:0 0 8px">Marketplace connection</h2>
-    <p style="margin:0 0 8px;color:#b9c7d8">Prisma 3D Lite connects automatically to the shared Marketplace service. Visitors do not need to enter Supabase settings.</p>
-    <p id="p3dlSupabaseStatus" role="status" aria-live="polite" style="margin:12px 0 0;color:#b9c7d8">Checking Marketplace connection…</p>
-  </section>
-  <section id="p3dlAccountPanel" class="p3dl-store-info" style="display:none;margin:18px 0;padding:18px" aria-label="Marketplace account">
-    <h2 style="margin:0 0 8px">Your Creator Account</h2>
-    <p id="p3dlAccountMessage" role="status" aria-live="polite" style="margin:0 0 14px;color:#b9c7d8">Connect your Supabase project above to create an account or sign in.</p>
-    <div id="p3dlAccountForm">
-      <label for="p3dlAccountEmail" style="display:block;margin:10px 0 5px;font-weight:700">Email address</label>
-      <input id="p3dlAccountEmail" type="email" autocomplete="email" placeholder="you@example.com" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
-      <label for="p3dlAccountPassword" style="display:block;margin:12px 0 5px;font-weight:700">Password</label>
-      <input id="p3dlAccountPassword" type="password" autocomplete="current-password" placeholder="Enter your password" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-        <button id="p3dlAccountSignUp" class="p3dl-store-action" type="button">Create Account</button>
-        <button id="p3dlAccountSignIn" class="p3dl-store-back" type="button">Log In</button>
-      </div>
-      <p style="margin:12px 0 0;color:#91a4ba;font-size:13px;line-height:1.5">Supabase may send a confirmation email before you can log in. Your password is handled by Supabase Auth and is not saved in this app.</p>
+    <h2 style="margin:0 0 8px">Connect your Supabase project</h2>
+    <p style="margin:0 0 14px;color:#b9c7d8">Enter your Project URL and Publishable key here. This setup uses only the browser-safe publishable key. Never enter a secret key or database password.</p>
+    <label for="p3dlSupabaseUrl" style="display:block;margin:10px 0 5px;font-weight:700">Project URL</label>
+    <input id="p3dlSupabaseUrl" type="url" autocomplete="url" placeholder="https://your-project.supabase.co" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+    <label for="p3dlSupabasePublishable" style="display:block;margin:12px 0 5px;font-weight:700">Publishable key</label>
+    <input id="p3dlSupabasePublishable" type="password" autocomplete="off" placeholder="sb_publishable_..." style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+      <button id="p3dlSupabaseConnect" class="p3dl-store-action" type="button">Save & Test Connection</button>
+      <button id="p3dlSupabaseClear" class="p3dl-store-back" type="button">Clear saved settings</button>
     </div>
-    <div id="p3dlAccountSignedIn" style="display:none">
-      <p id="p3dlAccountEmailLabel" style="color:#dffff0;overflow-wrap:anywhere"></p>
-      <button id="p3dlAccountSignOut" class="p3dl-store-back" type="button">Sign Out</button>
-    </div>
+    <p id="p3dlSupabaseStatus" role="status" aria-live="polite" style="margin:12px 0 0;color:#b9c7d8">Not connected yet.</p>
   </section>
   <nav class="p3dl-store-tabs" aria-label="Marketplace categories"><button class="p3dl-store-tab active" type="button">All Models</button><button class="p3dl-store-tab" type="button">Characters</button><button class="p3dl-store-tab" type="button">Maps & Environments</button><button class="p3dl-store-tab" type="button">Props</button><button class="p3dl-store-tab" type="button">Rigs</button></nav>
-  <div class="p3dl-store-empty"><div class="symbol">◇</div><h2>The Marketplace is being connected</h2><p>The Store screen is ready. Community listings and model uploads are the next development stage. Sign-in uses the shared Marketplace service configured by the site owner. No sample listings are shown as real community content.</p><button id="p3dlStoreSetupInfo" class="p3dl-store-action" type="button">What needs to be connected?</button><div id="p3dlStoreInfo" class="p3dl-store-info">The app uses one shared Supabase project. Each visitor creates their own account; they do not need their own Project URL or API key. The site owner must only place a browser-safe sb_publishable_ key in the app configuration. Never use a sb_secret_ key or database password.</div></div>
+  <div class="p3dl-store-empty"><div class="symbol">◇</div><h2>The Marketplace is being connected</h2><p>The Store screen is ready, but community listings, accounts, uploads, comments, and downloads will appear after we connect this app to your Supabase project. No sample listings are shown as real community content.</p><button id="p3dlStoreSetupInfo" class="p3dl-store-action" type="button">What needs to be connected?</button><div id="p3dlStoreInfo" class="p3dl-store-info">Next, we'll connect Prisma 3D Lite using your Supabase project URL and publishable (anon) key, then build sign-in and model browsing/upload. Never put your database password or service_role secret in this HTML file or share it here.</div></div>
   <div class="p3dl-store-status">PRISMA 3D LITE · COMMUNITY MARKETPLACE · EARLY DEVELOPMENT</div>
  </div>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- SITE OWNER SETUP: In the script below, replace PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE with your Supabase key beginning sb_publishable_. Do this once before uploading to GitHub Pages. This publishable key is designed to be visible in browser code. Never insert a sb_secret_ key or database password. -->
 <script id="p3dl-marketplace-script">
 (()=>{
  const store=document.getElementById('p3dlMarketplace'),openBtn=document.getElementById('p3dlOpenStore'),backBtn=document.getElementById('p3dlBackToEditor');
@@ -2645,96 +2572,48 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
  function closeStore(){store.classList.remove('open');store.setAttribute('aria-hidden','true');window.p3dlStoreOpen=false;syncButton();}
  openBtn.addEventListener('click',openStore);backBtn.addEventListener('click',closeStore);
  document.getElementById('p3dlStoreSetupInfo').addEventListener('click',()=>document.getElementById('p3dlStoreInfo').classList.toggle('open'));
- document.getElementById('p3dlStoreUpload').addEventListener('click',()=>{const info=document.getElementById('p3dlStoreInfo');info.classList.add('open');info.scrollIntoView({behavior:'smooth',block:'center'});});
- const accountPanel=document.getElementById('p3dlAccountPanel');
- document.getElementById('p3dlStoreAccount').addEventListener('click',()=>{accountPanel.style.display=accountPanel.style.display==='none'?'block':'none';accountPanel.scrollIntoView({behavior:'smooth',block:'center'});});
+ for(const id of ['p3dlStoreUpload','p3dlStoreAccount'])document.getElementById(id).addEventListener('click',()=>{const info=document.getElementById('p3dlStoreInfo');info.classList.add('open');info.scrollIntoView({behavior:'smooth',block:'center'});});
  document.querySelectorAll('.p3dl-store-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.p3dl-store-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');}));
  const observer=new MutationObserver(syncButton);if(menu)observer.observe(menu,{attributes:true,attributeFilter:['style','class']});
  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&store.classList.contains('open'))closeStore();});
 
- // Shared public Supabase configuration.
- // Replace the placeholder below ONCE before publishing this HTML on GitHub Pages.
- // A sb_publishable_ key is intended for browser use; NEVER use a sb_secret_ key here.
- const P3DL_SUPABASE_URL = 'https://xowaavkdccjsabiyouxp.supabase.co';
- const P3DL_SUPABASE_PUBLISHABLE_KEY = 'PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE';
+ // Supabase connection setup: only the Project URL and browser-safe publishable key are accepted.
+ const urlInput=document.getElementById('p3dlSupabaseUrl');
+ const keyInput=document.getElementById('p3dlSupabasePublishable');
+ const connectBtn=document.getElementById('p3dlSupabaseConnect');
+ const clearBtn=document.getElementById('p3dlSupabaseClear');
  const statusEl=document.getElementById('p3dlSupabaseStatus');
+ const configStoreKey='p3dl_supabase_public_config_v1';
  function setConnectionStatus(message,good=false){if(statusEl){statusEl.textContent=message;statusEl.style.color=good?'#6ee7a8':'#ffd18a';}}
- function supabaseConfigIsReady(){
-   return /^https:\/\/[a-zA-Z0-9-]+\.supabase\.co$/.test(P3DL_SUPABASE_URL)
-     && P3DL_SUPABASE_PUBLISHABLE_KEY.startsWith('sb_publishable_');
+ function readSavedConfig(){
+   try{return JSON.parse(localStorage.getItem(configStoreKey)||'null');}catch(e){return null;}
  }
- if(!supabaseConfigIsReady()){
-   setConnectionStatus('Marketplace setup is incomplete. The site owner needs to add the Supabase Publishable key to the app configuration before visitors can sign in.',false);
- }else if(!window.supabase || typeof window.supabase.createClient!=='function'){
-   setConnectionStatus('Could not load the Supabase library. Check the internet connection and reload the app.',false);
- }else{
+ const savedConfig=readSavedConfig();
+ if(savedConfig&&urlInput&&keyInput){urlInput.value=savedConfig.url||'';keyInput.value=savedConfig.key||'';keyInput.type='password';setConnectionStatus('Saved settings found. Press “Save & Test Connection” to verify them.');}
+ if(connectBtn)connectBtn.addEventListener('click',async()=>{
+   const projectUrl=(urlInput?.value||'').trim().replace(/\/+$/,'');
+   const publishableKey=(keyInput?.value||'').trim();
+   if(!/^https:\/\/[a-zA-Z0-9-]+\.supabase\.co$/.test(projectUrl)){setConnectionStatus('Please enter the Project URL from Supabase. It should look like https://your-project.supabase.co');return;}
+   if(!publishableKey.startsWith('sb_publishable_')){setConnectionStatus('That does not look like a new Supabase Publishable key. Use the key beginning sb_publishable_. Do not use a secret key.');return;}
+   if(!window.supabase||typeof window.supabase.createClient!=='function'){setConnectionStatus('The Supabase library did not load. Check your internet connection, then reload this page.');return;}
+   connectBtn.disabled=true;connectBtn.textContent='Testing…';setConnectionStatus('Contacting Supabase…');
    try{
-     window.p3dlSupabase=window.supabase.createClient(P3DL_SUPABASE_URL,P3DL_SUPABASE_PUBLISHABLE_KEY);
-     setConnectionStatus('Supabase client initialized. Checking access to the Marketplace…',true);
-     window.p3dlSupabase.from('profiles').select('id').limit(1).then(({error})=>{
-       if(error){console.error('Marketplace profile check failed:',error);setConnectionStatus('Supabase is configured, but the profiles table check failed: '+error.message,false);}
-       else setConnectionStatus('Marketplace connected. You can create an account or log in.',true);
-     }).catch(err=>{console.error('Marketplace connection check failed:',err);setConnectionStatus('Could not reach the Marketplace database. Check the connection and reload.',false);});
+     const client=window.supabase.createClient(projectUrl,publishableKey);
+     const {error}=await client.from('profiles').select('id').limit(1);
+     if(error)throw error;
+     localStorage.setItem(configStoreKey,JSON.stringify({url:projectUrl,key:publishableKey}));
+     window.p3dlSupabase=client;
+     setConnectionStatus('Connection successful! Prisma 3D Lite can reach your Supabase profiles table. Your settings are saved in this browser.',true);
    }catch(err){
-     console.error('Supabase initialization failed:',err);
-     setConnectionStatus('Supabase could not start: '+(err.message||'unknown error'),false);
-   }
- }
-
- // Supabase Auth: email/password registration, sign-in, and sign-out.
- const accountMessage=document.getElementById('p3dlAccountMessage');
- const accountForm=document.getElementById('p3dlAccountForm');
- const accountSignedIn=document.getElementById('p3dlAccountSignedIn');
- const accountEmail=document.getElementById('p3dlAccountEmail');
- const accountPassword=document.getElementById('p3dlAccountPassword');
- const accountEmailLabel=document.getElementById('p3dlAccountEmailLabel');
- const signUpBtn=document.getElementById('p3dlAccountSignUp');
- const signInBtn=document.getElementById('p3dlAccountSignIn');
- const signOutBtn=document.getElementById('p3dlAccountSignOut');
- function setAccountMessage(message,good=false){if(accountMessage){accountMessage.textContent=message;accountMessage.style.color=good?'#6ee7a8':'#ffd18a';}}
- function setAccountBusy(busy){[signUpBtn,signInBtn,signOutBtn].forEach(b=>{if(b)b.disabled=busy;});}
- function renderAccountSession(session){
-   const user=session&&session.user;
-   accountForm.style.display=user?'none':'block';
-   accountSignedIn.style.display=user?'block':'none';
-   if(user){accountEmailLabel.textContent='Signed in as '+(user.email||'your account');setAccountMessage('You are signed in. Your creator profile is linked to this account.',true);}
-   else if(!window.p3dlSupabase){setAccountMessage('The Marketplace is not configured yet. Please try again later.');}
-   else{setAccountMessage('You are not signed in. Create an account or log in.');}
- }
- async function getAuthClient(){
-   if(window.p3dlSupabase)return window.p3dlSupabase;
-   throw new Error('The Marketplace connection is not configured. Please try again later.');
- }
- async function runAuthAction(action){
-   const email=(accountEmail.value||'').trim();
-   const password=accountPassword.value||'';
-   if(!email||!accountEmail.checkValidity()){setAccountMessage('Enter a valid email address.');accountEmail.focus();return;}
-   if(!password){setAccountMessage('Enter your password.');accountPassword.focus();return;}
-   setAccountBusy(true);setAccountMessage(action==='signup'?'Creating your account…':'Logging in…');
-   try{
-     const client=await getAuthClient();
-     if(action==='signup'){
-       const {data,error}=await client.auth.signUp({email,password});
-       if(error)throw error;
-       if(data&&data.session){renderAccountSession(data.session);accountPassword.value='';}
-       else{setAccountMessage('Account request received. Check your email for a confirmation link, then return here and log in.',true);accountPassword.value='';}
-     }else{
-       const {data,error}=await client.auth.signInWithPassword({email,password});
-       if(error)throw error;
-       renderAccountSession(data.session);accountPassword.value='';
-     }
-   }catch(err){setAccountMessage((err&&err.message)?err.message:'Account action failed. Please try again.');}
-   finally{setAccountBusy(false);}
- }
- signUpBtn.addEventListener('click',()=>runAuthAction('signup'));
- signInBtn.addEventListener('click',()=>runAuthAction('signin'));
- signOutBtn.addEventListener('click',async()=>{
-   setAccountBusy(true);setAccountMessage('Signing out…');
-   try{const client=await getAuthClient();const {error}=await client.auth.signOut();if(error)throw error;accountPassword.value='';renderAccountSession(null);}
-   catch(err){setAccountMessage((err&&err.message)?err.message:'Could not sign out. Please try again.');}
-   finally{setAccountBusy(false);}
+     const msg=(err&&err.message)?err.message:String(err);
+     setConnectionStatus('Connection test failed: '+msg+' Check the URL/key and confirm the profiles table and its read policy exist.');
+   }finally{connectBtn.disabled=false;connectBtn.textContent='Save & Test Connection';}
  });
- (async()=>{try{const client=await getAuthClient();const {data,error}=await client.auth.getSession();if(error)throw error;renderAccountSession(data.session);client.auth.onAuthStateChange((_event,session)=>renderAccountSession(session));}catch(err){renderAccountSession(null);if(err&&err.message)setAccountMessage(err.message);}})();
+ if(clearBtn)clearBtn.addEventListener('click',()=>{
+   try{localStorage.removeItem(configStoreKey);}catch(e){}
+   if(urlInput)urlInput.value='';if(keyInput)keyInput.value='';
+   window.p3dlSupabase=null;setConnectionStatus('Saved browser settings cleared.');
+ });
 
  syncButton();setTimeout(syncButton,1100);
 })();
