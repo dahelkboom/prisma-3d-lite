@@ -112,6 +112,24 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 #unparentObjectsButton{background:#303943;border-color:#667585}
 
 .tl-key.auto-x{background:#ff5555!important;box-shadow:0 0 4px 1px #ff555566}.tl-key.auto-y{background:#42d17a!important;box-shadow:0 0 4px 1px #42d17a66}.tl-key.auto-z{background:#4d9cff!important;box-shadow:0 0 4px 1px #4d9cff66}.tl-key.auto-x.active,.tl-key.auto-y.active,.tl-key.auto-z.active{background:#fff!important;outline:2px solid currentColor;box-shadow:0 0 5px 2px currentColor}
+
+/* Touch-first Auto Rotate access and controls */
+#autoRotateQuickAccess{display:none;position:absolute;z-index:8;left:12px;bottom:14px;min-height:46px;padding:10px 16px;border:1px solid #91bfff;border-radius:999px;background:#244d78;color:#fff;font-weight:750;box-shadow:0 4px 18px #0008;touch-action:manipulation}
+#autoRotateQuickAccess:active{transform:scale(.97);background:#32699e}
+#tlAutoTools.auto-tools-focus{outline:3px solid #8fc5ff;box-shadow:0 0 0 5px #4b9be544}
+@media(max-width:800px){
+ #autoRotateQuickAccess{display:block}
+ .tl-auto-tools{gap:9px;padding:12px;align-items:center}
+ .tl-auto-tools button{min-height:44px;min-width:48px;padding:10px 13px;font-size:14px;touch-action:manipulation}
+ .tl-auto-tools #tlAutoMode{flex:1 1 100%;font-weight:750;background:#28527b;border-color:#7fb8f4}
+ .tl-auto-tools #tlAutoMode.active{background:#176b50;border-color:#75dfae}
+ .tl-auto-tools .auto-label{font-size:12px;font-weight:650}
+ .tl-auto-tools input[type=range]{width:100%;min-width:140px;flex:1 1 150px;height:32px;touch-action:pan-x}
+ .tl-auto-tools output{font-size:13px;min-width:62px}
+ .tl-auto-tools .tl-auto-legend{flex:1 1 100%;margin-left:0;font-size:12px}
+ .tl-auto-tools #tlAutoDirection{flex:1 1 100%;min-height:44px}
+ .tl-controls button{min-height:40px}
+}
 </style>
 <style>
 #busyOverlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(8,10,14,.74);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
@@ -263,13 +281,6 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 @media(prefers-reduced-motion:reduce){.p3dl-character-placeholder,.p3dl-figure-head{animation:none!important}#p3dlMainMenu *{transition-duration:.01ms!important}}
 </style>
 
-
-<style id="auto-rotate-launcher-styles">
-#stageAutoRotateLauncher{position:absolute;left:12px;bottom:12px;z-index:25;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 14px;border:1px solid #6d9fd6;border-radius:8px;background:#172b43eF;color:#f2f7ff;font-weight:700;box-shadow:0 4px 16px #0007;cursor:pointer;touch-action:manipulation}
-#stageAutoRotateLauncher:hover{background:#244b73;border-color:#a7ceff}
-#stageAutoRotateLauncher:focus-visible{outline:3px solid #b7dcff;outline-offset:2px}
-@media(max-width:760px){#stageAutoRotateLauncher{left:9px;bottom:9px;min-height:44px;padding:11px 14px;font-size:13px}.timeline.auto-rotate-focus{max-height:75dvh;overflow-y:auto;overscroll-behavior:contain}}
-</style>
 </head><body>
 
 <div id="p3dlMainMenu" aria-label="Prisma 3D Lite main menu">
@@ -410,14 +421,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="absoluteIKMode" class="wide" disabled>Absolute IK Mode (AIKM): Off</button><button id="absoluteIKPinSelected" class="wide" disabled>Pin Selected Bone</button><p class="note">With AIKM on, select a bone to make it the active IK target, then use Pin Selected Bone to lock or release it. Pinned bones stay fixed in world space while the rest of the connected rig continues moving.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
 <main class="main"><div class="toolbar">
 <button id="move" class="active" data-mode="translate">Move (M)</button><button id="rotate" data-mode="rotate">Rotate (R)</button><button id="scale" data-mode="scale">Scale (S)</button><button id="saveModelBtn" disabled>Save Model</button><button id="savedModelsBtn">Saved Models</button><button id="dustToggle" aria-pressed="false">Dust FX: Off</button><button id="presetMapsBtn">Preset Maps</button><button id="resetCam">Reset camera</button><button id="mobileTimelineBtn" type="button" aria-expanded="false">Timeline ▾</button><span class="spacer"></span><span class="note">Left-drag orbit · Right-drag pan · Wheel zoom · Larger rotation rings for finer posing</span>
 </div>
-<div class="stage" id="stage"><button id="stageAutoRotateLauncher" type="button" aria-controls="tlAutoTools" aria-expanded="false" title="Open Auto Rotate controls">⟳ Auto Rotate</button><div id="performancePanel" aria-live="polite"><strong>Live Performance</strong><div class="performance-grid"><span>FPS</span><b id="perfFps">—</b><span>Frame time</span><b id="perfFrame">—</b><span>Draw calls</span><b id="perfCalls">—</b><span>Triangles</span><b id="perfTriangles">—</b><span>Model meshes</span><b id="perfMeshes">—</b><span>Geometries / textures</span><b id="perfResources">—</b><span>Geometry buffers</span><b id="perfGeoMb">—</b></div><div class="performance-foot" id="perfHint">Renderer counters update while the scene runs.</div></div><div class="hint">Perspective · 3D scene</div><div class="hint bottom">Click object or bone to select<br>M = Move · R = Rotate · S = Scale<br>F = FK rig · I = IK rig · D = Delete</div></div>
+<div class="stage" id="stage"><button id="autoRotateQuickAccess" type="button" aria-label="Open Auto Rotate controls">⟳ Auto Rotate</button><div id="performancePanel" aria-live="polite"><strong>Live Performance</strong><div class="performance-grid"><span>FPS</span><b id="perfFps">—</b><span>Frame time</span><b id="perfFrame">—</b><span>Draw calls</span><b id="perfCalls">—</b><span>Triangles</span><b id="perfTriangles">—</b><span>Model meshes</span><b id="perfMeshes">—</b><span>Geometries / textures</span><b id="perfResources">—</b><span>Geometry buffers</span><b id="perfGeoMb">—</b></div><div class="performance-foot" id="perfHint">Renderer counters update while the scene runs.</div></div><div class="hint">Perspective · 3D scene</div><div class="hint bottom">Click object or bone to select<br>M = Move · R = Rotate · S = Scale<br>F = FK rig · I = IK rig · D = Delete</div></div>
 <div class="preset-overlay" id="presetOverlay" role="dialog" aria-modal="true" aria-labelledby="presetTitle">
  <div class="preset-dialog"><div class="preset-head"><div><h2 id="presetTitle">Welcome to Preset Maps!</h2><p class="note">Choose a ready-made environment to add variety to your scene. You can make your own maps, too — these are just starting points.</p></div><button id="closePresetMaps" aria-label="Close preset maps">✕</button></div>
  <div class="section" style="margin-top:16px;padding:14px;border:1px solid #485465;border-radius:10px;background:#1a2029">
@@ -1328,7 +1339,7 @@ const light=new THREE.DirectionalLight(0xffffff,1.7);light.position.set(7,12,8);
 light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.near=.5;light.shadow.camera.far=120;light.shadow.bias=-.00025;light.shadow.normalBias=.02;scene.add(light);
 const floorMat=new THREE.MeshLambertMaterial({color:'#f4f4f4'}),floor=new THREE.Mesh(new THREE.PlaneGeometry(2000,2000),floorMat);floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;scene.add(floor);
 const grid=new THREE.GridHelper(2000,200,0xc9cdd3,0xe3e6eb);grid.position.y=.002;scene.add(grid);
-const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK';const floorContactBones=new Set();let floorContactSelectMode=false;const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
+const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK',absoluteIKEnabled=false;const absoluteIKAnchors=new Map();const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
 // Transform-only keyframe animation. Tracks store plain numbers so they are safe to save as JSON.
 const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let autoRotateMode=false,autoRotateAxis="x",autoRotateSpeed=.5,autoRotateDirection=1;let selectedKeyframe=null;let keyframeClipboard=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
 const ikTarget=new THREE.Object3D();scene.add(ikTarget);const fkMoveProxy=new THREE.Object3D();scene.add(fkMoveProxy);let fkMoveLast=new THREE.Vector3();
@@ -1348,18 +1359,17 @@ function restoreState(st){undoRestoreInProgress=true;for(const x of st.objects){
 function undo(){const st=undoStack.pop();if(!st){msg('Nothing to undo');return}restoreState(st);$('tlUndo').disabled=undoStack.length===0}
 $('tlUndo').disabled=true;$('tlUndo').onclick=undo;
 gizmo.addEventListener('dragging-changed',e=>{controls.enabled=!e.value;if(e.value)pushUndo()});gizmo.addEventListener('change',()=>{
- if(!selectedBone&&rigRoot)solveFloorContacts();
- if(rigMode==='IK'&&selectedBone&&gizmo.object===ikTarget){solveIK();solveFloorContacts();updateCurrentKeyIfPresent();return;}
+ if(rigMode==='IK'&&selectedBone&&gizmo.object===ikTarget){solveIK();updateCurrentKeyIfPresent();return;}
  if(rigMode==='FK'&&selectedBone&&gizmo.object===fkMoveProxy){const world=fkMoveProxy.position.clone();if(selectedBone.parent){selectedBone.parent.updateWorldMatrix(true,false);selectedBone.position.copy(selectedBone.parent.worldToLocal(world));}else selectedBone.position.copy(world);rigRoot&&rigRoot.updateMatrixWorld(true);selectedBone.updateMatrixWorld(true);for(const o of objects){o.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)n.skeleton.update()})}fkMoveLast.copy(fkMoveProxy.position);updateBoneMarkers();updateCurrentKeyIfPresent();return;}
  if(selectedBone){refreshSkinnedMeshes(rigRoot||selected);updateBoneMarkers();updateCurrentKeyIfPresent();}
 });
 const markerGeo=new THREE.SphereGeometry(1,16,12);
 const boneLineMaterial=new THREE.LineBasicMaterial({color:0x8aa9c8,depthTest:false,transparent:true,opacity:.9});
-function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;floorContactBones.clear();floorContactSelectMode=false;if($('floorContactIK')){$('floorContactIK').disabled=true;$('floorContactIK').textContent='Floor Contact IK: Off';$('floorContactIK').classList.remove('active')}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.'}
+function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;absoluteIKAnchors.clear();absoluteIKEnabled=false;if($('absoluteIKMode')){$('absoluteIKMode').disabled=true;$('absoluteIKMode').textContent='Absolute IK Mode (AIKM): Off';$('absoluteIKMode').classList.remove('active')}if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=true;$('absoluteIKPinSelected').textContent='Pin Selected Bone'}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
 function showRigFor(root){clearBoneMarkers();rigRoot=root;const bones=[];root.traverse(o=>{if(o.isBone)bones.push(o)});if(bones.length>2500){const total=bones.length;bones.length=2500;setTimeout(()=>msg('This rig has '+total+' bones. Handles are shown for the first 2500; the animation still uses all of them.'),0)}if(!bones.length){$('rigInfo').textContent='No bones detected. Create a root bone to begin building a rig.';$('addRootBone').disabled=false;$('addChildBone').disabled=true;$('boneBuildInfo').textContent='No skeleton yet. Create a root bone to start.';return}
 const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),diam=Math.max(size.x,size.y,size.z,1),radius=Math.max(.009,Math.min(.052,diam*.0085));rigTrueDiag=Math.max(size.x,size.y,size.z,1e-6);root.updateMatrixWorld(true);rigBaseScale=root.matrixWorld.getMaxScaleOnAxis()||1;
 bones.forEach((bone,i)=>{const outline=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0x252a32,depthTest:false}));outline.scale.setScalar(radius*1.22);outline.renderOrder=998;outline.userData.bone=bone;const ball=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false}));ball.scale.setScalar(radius);ball.renderOrder=999;ball.userData.bone=bone;let line=null;if(bone.parent&&bone.parent.isBone){const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]);line=new THREE.Line(geo,boneLineMaterial);line.renderOrder=997;line.frustumCulled=false;scene.add(line)}scene.add(outline,ball);boneMarkers.push({bone,outline,ball,radius,line});boneRayTargets.push(ball)});
-$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('floorContactIK').disabled=false;$('floorContactIK').textContent='Floor Contact IK: Off';$('floorContactIK').classList.remove('active');$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
+$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('absoluteIKMode').disabled=false;$('absoluteIKPinSelected').disabled=true;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
 
 function topObject(hit){let o=hit;while(o&&o!==scene){if(objects.includes(o))return o;o=o.parent}return null}
 function refresh(){
@@ -1413,7 +1423,7 @@ function selectedMaterials(){const mats=[];if(selected)selected.traverse(o=>{if(
 function syncProps(){syncCameraUI();syncLightUI();enableProps(!!selected);if(!selected)return;$('objName').value=selected.name||'Object';let color='#b9c6d8',rough=.8,metal=0,opacity=1,found=false;selected.traverse(o=>{if(o.isMesh){const m=Array.isArray(o.material)?o.material[0]:o.material;if(m){if(m.color)color='#'+m.color.getHexString();if(!found){rough=Number.isFinite(m.roughness)?m.roughness:rough;metal=Number.isFinite(m.metalness)?m.metalness:metal;opacity=Number.isFinite(m.opacity)?m.opacity:opacity;found=true}}}});$('objColor').value=color;$('matRoughness').value=rough;$('matMetalness').value=metal;$('matOpacity').value=opacity;$('matRoughnessOut').textContent=rough.toFixed(2);$('matMetalnessOut').textContent=metal.toFixed(2);$('matOpacityOut').textContent=opacity.toFixed(2);['x','y','z'].forEach(a=>{$('p'+a).value=selected.position[a].toFixed(2);$('r'+a).value=THREE.Math.radToDeg(selected.rotation[a]).toFixed(1);$('s'+a).value=selected.scale[a].toFixed(2)})}
 function select(o){selected=o;selectedLightNode=null;selectedBone=null;selectedKeyframe=null;if(typeof syncEffectUI==='function'){try{syncEffectUI(o)}catch(effectUiError){console.warn('Effects UI sync skipped:',effectUiError)}}$('addRootBone').disabled=!o;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;if(o&&!multiSelected.has(o)){multiSelected.clear();multiSelected.add(o);}gizmo.detach();if(o){gizmo.attach(o);showRigFor(o)}else clearBoneMarkers();refresh();syncProps();updateBoneMarkers();renderTimeline();syncEditorTools();msg(o?'Selected: '+o.name:'Ready')}
 gizmo.addEventListener('objectChange',()=>{if((selected&&gizmo.object===selected)||(selectedLightNode&&gizmo.object===selectedLightNode))updateCurrentKeyIfPresent()});
-function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;if(floorContactSelectMode){if(floorContactBones.has(bone)){floorContactBones.delete(bone);msg('Floor collision removed from '+(bone.name||'bone'));}else{floorContactBones.add(bone);msg('Floor collision assigned to '+(bone.name||'bone'));}updateBoneMarkers();return;}selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
+function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&rigMode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
 function isBodyRootBone(bone){
   const n=(bone&&bone.name||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   return /^(root|hips?|pelvis|spine[0-9]*|torso|body|armature|skeleton|mixamorighips|mixamorigspine[0-9]*)$/.test(n)||/(pelvis|hips|spine|torso|armature|skeleton)/.test(n);
@@ -1447,59 +1457,59 @@ function setIKTargetToBone(){
   ikTarget.quaternion.identity();ikTarget.scale.set(1,1,1);
   ikMarker.position.copy(ikTarget.position);
 }
-function toggleFloorContactMode(){
- if(!rigRoot){msg('Select a rigged model first.');return;}
- floorContactSelectMode=!floorContactSelectMode;
- const b=$('floorContactIK');
- b.textContent=floorContactSelectMode?'Floor Contact IK: Finish Selection':'Floor Contact IK: Select Bones';
- b.classList.toggle('active',floorContactSelectMode);
- $('floorContactHelp').textContent=floorContactSelectMode?'Selection mode is on. Click any bone handles you want to have floor collision. Press this button again when finished.':'Floor collision assignments remain active. Press the button to select or deselect more bones.';
- $('rigInfo').textContent=floorContactSelectMode?'Floor Contact IK selection: click bone handles to add or remove floor collision.':'Floor Contact IK is '+(floorContactBones.size?'active for '+floorContactBones.size+' selected bone(s).':'ready. No bones assigned yet.');
- msg(floorContactSelectMode?'Floor Contact IK selection enabled. Click bones, then press the button again.':'Floor Contact IK selection finished. Assigned bones retain floor collision.');
+function captureAbsoluteIKAnchor(bone){
+ if(!bone||!bone.isBone)return;rigRoot&&rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
+ absoluteIKAnchors.set(bone,{position:bone.getWorldPosition(new THREE.Vector3()),quaternion:bone.getWorldQuaternion(new THREE.Quaternion())});
 }
-function solveFloorContactBone(bone){
- if(!bone||!bone.isBone||!bone.parent)return false;
- rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- const current=bone.getWorldPosition(new THREE.Vector3()),floorY=floor.position.y+.045;
- if(current.y>=floorY)return false;
- const target=new THREE.Vector3(current.x,floorY,current.z);
- const chain=[];let joint=bone.parent;while(joint&&joint.isBone&&chain.length<6){if(isBodyRootBone(joint))break;chain.push(joint);joint=joint.parent;}
- if(!chain.length){const parent=bone.parent;parent.updateWorldMatrix(true,false);bone.position.copy(parent.worldToLocal(target));bone.updateMatrixWorld(true);return true;}
- for(let pass=0;pass<14;pass++){
-  for(const j of chain){rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);j.updateWorldMatrix(true,false);
-   const jp=j.getWorldPosition(new THREE.Vector3()),ep=bone.getWorldPosition(new THREE.Vector3());
-   const a=ep.sub(jp),v=target.clone().sub(jp);if(a.lengthSq()<1e-9||v.lengthSq()<1e-9)continue;
-   a.normalize();v.normalize();const delta=new THREE.Quaternion().setFromUnitVectors(a,v);
-   const parentQ=j.parent?j.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
-   const desired=delta.multiply(j.getWorldQuaternion(new THREE.Quaternion()));
-   j.quaternion.copy(parentQ.invert().multiply(desired)).normalize();j.updateMatrixWorld(true);
-  }
+function applyAbsoluteIKAnchors(){
+ if(!absoluteIKEnabled||!absoluteIKAnchors.size)return;
+ for(const [bone,pose] of absoluteIKAnchors){
+  if(!bone||!bone.parent)continue;
+  bone.parent.updateWorldMatrix(true,false);
+  const parentQ=bone.parent.getWorldQuaternion(new THREE.Quaternion());
+  bone.position.copy(bone.parent.worldToLocal(pose.position.clone()));
+  bone.quaternion.copy(parentQ.invert().multiply(pose.quaternion)).normalize();
+  bone.updateMatrixWorld(true);
  }
- rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- // Keep the limb lengths intact: if the selected chain cannot reach the floor,
- // leave the endpoint unconstrained rather than stretching the bone hierarchy.
- return bone.getWorldPosition(new THREE.Vector3()).y>=floorY-.02;
 }
-function solveFloorContacts(){
- if(!floorContactBones.size||!rigRoot)return;
- let changed=false;for(const bone of floorContactBones){if(bone&&bone.parent)changed=solveFloorContactBone(bone)||changed;}
- if(changed){rigRoot.updateMatrixWorld(true);for(const o of objects)o.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)n.skeleton.update()});updateBoneMarkers();}
+function toggleAbsoluteIKAnchor(bone){
+ if(!bone||!bone.isBone)return;
+ if(absoluteIKAnchors.has(bone)){absoluteIKAnchors.delete(bone);msg('Released pin: '+(bone.name||'Unnamed bone'));}
+ else{captureAbsoluteIKAnchor(bone);msg('Pinned in place: '+(bone.name||'Unnamed bone'));}
+ if(bone===selectedBone&&$('absoluteIKPinSelected'))$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';
+ updateBoneMarkers();
+}
+function pinSelectedAbsoluteIKBone(){
+ if(!absoluteIKEnabled||rigMode!=='IK'||!selectedBone){msg('Enable Absolute IK and select a bone first.');return;}
+ toggleAbsoluteIKAnchor(selectedBone);
+}
+function setAbsoluteIKMode(on){
+ if(on&&rigMode!=='IK'){msg('Switch to IK Rig before enabling Absolute IK Mode.');return;}
+ absoluteIKEnabled=!!on;
+ if(!on)absoluteIKAnchors.clear();
+ const b=$('absoluteIKMode');if(b){b.textContent='Absolute IK Mode (AIKM): '+(on?'On':'Off');b.classList.toggle('active',on);}
+ $('absoluteIKPinSelected').disabled=!(on&&rigMode==='IK'&&!!selectedBone);$('absoluteIKPinSelected').textContent=selectedBone&&absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';
+ updateBoneMarkers();
+ $('rigInfo').textContent=on?'Absolute IK is active. Select a bone as the IK target, then pin it with the Pin Selected Bone button. Pinned bones stay fixed while connected bones continue to move.':'IK rig: drag the blue target. Enable Absolute IK Mode to pin bones in place.';
+ msg(on?'Absolute IK Mode enabled — click bones to anchor them.':'Absolute IK Mode disabled.');
 }
 function solveIK(){
   if(!selectedBone||!rigRoot||!ikEffectorBone)return;
   const target=ikTarget.position.clone();
+  if(absoluteIKEnabled&&absoluteIKAnchors.has(ikEffectorBone)){ikMarker.position.copy(ikEffectorBone.getWorldPosition(new THREE.Vector3()));$('rigInfo').textContent='This bone is pinned. Select a different bone as the active IK target, or release this pin.';return;}
   const chain=getIKChain(ikEffectorBone,selectedBone);
   if(!chain.length){
     // Root/body bones have no movable parent chain. Move the selected bone itself;
-    // Move the selected endpoint directly when it has no movable parent chain.
+    // pinned descendants are then held in world space by the anchor pass.
     const parent=ikEffectorBone.parent;
     if(parent){parent.updateWorldMatrix(true,false);ikEffectorBone.position.copy(parent.worldToLocal(target.clone()));}
     else ikEffectorBone.position.copy(target);
-    ikEffectorBone.updateMatrixWorld(true);rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
+    ikEffectorBone.updateMatrixWorld(true);applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
   }
   // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
   for(let pass=0;pass<18;pass++){
     for(const joint of chain){
+      if(absoluteIKEnabled&&absoluteIKAnchors.has(joint))continue;
       rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
       const jp=joint.getWorldPosition(new THREE.Vector3());
       const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
@@ -1511,13 +1521,13 @@ function solveIK(){
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
       joint.quaternion.copy(parentWorldQ.invert().multiply(desiredWorldQ)).normalize();
-      joint.updateMatrixWorld(true);
+      joint.updateMatrixWorld(true);applyAbsoluteIKAnchors();
     }
   }
-  rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
+  applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
 }
 function setBoneTransformMode(mode){if(!selectedBone)return;if(rigMode==='IK'){gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));msg('IK mode uses Move to drag the blue target');return;}if(mode==='translate'){selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);fkMoveProxy.quaternion.identity();fkMoveProxy.scale.set(1,1,1);fkMoveLast.copy(fkMoveProxy.position);gizmo.attach(fkMoveProxy);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='FK Move: moving this joint changes only this bone and its connected descendants; the character root and unrelated limbs stay put.';msg('FK bone move — only this bone and its descendants should move');}else{gizmo.attach(selectedBone);gizmo.setSpace('local');gizmo.setMode(mode);setGizmoSize(mode==='rotate'?1.15:.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));msg(({rotate:'Rotate',scale:'Scale'})[mode]+' selected bone');}}
-function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
+function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&mode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';}$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
 function syncEditorTools(){}
 function deleteSelectedBone(){const bone=selectedBone||selectedAttachmentBone;if(!bone||!bone.isBone){msg('Select or focus a bone first.');return}if(!confirm('Delete bone “'+(bone.name||'Unnamed bone')+'”? This edits the rig and can change skinned-mesh deformation. This action cannot be restored with the current Undo button.'))return;const root=topObject(bone);if(!root){msg('Could not find the model that owns this bone.');return}const parent=bone.parent;if(!parent){msg('This bone has no parent and cannot be removed safely.');return}try{const descendants=[];bone.traverse(n=>{if(n.isBone)descendants.push(n)});const skinMeshes=[];root.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)skinMeshes.push(n)});const handledSkeletons=new Set();for(const mesh of skinMeshes){const sk=mesh.skeleton;if(handledSkeletons.has(sk))continue;handledSkeletons.add(sk);const idx=sk.bones.indexOf(bone);if(idx<0)continue;let fallback=bone.parent;while(fallback&&!fallback.isBone)fallback=fallback.parent;let fallbackIndex=fallback?sk.bones.indexOf(fallback):-1;if(fallbackIndex<0)fallbackIndex=sk.bones.findIndex(b=>b!==bone);if(fallbackIndex<0)fallbackIndex=0;const geoms=new Set();for(const sm of skinMeshes){if(sm.skeleton!==sk||!sm.geometry||geoms.has(sm.geometry))continue;geoms.add(sm.geometry);const attr=sm.geometry.getAttribute('skinIndex');if(attr){for(let i=0;i<attr.count;i++){for(let c=0;c<4;c++){let v=attr.getComponent(i,c);if(v===idx)v=fallbackIndex;if(v>idx)v--;attr.setComponent(i,c,v)}}attr.needsUpdate=true}}sk.bones.splice(idx,1);if(sk.boneInverses&&sk.boneInverses.length>idx)sk.boneInverses.splice(idx,1);for(const sm of skinMeshes)if(sm.skeleton===sk)sk.update()}
 for(const child of [...bone.children])parent.attach(child);parent.remove(bone);for(const b of descendants)animationTracks.delete(b.uuid);if(selectedBone&&descendants.includes(selectedBone))selectedBone=null;if(selectedAttachmentBone&&descendants.includes(selectedAttachmentBone))selectedAttachmentBone=null;selectedKeyframe=null;showRigFor(root);refresh();syncEditorTools();renderTimeline();msg('Deleted bone '+(bone.name||'Unnamed bone')+'. Inspect the rig; some models may need skin-weight adjustments.')}catch(err){console.error(err);msg('Bone deletion failed: '+(err&&err.message?err.message:'unknown error'))}}
@@ -1718,7 +1728,7 @@ $('presetMapsBtn').onclick=()=>$('presetOverlay').classList.add('open');$('close
 ['bg','floorColor','fog','bright','ambient','gridToggle'].forEach(id=>$(id).addEventListener('input',env));
 $('resetEnv').onclick=()=>{$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;env();msg('Environment reset')};
 $('addCube').onclick=addCube;$('delete').onclick=del;$('duplicate').onclick=duplicate;
-$('fkMode').onclick=()=>setRigMode('FK');$('ikMode').onclick=()=>setRigMode('IK');$('floorContactIK').onclick=toggleFloorContactMode;
+$('fkMode').onclick=()=>{setAbsoluteIKMode(false);setRigMode('FK')};$('ikMode').onclick=()=>setRigMode('IK');$('absoluteIKMode').onclick=()=>setAbsoluteIKMode(!absoluteIKEnabled);$('absoluteIKPinSelected').onclick=pinSelectedAbsoluteIKBone;
 $('showBones').onclick=()=>{showRigBones=true;updateBoneMarkers();msg('Bone handles shown')};
 $('hideBones').onclick=()=>{showRigBones=false;updateBoneMarkers();msg('Bone handles hidden')};
 document.addEventListener('keydown',e=>{
@@ -1970,6 +1980,7 @@ $('tlAutoX').onclick=()=>setAutoRotateAxis('x');$('tlAutoY').onclick=()=>setAuto
 $('tlAutoSpeed').addEventListener('pointerdown',()=>{if(getSelectedKeyframeRecord()?.key.autoRotate)pushUndo()});
 $('tlAutoSpeed').addEventListener('input',()=>{autoRotateSpeed=Math.max(.05,Math.min(3,Number($('tlAutoSpeed').value)||.5));const found=getSelectedKeyframeRecord();if(found&&found.key.autoRotate)found.key.autoRotate.speed=autoRotateSpeed;syncAutoRotateUI();if(found&&found.key.autoRotate)renderTimeline()});
 $('tlAutoDirection').onclick=()=>{const found=getSelectedKeyframeRecord();if(found&&found.key.autoRotate)pushUndo();autoRotateDirection*=-1;if(found&&found.key.autoRotate){found.key.autoRotate.direction=autoRotateDirection;renderTimeline()}syncAutoRotateUI();msg(autoRotateDirection>0?'Auto Rotate direction: Forward':'Auto Rotate direction: Reverse')};
+$('autoRotateQuickAccess').onclick=()=>{if(!autoRotateMode)$('tlAutoMode').click();$('tlAutoTools').scrollIntoView({behavior:'smooth',block:'center'});$('tlAutoTools').classList.add('auto-tools-focus');setTimeout(()=>$('tlAutoTools').classList.remove('auto-tools-focus'),1400)};
 function renderTimeline(){
  const track=$('tlTrack');if(!track)return;track.replaceChildren();const fps=timelineFps(),duration=timelineDuration();
  const targets=[];for(const o of objects){targets.push({target:o,label:'▸ '+(o.name||'Model'),depth:0,owner:o});o.traverse(n=>{if(n.isBone)targets.push({target:n,label:'　↳ '+(n.name||'Unnamed bone'),depth:1,owner:o})})}
@@ -2034,7 +2045,7 @@ $('tlClear').onclick=()=>{const target=timelineTarget();if(!target){msg('Select 
 $('tlPrev').onclick=()=>setTimelineFrame(timelineFrame-1);$('tlNext').onclick=()=>setTimelineFrame(timelineFrame+1);
 $('tlPlay').onclick=()=>{timelinePlaying=!timelinePlaying;timelineLastTime=0;timelineAccumulator=0;$('tlPlay').textContent=timelinePlaying?'❚❚ Pause':'▶ Play';if(!timelinePlaying)renderTimeline();msg(timelinePlaying?'Timeline playback started':'Timeline paused')};
 $('tlFps').addEventListener('change',()=>{syncTimelineTimeUI();renderTimeline()});
-function tickTimeline(now){if(!timelinePlaying)return;if(!timelineLastTime)timelineLastTime=now;const dt=Math.min(.1,Math.max(0,(now-timelineLastTime)/1000));timelineLastTime=now;timelineFrame+=dt*timelineFps();if(timelineFrame>timelineMaxFrame())timelineFrame=timelineFrame%timelineMaxFrame();syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);solveFloorContacts();updateTimedEffects();updatePlayheads()}
+function tickTimeline(now){if(!timelinePlaying)return;if(!timelineLastTime)timelineLastTime=now;const dt=Math.min(.1,Math.max(0,(now-timelineLastTime)/1000));timelineLastTime=now;timelineFrame+=dt*timelineFps();if(timelineFrame>timelineMaxFrame())timelineFrame=timelineFrame%timelineMaxFrame();syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);updateTimedEffects();updatePlayheads()}
 // ===== Animation video export =====
 let lastExportVideoUrl=null;
 function showExportReplay(blob){
@@ -2322,7 +2333,7 @@ function updateBoneMarkers(){
   _bmP.setFromMatrixPosition(m.bone.matrixWorld);m.ball.position.copy(_bmP);m.outline.position.copy(_bmP);
   m.radius=boneRadius(_bmC.distanceTo(_bmP),vc.fov,stage.clientHeight,diag,BONE_PX,boneSizeMul);
   if(m.line&&m.bone.parent&&m.bone.parent.isBone){_bmQ.setFromMatrixPosition(m.bone.parent.matrixWorld);const a=m.line.geometry.attributes.position;a.setXYZ(0,_bmQ.x,_bmQ.y,_bmQ.z);a.setXYZ(1,_bmP.x,_bmP.y,_bmP.z);a.needsUpdate=true;m.line.visible=showRigBones}
-  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=floorContactBones.has(m.bone);
+  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=absoluteIKAnchors.has(m.bone);
   m.ball.material.color.set(anchored?0x39e6a2:(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff)));
   m.ball.scale.setScalar(m.radius*(anchored?1.65:(attachFocus?1.9:(poseFocus?1.35:1))));
   m.outline.scale.setScalar(m.radius*(anchored?2.05:(attachFocus?2.35:1.22)));
@@ -2581,31 +2592,6 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
 })();
 </script>
 
-
-<script id="auto-rotate-launcher-controller">
-(function(){
-  const launcher=document.getElementById('stageAutoRotateLauncher');
-  const timeline=document.getElementById('timeline');
-  const timelineButton=document.getElementById('mobileTimelineBtn');
-  const controls=document.getElementById('tlAutoTools');
-  if(!launcher||!timeline||!controls)return;
-  launcher.addEventListener('click',function(){
-    if(timeline.classList.contains('mobile-collapsed')){
-      timeline.classList.remove('mobile-collapsed');
-      if(timelineButton){timelineButton.setAttribute('aria-expanded','true');timelineButton.textContent='Hide Timeline ▴';}
-    }
-    timeline.classList.add('auto-rotate-focus');
-    launcher.setAttribute('aria-expanded','true');
-    controls.scrollIntoView({behavior:'smooth',block:'nearest'});
-    const mode=document.getElementById('tlAutoMode');
-    if(mode)mode.focus({preventScroll:true});
-  });
-  const mobileQuery=window.matchMedia('(max-width:760px)');
-  function syncLabel(){launcher.textContent=mobileQuery.matches?'⟳ Auto Rotate':'⟳ Auto Rotate Controls';}
-  syncLabel();
-  if(mobileQuery.addEventListener)mobileQuery.addEventListener('change',syncLabel);else mobileQuery.addListener(syncLabel);
-})();
-</script>
 
 <script id="p3dl-main-menu-script">
 (()=>{
