@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Prisma 3D Lite — Professional Studio</title>
-<meta name="prisma3d-lite-build" content="effects-studio-load-fix-55">
+<meta name="prisma3d-lite-build" content="soft-project-load-350mb">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#17191e;color:#eef2f7;font:14px system-ui,Arial,sans-serif}
 header{padding:14px 16px;background:#20232a;font-weight:700;border-bottom:1px solid #3b414b}
@@ -27,7 +27,7 @@ button,.filebtn{cursor:pointer}button:hover,.filebtn:hover{border-color:#78aaff}
 .saved-project-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}.saved-project-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:13px;border:1px solid #46515d;background:#1b222a;border-radius:5px}.saved-project-meta{min-width:0}.saved-project-name{font-weight:700;overflow-wrap:anywhere}.saved-project-sub{font-size:11px;color:#9eabb9;margin-top:4px;line-height:1.45}.saved-project-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.saved-project-actions button{font-size:12px;padding:7px 9px}.saved-project-empty{padding:20px;border:1px dashed #536170;text-align:center;color:#aeb7c4;border-radius:5px}.autosave-indicator{font-size:11px;color:#aeb7c4;margin:8px 0 0}.autosave-indicator strong{color:#a8d6b4;font-weight:600}@media(max-width:560px){.saved-project-card{grid-template-columns:1fr}.saved-project-actions{justify-content:flex-start}.saved-project-actions button{flex:1}}
 .project-menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:18px}.project-menu-action{min-height:118px;text-align:left;padding:16px;background:#27313e;border-color:#4b5b70;display:flex;flex-direction:column;gap:8px}.project-menu-action strong{font-size:15px}.project-menu-action span{font-size:12px;line-height:1.45;color:#bdc7d5}.project-menu-action.primary{background:#285f9b;border-color:#78b8ff}.project-menu-icon{font-size:24px}.editor-tools{border:2px solid #47c7bd!important;border-radius:10px;padding:12px;background:linear-gradient(145deg,#203b3b,#20232a)}.editor-tools h2{font-size:15px;color:#d9fffb}.editor-tools .note{margin:6px 0}.editor-tools button{width:100%;margin-top:7px}.editor-tools button.primary{background:#176e6a;border-color:#62e4d7;font-weight:700}.editor-tools button.danger{border-color:#a75b65;color:#ffdce0}.editor-status{font-size:11px;color:#9fe6df;margin-top:8px}
 .pair{display:flex;gap:6px}.pair button{flex:1}.pair button.active{background:#304c76;border-color:#78aaff}.propgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.propgrid label{font-size:11px;color:#aeb7c4;display:block;margin-bottom:3px}.propgrid input{width:100%;min-width:0;padding:6px}.minirow{display:flex;align-items:center;gap:7px}
-.timeline{background:#20232a;border-top:1px solid #414854;padding:10px 12px;color:#eef2f7}.tl-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.tl-controls button{padding:6px 9px}.tl-controls input[type=number]{width:66px;padding:6px}.tl-controls label{font-size:11px;color:#b9c3d0}.tl-slider{display:flex;align-items:center;gap:10px;margin-top:9px}.tl-slider input{width:100%;min-width:0}.tl-ruler{display:flex;justify-content:space-between;color:#9ca8b7;font-size:10px;margin-top:3px}.tl-track{height:340px;max-height:42vh;min-height:180px;overflow:auto;background:#17191e;border:1px solid #414854;border-radius:4px;margin-top:6px;position:relative}.tl-lane{display:flex;min-height:28px;border-bottom:1px solid #303640}.tl-lane:last-child{border-bottom:0}.tl-lane.selected{background:#282d36;outline:1px solid #52c7ff;outline-offset:-1px}.tl-lane.timeline-focus-pulse{animation:timelineFocusPulse .85s ease-out 1}@keyframes timelineFocusPulse{0%{background:#15546b;box-shadow:inset 0 0 0 2px #52c7ff}100%{background:#282d36;box-shadow:inset 0 0 0 0 transparent}}.tl-lane.selected .tl-lane-label{background:#174153;color:#e7faff;font-weight:700}.tl-bone-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.tl-bone-tools input[type=search]{flex:1;min-width:180px;padding:7px 9px;background:#17191e;color:#eef2f7;border:1px solid #414854;border-radius:5px}.tl-bone-tools label{font-size:11px;color:#c4ccd6;display:flex;align-items:center;gap:5px}.tl-lane.focused-bone{box-shadow:inset 3px 0 #52c7ff}.tl-lane-label{position:sticky;left:0;z-index:3;flex:0 0 210px;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;border:0;border-radius:0;background:#252a32;color:#d9e1ec;font-size:10px;padding:5px 7px}.tl-lane-label:hover{background:#39414d}.tl-lane-strip{height:28px;flex:1;min-width:180px;position:relative;background:linear-gradient(to right,transparent 19.8%,#303640 20%,transparent 20.2%,transparent 39.8%,#303640 40%,transparent 40.2%,transparent 59.8%,#303640 60%,transparent 60.2%,transparent 79.8%,#303640 80%,transparent 80.2%)}.tl-playhead{position:absolute;top:0;bottom:0;width:1px;background:#52c7ff;opacity:.75;pointer-events:none;z-index:1}.tl-key{position:absolute;top:7px;z-index:2;width:12px;height:12px;padding:0;border:0;border-radius:2px;background:#ffc857;transform:translateX(-50%) rotate(45deg);min-width:0}.tl-key:hover{background:#fff0bd;box-shadow:0 0 7px 3px rgba(255,200,87,.55)}.tl-key.active{background:#fff7d6;box-shadow:0 0 5px 2px rgba(255,200,87,.95),0 0 14px 5px rgba(255,200,87,.55);outline:1px solid #fff0bd;z-index:2}.tl-track-label{font-size:10px;color:#aeb7c4;margin-top:4px}.tl-controls button:disabled{opacity:.4;cursor:not-allowed}@media(max-width:800px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #3b414b;max-height:none;order:2}.main{order:1}.stage{height:45vh;min-height:280px}}
+.timeline{background:#20232a;border-top:1px solid #414854;padding:10px 12px;color:#eef2f7}.tl-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.tl-controls button{padding:6px 9px}.tl-controls input[type=number]{width:66px;padding:6px}.tl-controls label{font-size:11px;color:#b9c3d0}.tl-slider{display:flex;align-items:center;gap:10px;margin-top:9px}.tl-slider input{width:100%;min-width:0}.tl-ruler{display:flex;justify-content:space-between;color:#9ca8b7;font-size:10px;margin-top:3px}.tl-track{height:340px;max-height:42vh;min-height:180px;overflow:auto;background:#17191e;border:1px solid #414854;border-radius:4px;margin-top:6px;position:relative}.tl-lane{display:flex;min-height:28px;border-bottom:1px solid #303640}.tl-lane:last-child{border-bottom:0}.tl-lane.selected{background:#282d36;outline:1px solid #52c7ff;outline-offset:-1px}.tl-lane.timeline-focus-pulse{animation:timelineFocusPulse .85s ease-out 1}@keyframes timelineFocusPulse{0%{background:#15546b;box-shadow:inset 0 0 0 2px #52c7ff}100%{background:#282d36;box-shadow:inset 0 0 0 0 transparent}}.tl-lane.selected .tl-lane-label{background:#174153;color:#e7faff;font-weight:700}.tl-bone-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.tl-bone-tools input[type=search]{flex:1;min-width:180px;padding:7px 9px;background:#17191e;color:#eef2f7;border:1px solid #414854;border-radius:5px}.tl-bone-tools label{font-size:11px;color:#c4ccd6;display:flex;align-items:center;gap:5px}.tl-lane.focused-bone{box-shadow:inset 3px 0 #52c7ff}.tl-lane-label{position:sticky;left:0;z-index:3;flex:0 0 210px;max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;border:0;border-radius:0;background:#252a32;color:#d9e1ec;font-size:10px;padding:5px 7px}.tl-lane-label:hover{background:#39414d}.tl-lane-strip{height:28px;flex:1;min-width:180px;position:relative;background:linear-gradient(to right,transparent 19.8%,#303640 20%,transparent 20.2%,transparent 39.8%,#303640 40%,transparent 40.2%,transparent 59.8%,#303640 60%,transparent 60.2%,transparent 79.8%,#303640 80%,transparent 80.2%)}.tl-playhead{position:absolute;top:0;bottom:0;width:1px;background:#52c7ff;opacity:.75;pointer-events:none;z-index:1}.tl-key{position:absolute;top:7px;z-index:2;width:12px;height:12px;padding:0;border:0;border-radius:2px;background:#ffc857;transform:translateX(-50%) rotate(45deg);min-width:0}.tl-key:hover{background:#fff0bd;box-shadow:0 0 7px 3px rgba(255,200,87,.55)}.tl-key.active{background:#fff7d6;box-shadow:0 0 5px 2px rgba(255,200,87,.95),0 0 14px 5px rgba(255,200,87,.55);outline:1px solid #fff0bd;z-index:2}.tl-track-label{font-size:10px;color:#aeb7c4;margin-top:4px}.tl-controls button:disabled{opacity:.4;cursor:not-allowed}.tl-controls button{white-space:nowrap}@media(max-width:800px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid #3b414b;max-height:none;order:2}.main{order:1}.stage{height:45vh;min-height:280px}}
 
 /* Professional studio visual pass: restrained graphite UI, clear hierarchy, no playful gradients. */
 :root{color-scheme:dark;--studio-bg:#171a1f;--studio-panel:#20252c;--studio-panel-2:#262c34;--studio-line:#39414b;--studio-muted:#9ba6b3;--studio-text:#e4e9ef;--studio-accent:#8aa9c8;--studio-accent-strong:#52799f}
@@ -142,7 +142,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   header{position:sticky;top:0;z-index:160;display:flex;align-items:center;gap:7px;min-height:48px;padding:7px 9px;font-size:13px;white-space:nowrap}
   header span{display:none!important}
   #mobileToolsBtn{display:inline-flex;align-items:center;justify-content:center;float:none!important;margin:0!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
-  #projectMenuBtn{float:none!important;margin:0 0 0 auto!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
+  #backToMainMenu{float:none!important;margin:0 0 0 auto!important;padding:7px 9px;font-size:12px;flex:0 0 auto}
   .app{display:flex;flex-direction:column;min-height:calc(100dvh - 48px);height:auto}
   .main{width:100%;min-width:0;min-height:0;flex:1}
   aside{display:none;position:fixed;left:0;top:48px;bottom:0;z-index:150;width:min(88vw,360px);max-width:360px;max-height:none;height:auto;overflow-y:auto;overscroll-behavior:contain;padding:12px;background:#20232a;border-right:1px solid #4a5666;box-shadow:16px 0 36px #0008;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 }
 @media (max-width:380px){
   header{gap:5px;padding-left:7px;padding-right:7px}
-  #mobileToolsBtn,#projectMenuBtn{font-size:11px;padding:6px 7px}
+  #mobileToolsBtn,#backToMainMenu{font-size:11px;padding:6px 7px}
   .toolbar button{padding:6px 8px;font-size:11px}
   .stage{height:44dvh;min-height:210px}
 }
@@ -220,8 +220,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .p3dl-menu-title{font-size:clamp(42px,6vw,78px);line-height:.94;letter-spacing:-.065em;font-weight:850;margin:0;text-shadow:0 8px 40px #0008}
 .p3dl-menu-title span{display:block;color:#8bdcff}
 .p3dl-menu-subtitle{color:#a9bbcb;max-width:420px;line-height:1.65;font-size:14px;margin:22px 0 30px}
-.p3dl-menu-actions{display:grid;gap:11px;max-width:390px}
-.p3dl-menu-btn{appearance:none;border:1px solid rgba(160,204,230,.2);background:linear-gradient(110deg,rgba(22,42,61,.92),rgba(13,25,39,.84));color:#edf7ff;border-radius:12px;min-height:62px;padding:12px 17px;display:flex;align-items:center;gap:15px;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;box-shadow:0 8px 28px #0003}
+.p3dl-menu-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-width:620px}
+.p3dl-menu-btn{appearance:none;border:1px solid rgba(160,204,230,.2);background:linear-gradient(110deg,rgba(22,42,61,.92),rgba(13,25,39,.84));color:#edf7ff;border-radius:12px;min-height:58px;padding:10px 12px;display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;box-shadow:0 8px 28px #0003}
 .p3dl-menu-btn:hover,.p3dl-menu-btn:focus-visible{transform:translateX(6px);border-color:rgba(112,213,255,.8);background:linear-gradient(110deg,rgba(29,77,105,.96),rgba(16,38,57,.94));box-shadow:0 0 24px rgba(55,173,223,.15);outline:none}
 .p3dl-menu-btn.primary{background:linear-gradient(105deg,#167db0,#14527e);border-color:#62caff;box-shadow:0 8px 30px rgba(0,128,190,.2)}
 .p3dl-menu-icon{width:34px;height:34px;flex:0 0 34px;border-radius:9px;background:rgba(130,205,239,.12);display:grid;place-items:center;color:#9be2ff;font-size:18px}
@@ -271,9 +271,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
    <p class="p3dl-menu-subtitle">Build your scene. Bring your characters to life. Your next animation starts here.</p>
    <div class="p3dl-menu-actions">
     <button class="p3dl-menu-btn primary" id="p3dlMenuNew"><span class="p3dl-menu-icon">＋</span><span><strong>New Project</strong><small>Start a fresh scene</small></span></button>
-    <button class="p3dl-menu-btn" id="p3dlMenuSaved"><span class="p3dl-menu-icon">▤</span><span><strong>Saved Projects</strong><small>Continue where you left off</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuOpen"><span class="p3dl-menu-icon">📂</span><span><strong>Open Project</strong><small>Load a project JSON file</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuDownload"><span class="p3dl-menu-icon">💾</span><span><strong>Download Project</strong><small>Save a portable JSON backup</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuSaved"><span class="p3dl-menu-icon">▤</span><span><strong>Saved Projects</strong><small>Open, rename or delete projects</small></span></button>
+    <button class="p3dl-menu-btn" id="p3dlMenuContinue"><span class="p3dl-menu-icon">🎬</span><span><strong>Continue Editing</strong><small>Return to your current scene</small></span></button>
     <button class="p3dl-menu-btn" id="p3dlMenuTutorials"><span class="p3dl-menu-icon">▶</span><span><strong>Tutorials</strong><small>Learn the editor step by step</small></span></button>
     <button class="p3dl-menu-btn" id="p3dlMenuSettings"><span class="p3dl-menu-icon">⚙</span><span><strong>Settings</strong><small>Graphics, tools and preferences</small></span></button>
+    <input id="p3dlMenuProjectFile" type="file" accept=".json,application/json" hidden>
    </div>
    <div class="p3dl-menu-footer"><span>ANIMATION STUDIO</span><span>•</span><span>BUILD · RIG · ANIMATE · RENDER</span></div>
   </section>
@@ -296,7 +300,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <button id="acceptDisclaimer" type="button">I Understand — Enter Studio</button>
   </div>
 </div>
-<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="projectMenuBtn" style="float:right;margin-top:-4px">▤ Projects</button></header>
+<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="backToMainMenu" type="button" style="float:right;margin-top:-4px">⌂ Main Menu</button></header>
 <button id="mobileToolsBackdrop" type="button" aria-label="Close tools panel"></button>
 <div class="app">
 <aside>
@@ -315,7 +319,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <div class="row"><label for="cinematicAtmosphere">Atmospheric haze</label><input id="cinematicAtmosphere" type="range" min="0" max="100" step="5" value="15"><output id="cinematicAtmosphereOut">15%</output></div>
 <button id="resetCinematic" type="button" class="wide">Reset cinematic settings</button>
 <p class="note" id="cinematicStatus" aria-live="polite">Cinematic Mode is off. Motion blur and selective depth of field are not included in this lightweight preview yet.</p></div>
-<div class="section"><h2>Performance & Optimization</h2><div class="performance-actions"><button id="performanceModeBtn" type="button">Enable Performance Mode</button><button id="performanceMonitorBtn" type="button">Hide Monitor</button></div><p class="note">Performance Mode temporarily lowers viewport rendering cost without changing or deleting model geometry, textures, rigs, or animation. The monitor reports renderer counters and an approximate geometry-buffer size, not total device RAM or VRAM.</p><p class="note" id="performanceModeNote" aria-live="polite">Performance Mode is off. Your selected graphics preset is active.</p></div>
+<div class="section"><h2>Performance & Optimization</h2><div class="performance-actions"><button id="performanceModeBtn" type="button">Enable Performance Mode</button><button id="performanceMonitorBtn" type="button">Hide Monitor</button></div><p class="note">Performance Mode temporarily lowers viewport rendering cost without changing or deleting model geometry, textures, rigs, or animation. The monitor reports renderer counters and an approximate geometry-buffer size, not total device RAM or VRAM.</p><p class="note" id="performanceModeNote" aria-live="polite">Performance Mode is off. Your selected graphics preset is active.</p><p class="note" id="projectLoadStatus" aria-live="polite">Imported model files: 0 MB / 350 MB soft target. This is a source-file-size estimate, not a measurement of device RAM.</p></div>
 <div class="section"><h2>Environment</h2>
 <div class="row"><label for="bg">Background</label><input id="bg" type="color" value="#252a31"></div>
 <div class="row"><label for="floorColor">Floor</label><input id="floorColor" type="color" value="#343a42"></div>
@@ -396,7 +400,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="absoluteIKMode" class="wide" disabled>Absolute IK Mode (AIKM): Off</button><button id="absoluteIKPinSelected" class="wide" disabled>Pin Selected Bone</button><p class="note">With AIKM on, select a bone to make it the active IK target, then use Pin Selected Bone to lock or release it. Pinned bones stay fixed in world space while the rest of the connected rig continues moving.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
@@ -422,14 +426,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   <button class="preset-card" data-preset="forest"><span class="preset-art" style="background:linear-gradient(#9ec9a0,#244c3d)">🌲 🌿</span><strong>Forest Clearing</strong><small>A green outdoor setting with trees and a clear central space for characters.</small><span class="choose">Use this map</span></button>
   <button class="preset-card" data-preset="arena"><span class="preset-art" style="background:linear-gradient(#382c5d,#e07c52)">⚔️ 🔮</span><strong>Sci-Fi Arena</strong><small>A circular combat platform with pillars and luminous accents.</small><span class="choose">Use this map</span></button>
  </div><p class="preset-foot">Loading a map replaces only the previous map scenery. Your characters/models and animation keyframes stay in the scene. The selected map is included when you save a project.</p></div></div>
-<div class="preset-overlay" id="projectMenuOverlay" role="dialog" aria-modal="true" aria-labelledby="projectMenuTitle"><div class="preset-dialog" style="width:min(760px,100%)"><div class="preset-head"><div><h2 id="projectMenuTitle">Projects</h2><p class="note">Start a new scene, open a saved project, or save your current work. Your Saved Models library is separate from individual projects.</p></div><button id="closeProjectMenu" aria-label="Close project menu">✕</button></div><div class="project-menu-grid"><button class="project-menu-action primary" id="menuNewProject"><span class="project-menu-icon">＋</span><strong>New Project</strong><span>Start with a clean scene. Your saved model library stays available.</span></button><label class="project-menu-action" for="menuProjectFile"><span class="project-menu-icon">📂</span><strong>Open Project</strong><span>Load a Prisma 3D Lite JSON project you saved earlier.</span><input id="menuProjectFile" type="file" accept=".json,application/json" style="margin-top:6px;max-width:100%"></label><button class="project-menu-action" id="menuSaveProject"><span class="project-menu-icon">💾</span><strong>Download Project</strong><span>Export a portable JSON copy to your device.</span></button><button class="project-menu-action" id="menuSavedProjects"><span class="project-menu-icon">▤</span><strong>Saved Projects</strong><span>Open, rename, or delete projects stored in this browser.</span></button><button class="project-menu-action" id="menuContinue"><span class="project-menu-icon">🎬</span><strong>Continue Editing</strong><span>Close this menu and return to the current scene.</span></button></div><p class="preset-foot">Your projects are automatically saved in this browser while you work. Download a JSON backup when you want a portable copy. Saved Models remain separate.</p><p class="autosave-indicator" id="autosaveMenuStatus" aria-live="polite">Autosave is preparing…</p></div></div>
 <div class="preset-overlay" id="savedProjectsOverlay" role="dialog" aria-modal="true" aria-labelledby="savedProjectsTitle"><div class="preset-dialog" style="width:min(760px,100%)"><div class="preset-head"><div><h2 id="savedProjectsTitle">Saved Projects</h2><p class="note">Projects are stored locally in this browser. Open one to continue, rename it, or delete it. Download JSON backups if you want to move projects to another device.</p></div><button id="closeSavedProjects" aria-label="Close saved projects">✕</button></div><div class="saved-project-list" id="savedProjectsList"><div class="saved-project-empty">Loading saved projects…</div></div><p class="autosave-indicator" id="savedProjectsStatus" aria-live="polite">Autosave keeps the current project up to date.</p></div></div>
 <div class="preset-overlay" id="savedModelsOverlay" role="dialog" aria-modal="true" aria-labelledby="savedModelsTitle"><div class="preset-dialog" style="width:min(650px,100%)"><div class="preset-head"><div><h2 id="savedModelsTitle">Saved Models</h2><p class="note">Save a selected object to keep a reusable copy in your model library. Rename saved copies here, or add a saved copy back into the scene.</p></div><button id="closeSavedModels" aria-label="Close saved models">✕</button></div><div id="savedModelsList" class="saved-model-list"></div><p class="preset-foot">Your model library is separate from the current project. Save the project as a JSON file to preserve the scene and reopen it later.</p></div></div>
 <div class="preset-overlay" id="movementOverlay" role="dialog" aria-modal="true" aria-labelledby="movementTitle"><div class="preset-dialog"><div class="preset-head"><div><h2 id="movementTitle">Preset Movements</h2><p class="note">Choose a movement for the selected model. Orange Justice is first so you can test whether your character's rig works with it. Motion is generated from bone names, so results vary by rig and bone orientation.</p></div><button id="closeMovements" aria-label="Close preset movements">✕</button></div><div class="preset-cards"><button class="preset-card" data-movement="orange"><span class="preset-art" style="background:linear-gradient(#3b285d,#e69a48)">🕺 🟠</span><strong>Orange Justice</strong><small>Fast cross-body arm pumps, bent elbows, side-to-side torso sway, and knee bounce.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="walk"><span class="preset-art" style="background:linear-gradient(#203b4c,#5797a8)">🚶</span><strong>Realistic Walk</strong><small>Alternating arm and leg swing with a subtle torso bob.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="dance"><span class="preset-art" style="background:linear-gradient(#40294c,#a25c91)">💃</span><strong>Dance Groove</strong><small>Rhythmic shoulder, arm, hip, and torso movement.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="idle"><span class="preset-art" style="background:linear-gradient(#244a3d,#73a98a)">🌬️</span><strong>Idle / Breathing</strong><small>Gentle torso and shoulder motion for a standing character.</small><span class="choose">Apply movement</span></button></div><p class="preset-foot">Applying a movement replaces existing keyframes on the selected model's bone tracks so you can test the preset cleanly. Use the timeline Play button to preview it. Save a project to keep the result.</p></div></div>
 <div class="timeline" id="timeline">
- <div class="tl-controls"><button id="tlPlay">▶ Play</button><button id="tlPrev">◀ Step</button><button id="tlNext">Step ▶</button><button id="tlKey">◆ Keyframe</button><button id="tlDeleteKey">Delete selected key</button><button id="tlUndo">↶ Undo</button><button id="tlClear">Clear target keys</button><button id="tlExportClip">Export clip</button><button id="exportAnimation" class="active">🎬 Export animation</button><label class="filebtn">Import clip<input id="tlImportClip" type="file" accept=".json,application/json"></label><label for="tlInterp">Motion</label><select id="tlInterp"><option value="smooth" selected>Smooth</option><option value="ease">Ease at every key</option><option value="linear">Linear</option></select><label for="tlFrame">Seconds</label><input id="tlFrame" type="number" min="0" max="5" step="0.01" value="0"><label for="tlDuration">Project length (seconds)</label><input id="tlDuration" type="number" min="0.1" max="120" step="0.5" value="5"><label for="tlFps">Playback FPS</label><input id="tlFps" type="number" min="1" max="60" value="24"></div>
+ <div class="tl-controls"><button id="tlPlay">▶ Play</button><button id="tlPrev">◀ Step</button><button id="tlNext">Step ▶</button><button id="tlKey">◆ Keyframe</button><button id="tlDeleteKey">Delete selected key</button><button id="tlCopyKey" type="button" disabled>Copy key</button><button id="tlPasteKey" type="button" disabled>Paste at playhead</button><button id="tlDuplicateKey" type="button" disabled>Duplicate +1s</button><button id="tlMoveKeyBack" type="button" disabled>← Move 1 frame</button><button id="tlMoveKeyForward" type="button" disabled>Move 1 frame →</button><button id="tlUndo">↶ Undo</button><button id="tlClear">Clear target keys</button><button id="tlExportClip">Export clip</button><button id="exportAnimation" class="active">🎬 Export animation</button><label class="filebtn">Import clip<input id="tlImportClip" type="file" accept=".json,application/json"></label><label for="tlInterp">Motion</label><select id="tlInterp"><option value="smooth" selected>Smooth</option><option value="ease">Ease at every key</option><option value="linear">Linear</option></select><label for="tlFrame">Seconds</label><input id="tlFrame" type="number" min="0" max="5" step="0.01" value="0"><label for="tlDuration">Project length (seconds)</label><input id="tlDuration" type="number" min="0.1" max="120" step="0.5" value="5"><label for="tlFps">Playback FPS</label><input id="tlFps" type="number" min="1" max="60" value="24"></div>
  <div class="tl-slider"><span class="note" id="tlStart">0.00s</span><input id="tlRange" type="range" min="0" max="5" step="0.01" value="0" aria-label="Timeline time in seconds"><span class="note" id="tlEnd">5.00s</span></div><div class="tl-ruler"><span>0s</span><span>1s</span><span>2s</span><span>3s</span><span>4s</span><span>5s</span></div>
- <div class="tl-bone-tools"><input id="tlBoneSearch" type="search" placeholder="Find a bone or model…" aria-label="Search timeline bones and models"><button id="tlFocusSelected" type="button">Find selected bone</button><label><input id="tlSelectedOnly" type="checkbox"> Show selected track only</label></div><div class="tl-track" id="tlTrack" aria-label="Model and bone animation tracks"></div><div class="tl-track-label" id="tlLabel">Select a rigged model, pose its bones, then press ◆ Keyframe to record the model and bone pose.</div>
+ <div class="tl-bone-tools"><input id="tlBoneSearch" type="search" placeholder="Find a bone or model…" aria-label="Search timeline bones and models"><button id="tlFocusSelected" type="button">Find selected bone</button><label><input id="tlSelectedOnly" type="checkbox"> Show selected track only</label></div><div class="tl-track" id="tlTrack" aria-label="Model and bone animation tracks"></div><div class="tl-track-label" id="tlLabel">Select a rigged model, pose its bones, then press ◆ Keyframe to record the model and bone pose. Select a key to copy, duplicate, or move it one frame at a time; paste places a copied key at the current playhead.</div>
 </div><div class="status" id="status">Loading 3D engine…</div></main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -1296,7 +1299,7 @@ function msg(s){$('status').textContent=s}
 if(!window.THREE||!THREE.OrbitControls||!THREE.TransformControls||!THREE.GLTFLoader){msg('Could not load 3D libraries. Check internet access, then refresh this file.');return}
 const scene=new THREE.Scene();scene.background=new THREE.Color('#252a31');scene.fog=new THREE.FogExp2('#252a31',.012);
 const camera=new THREE.PerspectiveCamera(50,1,.1,3000);camera.position.set(7,6,9);
-let performanceMode=false,showPerformanceMonitor=true;
+let performanceMode=false,showPerformanceMonitor=true,autoPerformanceLevel=0;
 const QUALITY_KEY='prisma3d-lite-quality-v1';
 const qualityProfiles={
  standard:{label:'Standard',pixelRatio:1,shadows:false,shadowSize:512,tone:'none',description:'Standard · Lower rendering resolution and no real-time shadows to help conserve graphics memory.'},
@@ -1314,9 +1317,9 @@ const light=new THREE.DirectionalLight(0xffffff,1.7);light.position.set(7,12,8);
 light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.near=.5;light.shadow.camera.far=120;light.shadow.bias=-.00025;light.shadow.normalBias=.02;scene.add(light);
 const floorMat=new THREE.MeshLambertMaterial({color:'#f4f4f4'}),floor=new THREE.Mesh(new THREE.PlaneGeometry(2000,2000),floorMat);floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;scene.add(floor);
 const grid=new THREE.GridHelper(2000,200,0xc9cdd3,0xe3e6eb);grid.position.y=.002;scene.add(grid);
-const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK';const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
+const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK',absoluteIKEnabled=false;const absoluteIKAnchors=new Map();const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
 // Transform-only keyframe animation. Tracks store plain numbers so they are safe to save as JSON.
-const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let selectedKeyframe=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
+const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let selectedKeyframe=null;let keyframeClipboard=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
 const ikTarget=new THREE.Object3D();scene.add(ikTarget);const fkMoveProxy=new THREE.Object3D();scene.add(fkMoveProxy);let fkMoveLast=new THREE.Vector3();
 // Lightweight animated dust particles; the effect is opt-in and can be toggled from the toolbar.
 const DUST_COUNT=260,dustPositions=new Float32Array(DUST_COUNT*3),dustVelocities=[];let dustCenter=new THREE.Vector3(),dustRadius=2.6,dustOn=false;
@@ -1340,11 +1343,11 @@ gizmo.addEventListener('dragging-changed',e=>{controls.enabled=!e.value;if(e.val
 });
 const markerGeo=new THREE.SphereGeometry(1,16,12);
 const boneLineMaterial=new THREE.LineBasicMaterial({color:0x8aa9c8,depthTest:false,transparent:true,opacity:.9});
-function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
+function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;absoluteIKAnchors.clear();absoluteIKEnabled=false;if($('absoluteIKMode')){$('absoluteIKMode').disabled=true;$('absoluteIKMode').textContent='Absolute IK Mode (AIKM): Off';$('absoluteIKMode').classList.remove('active')}if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=true;$('absoluteIKPinSelected').textContent='Pin Selected Bone'}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
 function showRigFor(root){clearBoneMarkers();rigRoot=root;const bones=[];root.traverse(o=>{if(o.isBone)bones.push(o)});if(bones.length>2500){const total=bones.length;bones.length=2500;setTimeout(()=>msg('This rig has '+total+' bones. Handles are shown for the first 2500; the animation still uses all of them.'),0)}if(!bones.length){$('rigInfo').textContent='No bones detected. Create a root bone to begin building a rig.';$('addRootBone').disabled=false;$('addChildBone').disabled=true;$('boneBuildInfo').textContent='No skeleton yet. Create a root bone to start.';return}
 const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),diam=Math.max(size.x,size.y,size.z,1),radius=Math.max(.009,Math.min(.052,diam*.0085));rigTrueDiag=Math.max(size.x,size.y,size.z,1e-6);root.updateMatrixWorld(true);rigBaseScale=root.matrixWorld.getMaxScaleOnAxis()||1;
 bones.forEach((bone,i)=>{const outline=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0x252a32,depthTest:false}));outline.scale.setScalar(radius*1.22);outline.renderOrder=998;outline.userData.bone=bone;const ball=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false}));ball.scale.setScalar(radius);ball.renderOrder=999;ball.userData.bone=bone;let line=null;if(bone.parent&&bone.parent.isBone){const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]);line=new THREE.Line(geo,boneLineMaterial);line.renderOrder=997;line.frustumCulled=false;scene.add(line)}scene.add(outline,ball);boneMarkers.push({bone,outline,ball,radius,line});boneRayTargets.push(ball)});
-$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
+$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('absoluteIKMode').disabled=false;$('absoluteIKPinSelected').disabled=true;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
 
 function topObject(hit){let o=hit;while(o&&o!==scene){if(objects.includes(o))return o;o=o.parent}return null}
 function refresh(){
@@ -1398,7 +1401,7 @@ function selectedMaterials(){const mats=[];if(selected)selected.traverse(o=>{if(
 function syncProps(){syncCameraUI();syncLightUI();enableProps(!!selected);if(!selected)return;$('objName').value=selected.name||'Object';let color='#b9c6d8',rough=.8,metal=0,opacity=1,found=false;selected.traverse(o=>{if(o.isMesh){const m=Array.isArray(o.material)?o.material[0]:o.material;if(m){if(m.color)color='#'+m.color.getHexString();if(!found){rough=Number.isFinite(m.roughness)?m.roughness:rough;metal=Number.isFinite(m.metalness)?m.metalness:metal;opacity=Number.isFinite(m.opacity)?m.opacity:opacity;found=true}}}});$('objColor').value=color;$('matRoughness').value=rough;$('matMetalness').value=metal;$('matOpacity').value=opacity;$('matRoughnessOut').textContent=rough.toFixed(2);$('matMetalnessOut').textContent=metal.toFixed(2);$('matOpacityOut').textContent=opacity.toFixed(2);['x','y','z'].forEach(a=>{$('p'+a).value=selected.position[a].toFixed(2);$('r'+a).value=THREE.Math.radToDeg(selected.rotation[a]).toFixed(1);$('s'+a).value=selected.scale[a].toFixed(2)})}
 function select(o){selected=o;selectedLightNode=null;selectedBone=null;selectedKeyframe=null;if(typeof syncEffectUI==='function'){try{syncEffectUI(o)}catch(effectUiError){console.warn('Effects UI sync skipped:',effectUiError)}}$('addRootBone').disabled=!o;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;if(o&&!multiSelected.has(o)){multiSelected.clear();multiSelected.add(o);}gizmo.detach();if(o){gizmo.attach(o);showRigFor(o)}else clearBoneMarkers();refresh();syncProps();updateBoneMarkers();renderTimeline();syncEditorTools();msg(o?'Selected: '+o.name:'Ready')}
 gizmo.addEventListener('objectChange',()=>{if((selected&&gizmo.object===selected)||(selectedLightNode&&gizmo.object===selectedLightNode))updateCurrentKeyIfPresent()});
-function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
+function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&rigMode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
 function isBodyRootBone(bone){
   const n=(bone&&bone.name||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   return /^(root|hips?|pelvis|spine[0-9]*|torso|body|armature|skeleton|mixamorighips|mixamorigspine[0-9]*)$/.test(n)||/(pelvis|hips|spine|torso|armature|skeleton)/.test(n);
@@ -1432,14 +1435,59 @@ function setIKTargetToBone(){
   ikTarget.quaternion.identity();ikTarget.scale.set(1,1,1);
   ikMarker.position.copy(ikTarget.position);
 }
+function captureAbsoluteIKAnchor(bone){
+ if(!bone||!bone.isBone)return;rigRoot&&rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
+ absoluteIKAnchors.set(bone,{position:bone.getWorldPosition(new THREE.Vector3()),quaternion:bone.getWorldQuaternion(new THREE.Quaternion())});
+}
+function applyAbsoluteIKAnchors(){
+ if(!absoluteIKEnabled||!absoluteIKAnchors.size)return;
+ for(const [bone,pose] of absoluteIKAnchors){
+  if(!bone||!bone.parent)continue;
+  bone.parent.updateWorldMatrix(true,false);
+  const parentQ=bone.parent.getWorldQuaternion(new THREE.Quaternion());
+  bone.position.copy(bone.parent.worldToLocal(pose.position.clone()));
+  bone.quaternion.copy(parentQ.invert().multiply(pose.quaternion)).normalize();
+  bone.updateMatrixWorld(true);
+ }
+}
+function toggleAbsoluteIKAnchor(bone){
+ if(!bone||!bone.isBone)return;
+ if(absoluteIKAnchors.has(bone)){absoluteIKAnchors.delete(bone);msg('Released pin: '+(bone.name||'Unnamed bone'));}
+ else{captureAbsoluteIKAnchor(bone);msg('Pinned in place: '+(bone.name||'Unnamed bone'));}
+ if(bone===selectedBone&&$('absoluteIKPinSelected'))$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';
+ updateBoneMarkers();
+}
+function pinSelectedAbsoluteIKBone(){
+ if(!absoluteIKEnabled||rigMode!=='IK'||!selectedBone){msg('Enable Absolute IK and select a bone first.');return;}
+ toggleAbsoluteIKAnchor(selectedBone);
+}
+function setAbsoluteIKMode(on){
+ if(on&&rigMode!=='IK'){msg('Switch to IK Rig before enabling Absolute IK Mode.');return;}
+ absoluteIKEnabled=!!on;
+ if(!on)absoluteIKAnchors.clear();
+ const b=$('absoluteIKMode');if(b){b.textContent='Absolute IK Mode (AIKM): '+(on?'On':'Off');b.classList.toggle('active',on);}
+ $('absoluteIKPinSelected').disabled=!(on&&rigMode==='IK'&&!!selectedBone);$('absoluteIKPinSelected').textContent=selectedBone&&absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';
+ updateBoneMarkers();
+ $('rigInfo').textContent=on?'Absolute IK is active. Select a bone as the IK target, then pin it with the Pin Selected Bone button. Pinned bones stay fixed while connected bones continue to move.':'IK rig: drag the blue target. Enable Absolute IK Mode to pin bones in place.';
+ msg(on?'Absolute IK Mode enabled — click bones to anchor them.':'Absolute IK Mode disabled.');
+}
 function solveIK(){
   if(!selectedBone||!rigRoot||!ikEffectorBone)return;
   const target=ikTarget.position.clone();
+  if(absoluteIKEnabled&&absoluteIKAnchors.has(ikEffectorBone)){ikMarker.position.copy(ikEffectorBone.getWorldPosition(new THREE.Vector3()));$('rigInfo').textContent='This bone is pinned. Select a different bone as the active IK target, or release this pin.';return;}
   const chain=getIKChain(ikEffectorBone,selectedBone);
-  if(!chain.length){ikMarker.position.copy(target);$('rigInfo').textContent='No movable parent joints were found above this bone. Select a bone lower in the limb or arm chain.';return;}
-  // CCD IK: solve from the clicked bone through its real parent joints.
+  if(!chain.length){
+    // Root/body bones have no movable parent chain. Move the selected bone itself;
+    // pinned descendants are then held in world space by the anchor pass.
+    const parent=ikEffectorBone.parent;
+    if(parent){parent.updateWorldMatrix(true,false);ikEffectorBone.position.copy(parent.worldToLocal(target.clone()));}
+    else ikEffectorBone.position.copy(target);
+    ikEffectorBone.updateMatrixWorld(true);applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
+  }
+  // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
   for(let pass=0;pass<18;pass++){
     for(const joint of chain){
+      if(absoluteIKEnabled&&absoluteIKAnchors.has(joint))continue;
       rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
       const jp=joint.getWorldPosition(new THREE.Vector3());
       const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
@@ -1451,13 +1499,13 @@ function solveIK(){
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
       joint.quaternion.copy(parentWorldQ.invert().multiply(desiredWorldQ)).normalize();
-      joint.updateMatrixWorld(true);
+      joint.updateMatrixWorld(true);applyAbsoluteIKAnchors();
     }
   }
-  rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
+  applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
 }
 function setBoneTransformMode(mode){if(!selectedBone)return;if(rigMode==='IK'){gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));msg('IK mode uses Move to drag the blue target');return;}if(mode==='translate'){selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);fkMoveProxy.quaternion.identity();fkMoveProxy.scale.set(1,1,1);fkMoveLast.copy(fkMoveProxy.position);gizmo.attach(fkMoveProxy);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='FK Move: moving this joint changes only this bone and its connected descendants; the character root and unrelated limbs stay put.';msg('FK bone move — only this bone and its descendants should move');}else{gizmo.attach(selectedBone);gizmo.setSpace('local');gizmo.setMode(mode);setGizmoSize(mode==='rotate'?1.15:.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));msg(({rotate:'Rotate',scale:'Scale'})[mode]+' selected bone');}}
-function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
+function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&mode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';}$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
 function syncEditorTools(){}
 function deleteSelectedBone(){const bone=selectedBone||selectedAttachmentBone;if(!bone||!bone.isBone){msg('Select or focus a bone first.');return}if(!confirm('Delete bone “'+(bone.name||'Unnamed bone')+'”? This edits the rig and can change skinned-mesh deformation. This action cannot be restored with the current Undo button.'))return;const root=topObject(bone);if(!root){msg('Could not find the model that owns this bone.');return}const parent=bone.parent;if(!parent){msg('This bone has no parent and cannot be removed safely.');return}try{const descendants=[];bone.traverse(n=>{if(n.isBone)descendants.push(n)});const skinMeshes=[];root.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)skinMeshes.push(n)});const handledSkeletons=new Set();for(const mesh of skinMeshes){const sk=mesh.skeleton;if(handledSkeletons.has(sk))continue;handledSkeletons.add(sk);const idx=sk.bones.indexOf(bone);if(idx<0)continue;let fallback=bone.parent;while(fallback&&!fallback.isBone)fallback=fallback.parent;let fallbackIndex=fallback?sk.bones.indexOf(fallback):-1;if(fallbackIndex<0)fallbackIndex=sk.bones.findIndex(b=>b!==bone);if(fallbackIndex<0)fallbackIndex=0;const geoms=new Set();for(const sm of skinMeshes){if(sm.skeleton!==sk||!sm.geometry||geoms.has(sm.geometry))continue;geoms.add(sm.geometry);const attr=sm.geometry.getAttribute('skinIndex');if(attr){for(let i=0;i<attr.count;i++){for(let c=0;c<4;c++){let v=attr.getComponent(i,c);if(v===idx)v=fallbackIndex;if(v>idx)v--;attr.setComponent(i,c,v)}}attr.needsUpdate=true}}sk.bones.splice(idx,1);if(sk.boneInverses&&sk.boneInverses.length>idx)sk.boneInverses.splice(idx,1);for(const sm of skinMeshes)if(sm.skeleton===sk)sk.update()}
 for(const child of [...bone.children])parent.attach(child);parent.remove(bone);for(const b of descendants)animationTracks.delete(b.uuid);if(selectedBone&&descendants.includes(selectedBone))selectedBone=null;if(selectedAttachmentBone&&descendants.includes(selectedAttachmentBone))selectedAttachmentBone=null;selectedKeyframe=null;showRigFor(root);refresh();syncEditorTools();renderTimeline();msg('Deleted bone '+(bone.name||'Unnamed bone')+'. Inspect the rig; some models may need skin-weight adjustments.')}catch(err){console.error(err);msg('Bone deletion failed: '+(err&&err.message?err.message:'unknown error'))}}
@@ -1477,7 +1525,7 @@ $('renameBoneButton').onclick=()=>{if(!selectedBone||!selectedBone.isBone){msg('
 $('deleteBoneButton').onclick=deleteSelectedBone;
 function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
 function addCube(){const o=new THREE.Mesh(new THREE.BoxGeometry(1.5,1.5,1.5),new THREE.MeshLambertMaterial({color:0xb9c6d8}));o.position.y=.75;add(o,'Cube '+(objects.length+1));msg('Cube added and selected')}
-function del(){if(!selected)return;const doomed=selected;const childObjects=objects.filter(o=>o!==doomed&&o.parent===doomed);if(childObjects.length&&!confirm('Delete '+(doomed.name||'this object')+'? Its '+childObjects.length+' child object(s) will be detached and kept in the scene.'))return;pushUndo();gizmo.detach();clearBoneMarkers();for(const child of childObjects)scene.attach(child);if(doomed.parent)doomed.parent.remove(doomed);disposeObjectTree(doomed);const i=objects.indexOf(doomed);if(i>=0)objects.splice(i,1);multiSelected.clear();selected=null;refresh();syncProps();msg('Selected object deleted. Child objects, if any, were kept in the scene.')}
+function del(){if(!selected)return;const doomed=selected;const childObjects=objects.filter(o=>o!==doomed&&o.parent===doomed);if(childObjects.length&&!confirm('Delete '+(doomed.name||'this object')+'? Its '+childObjects.length+' child object(s) will be detached and kept in the scene.'))return;pushUndo();gizmo.detach();clearBoneMarkers();for(const child of childObjects)scene.attach(child);if(doomed.parent)doomed.parent.remove(doomed);disposeObjectTree(doomed);const i=objects.indexOf(doomed);if(i>=0)objects.splice(i,1);updateProjectLoadPressure();multiSelected.clear();selected=null;refresh();syncProps();msg('Selected object deleted. Child objects, if any, were kept in the scene.')}
 function cloneMaterials(root){root.traverse(o=>{if(o.isMesh){if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone();if(o.geometry)o.geometry=o.geometry.clone()}})}
 // ===== Saved Models storage: IndexedDB (hundreds of MB) instead of localStorage (about 5 MB) =====
 const SM_DB='prisma3d-lite',SM_STORE='savedModels',smStored=new Map();let smDbPromise=null,smUnavailable=false;
@@ -1545,8 +1593,9 @@ loadSavedModels();addCube();
 function resize(){const w=Math.max(1,stage.clientWidth),h=Math.max(1,stage.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(stage);resize();
 function applyQualityPreset(value,save=true){
  const key=qualityProfiles[value]?value:'standard',profile=qualityProfiles[key];qualityPreset=key;
- const effectiveShadows=profile.shadows&&!performanceMode;
- renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,performanceMode?1:profile.pixelRatio));
+ const effectiveShadows=profile.shadows&&!performanceMode&&autoPerformanceLevel===0;
+ const adaptivePixelCap=autoPerformanceLevel>=2?.75:(autoPerformanceLevel===1?1:profile.pixelRatio);
+ renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,performanceMode?1:adaptivePixelCap));
  renderer.shadowMap.enabled=effectiveShadows;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
  renderer.toneMapping=profile.tone==='filmic'?THREE.ACESFilmicToneMapping:THREE.NoToneMapping;
  renderer.toneMappingExposure=+$('bright').value||1;
@@ -1556,7 +1605,7 @@ function applyQualityPreset(value,save=true){
  const select=$('qualityPreset'),description=$('qualityDescription');if(select)select.value=key;if(description)description.textContent=profile.description;
  if(typeof refreshEffectQuality==='function')refreshEffectQuality();
  if(save){try{localStorage.setItem(QUALITY_KEY,key)}catch(e){}}
- msg('Graphics quality: '+profile.label+'. '+(key==='standard'?'Performance-focused settings enabled.':key==='enhanced'?'Balanced visual settings enabled.':key==='hyper'?'High-quality preview settings enabled.':'Maximum browser preview settings enabled. Expect a significant performance cost.'));
+ if(!arguments[2])msg('Graphics quality: '+profile.label+'. '+(key==='standard'?'Performance-focused settings enabled.':key==='enhanced'?'Balanced visual settings enabled.':key==='hyper'?'High-quality preview settings enabled.':'Maximum browser preview settings enabled. Expect a significant performance cost.'));
 }
 const CINEMATIC_KEY='prisma3d-lite-cinematic-v1';
 const cinematicDefaults={enabled:false,bloom:25,vignette:30,grade:35,grain:12,atmosphere:15};
@@ -1585,11 +1634,13 @@ for(const [id,key] of [['cinematicBloom','bloom'],['cinematicVignette','vignette
 $('resetCinematic').addEventListener('click',()=>{cinematicSettings={...cinematicDefaults};applyCinematicSettings();msg('Cinematic settings reset.')});
 applyCinematicSettings(false);
 
-function updatePerformanceButtons(){const b=$('performanceModeBtn');if(b){b.textContent=performanceMode?'Disable Performance Mode':'Enable Performance Mode';b.classList.toggle('performance-mode-active',performanceMode)}const n=$('performanceModeNote');if(n)n.textContent=performanceMode?'Performance Mode is on: viewport resolution is capped at 1× and real-time shadows are paused. Your model data is unchanged.':'Performance Mode is off. Your selected graphics preset is active.';const m=$('performanceMonitorBtn');if(m)m.textContent=showPerformanceMonitor?'Hide Monitor':'Show Monitor';const panel=$('performancePanel');if(panel)panel.hidden=!showPerformanceMonitor;}
-function setPerformanceMode(enabled){performanceMode=!!enabled;applyQualityPreset(qualityPreset,false);updatePerformanceButtons();msg(performanceMode?'Performance Mode enabled. Model data was not changed.':'Performance Mode disabled. Restored '+qualityProfiles[qualityPreset].label+' rendering.');}
+function updatePerformanceButtons(){const b=$('performanceModeBtn');if(b){b.textContent=performanceMode?'Disable Performance Mode':'Enable Performance Mode';b.classList.toggle('performance-mode-active',performanceMode||autoPerformanceLevel>0)}const n=$('performanceModeNote');if(n)n.textContent=performanceMode?'Manual Performance Mode is on: viewport resolution is capped at 1× and real-time shadows are paused. Your model data is unchanged.':autoPerformanceLevel===2?'Automatic high-load optimization is active: preview resolution is reduced further and real-time shadows are paused. Imported models remain editable.':autoPerformanceLevel===1?'Automatic optimization is active because the project is above the 350 MB soft target: preview resolution is capped at 1× and real-time shadows are paused. Imported models remain editable.':'Performance Mode is off. Your selected graphics preset is active.';const m=$('performanceMonitorBtn');if(m)m.textContent=showPerformanceMonitor?'Hide Monitor':'Show Monitor';const panel=$('performancePanel');if(panel)panel.hidden=!showPerformanceMonitor;}
+function projectImportedBytes(){let total=0;for(const o of objects){const d=o&&o.userData&&o.userData.prismaLiteImport;if(d&&Number.isFinite(d.fileBytes))total+=Math.max(0,d.fileBytes)}return total}
+function updateProjectLoadPressure(extraBytes=0){const bytes=projectImportedBytes()+Math.max(0,Number(extraBytes)||0),mb=bytes/1e6,next=mb>500?2:(mb>350?1:0);const changed=next!==autoPerformanceLevel;autoPerformanceLevel=next;const status=$('projectLoadStatus');if(status){const shown=mb>=100?mb.toFixed(0):mb.toFixed(1);status.textContent='Known imported model file sizes: '+shown+' MB / 350 MB soft target. '+(next===2?'High-load preview optimization is active; imports are still allowed.':next===1?'Automatic preview optimization is active; imports are still allowed.':'Below the soft target. The app will not block imports at 350 MB.')+' File size is an estimate, not device RAM.';}if(changed){applyQualityPreset(qualityPreset,false,true);updatePerformanceButtons()}else updatePerformanceButtons();}
+function setPerformanceMode(enabled){performanceMode=!!enabled;applyQualityPreset(qualityPreset,false,true);updatePerformanceButtons();msg(performanceMode?'Performance Mode enabled. Model data was not changed.':'Performance Mode disabled. '+(autoPerformanceLevel?'Automatic project-load optimization remains active.':'Restored '+qualityProfiles[qualityPreset].label+' rendering.'));}
 $('performanceModeBtn').addEventListener('click',()=>setPerformanceMode(!performanceMode));
 $('performanceMonitorBtn').addEventListener('click',()=>{showPerformanceMonitor=!showPerformanceMonitor;updatePerformanceButtons()});
-updatePerformanceButtons();
+updatePerformanceButtons();updateProjectLoadPressure();
 $('qualityPreset').addEventListener('change',e=>{const requested=e.target.value;if(requested==='omega'){const accepted=confirm('WARNING: Be careful when using Omega Realism. This mode pushes graphics quality to an extremely high level and may make the editor run very slowly or become unstable. If you have a weak phone, tablet, or computer, it is not recommended. Are you sure you want to continue?');if(!accepted){e.target.value=qualityPreset;msg('Omega Realism was not enabled. Your previous quality setting is unchanged.');return;}}applyQualityPreset(requested);});
 applyQualityPreset(qualityPreset,false);
 let down=null;
@@ -1655,7 +1706,7 @@ $('presetMapsBtn').onclick=()=>$('presetOverlay').classList.add('open');$('close
 ['bg','floorColor','fog','bright','ambient','gridToggle'].forEach(id=>$(id).addEventListener('input',env));
 $('resetEnv').onclick=()=>{$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;env();msg('Environment reset')};
 $('addCube').onclick=addCube;$('delete').onclick=del;$('duplicate').onclick=duplicate;
-$('fkMode').onclick=()=>setRigMode('FK');$('ikMode').onclick=()=>setRigMode('IK');
+$('fkMode').onclick=()=>{setAbsoluteIKMode(false);setRigMode('FK')};$('ikMode').onclick=()=>setRigMode('IK');$('absoluteIKMode').onclick=()=>setAbsoluteIKMode(!absoluteIKEnabled);$('absoluteIKPinSelected').onclick=pinSelectedAbsoluteIKBone;
 $('showBones').onclick=()=>{showRigBones=true;updateBoneMarkers();msg('Bone handles shown')};
 $('hideBones').onclick=()=>{showRigBones=false;updateBoneMarkers();msg('Bone handles hidden')};
 document.addEventListener('keydown',e=>{
@@ -1754,14 +1805,14 @@ $('projectFile').addEventListener('change',e=>{const file=e.target.files&&e.targ
  }else{
    const group=parser.parse(data.objects);const allNodes=[];group.traverse(o=>{if(o!==group&&o.userData&&o.userData.prismaSceneObject===true)allNodes.push(o)});loaded=allNodes.length?allNodes:(group.children||[]).slice();loadedRoots=(group.children||[]).slice();loadedRoots.forEach(o=>group.remove(o));
  }
- gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;selected=null;multiSelected.clear();if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}
+ gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;updateProjectLoadPressure();selected=null;multiSelected.clear();if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}
  loaded.forEach(obj=>{objects.push(obj)});loadedRoots.forEach(obj=>scene.add(obj));if(data.presetMap){try{presetMapGroup=new THREE.ObjectLoader().parse(data.presetMap);presetMapName=data.presetMapName||presetMapGroup.name.replace(/^Preset Map: /,'');scene.add(presetMapGroup)}catch(mapErr){console.warn('Could not restore preset map',mapErr)}}
   if(['smooth','ease','linear'].includes(data.motion))$('tlInterp').value=data.motion;animationTracks.clear();if(Array.isArray(data.animation)){for(const track of data.animation){if(track&&typeof track.uuid==='string'&&Array.isArray(track.frames)){const clean=track.frames.filter(k=>k&&Number.isFinite(+k.frame)&&Array.isArray(k.position)&&Array.isArray(k.rotation)&&Array.isArray(k.scale)).map(k=>({frame:Math.max(0,Math.min(timelineMaxFrame(),+k.frame)),fov:Number.isFinite(+k.fov)?+k.fov:undefined,position:k.position.map(Number),rotation:k.rotation.map(Number),scale:k.scale.map(Number),quaternion:Array.isArray(k.quaternion)?k.quaternion.map(Number):undefined,bones:Array.isArray(k.bones)?k.bones.filter(b=>b&&Number.isFinite(+b.index)&&Array.isArray(b.position)&&Array.isArray(b.quaternion)&&Array.isArray(b.scale)).map(b=>({index:Math.max(0,Math.floor(+b.index)),name:String(b.name||''),position:b.position.map(Number),quaternion:b.quaternion.map(Number),scale:b.scale.map(Number),quaternion:Array.isArray(b.quaternion)?b.quaternion.map(Number):undefined})).filter(b=>[...b.position,...b.quaternion,...b.scale].every(Number.isFinite)):undefined})).filter(k=>[...k.position,...k.rotation,...k.scale].every(Number.isFinite));if(clean.length)animationTracks.set(track.uuid,clean)}}}timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';updateTimedEffects();renderTimeline();
 
  if(data.studioLighting){studioSettings={...studioDefaults,...data.studioLighting};applyStudioLights()}if(data.particleSettings){$('particlePreset').value=data.particleSettings.preset||'off';$('particleAmount').value=data.particleSettings.amount||'175';$('particleSpeed').value=data.particleSettings.speed||'4';$('particleAmountOut').value=$('particleAmount').value;$('particleSpeedOut').value=$('particleSpeed').value;rebuildParticles()}if(data.environment){$('bg').value=data.environment.background||'#ffffff';$('floorColor').value=data.environment.floorColor||'#f4f4f4';$('fog').value=data.environment.fog??'.012';$('bright').value=data.environment.brightness??'1.2';$('ambient').value=data.environment.ambient??'.8';$('gridToggle').checked=data.environment.grid!==false;env()}
  if(data.lighting){$('keyLight').value=data.lighting.intensity??'1.7';$('lightColor').value=data.lighting.color||'#ffffff';$('lightX').value=data.lighting.x??'7';$('lightY').value=data.lighting.y??'12';$('lightZ').value=data.lighting.z??'8';updateKeyLight()}
  if(data.camera){camera.position.fromArray(data.camera.position||[7,6,9]);camera.up.fromArray(data.camera.up||[0,1,0]);controls.target.fromArray(data.camera.target||[0,1,0]);camera.fov=data.camera.fov||50;camera.updateProjectionMatrix();controls.update()}
- dustOn=!!data.dustOn;dustPoints.visible=dustOn;$('dustToggle').textContent=dustOn?'Dust FX: On':'Dust FX: Off';$('dustToggle').classList.toggle('active',dustOn);$('dustToggle').setAttribute('aria-pressed',String(dustOn));if(dustOn)updateDustBounds();objects.filter(isSceneCamera).forEach(buildCameraVisual);activeCamObj=objects.find(isSceneCamera)||null;if(camMode!=='editor')setViewMode('editor');select(null);refresh();syncProps();if(openingStoredProject){openingStoredProject=false;}else{setCurrentProjectIdentity(makeProjectId(),file.name.replace(/\.json$/i,'')||'Imported Project')}msg('Project loaded successfully: '+file.name+' ('+objects.length+' scene object(s))');
+ dustOn=!!data.dustOn;dustPoints.visible=dustOn;$('dustToggle').textContent=dustOn?'Dust FX: On':'Dust FX: Off';$('dustToggle').classList.toggle('active',dustOn);$('dustToggle').setAttribute('aria-pressed',String(dustOn));if(dustOn)updateDustBounds();updateProjectLoadPressure();objects.filter(isSceneCamera).forEach(buildCameraVisual);activeCamObj=objects.find(isSceneCamera)||null;if(camMode!=='editor')setViewMode('editor');select(null);refresh();syncProps();if(openingStoredProject){openingStoredProject=false;}else{setCurrentProjectIdentity(makeProjectId(),file.name.replace(/\.json$/i,'')||'Imported Project')}msg('Project loaded successfully: '+file.name+' ('+objects.length+' scene object(s))');
  }catch(err){openingStoredProject=false;console.error(err);msg('Could not load project: '+(err&&err.message?err.message:'invalid project data'))}};reader.readAsText(file);e.target.value=''});
 // ===== Saved Projects + automatic recovery =====
 const PROJECT_DB_NAME='Prisma3DLiteProjects',PROJECT_DB_VERSION=1,PROJECT_STORE='projects';
@@ -1793,7 +1844,7 @@ async function autosaveCurrentProject(reason='timer'){
 }
 async function refreshSavedProjects(){const list=$('savedProjectsList');if(!list)return;list.innerHTML='';try{const records=(await listSavedProjects()).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));if(!records.length){list.innerHTML='<div class="saved-project-empty">No saved projects yet. Your current work will appear here after the first autosave.</div>';return}for(const record of records){const card=document.createElement('div');card.className='saved-project-card';const meta=document.createElement('div');meta.className='saved-project-meta';const name=document.createElement('div');name.className='saved-project-name';name.textContent=record.title||'Untitled Project';const sub=document.createElement('div');sub.className='saved-project-sub';const size=Math.max(1,Math.round((record.data||'').length/1024));sub.textContent='Last saved '+prettyProjectDate(record.updatedAt)+' · '+size+' KB'+(record.id===currentSavedProjectId?' · Current project':'');meta.append(name,sub);const actions=document.createElement('div');actions.className='saved-project-actions';const open=document.createElement('button');open.textContent='Open';open.addEventListener('click',()=>openSavedProject(record.id));const rename=document.createElement('button');rename.textContent='Rename';rename.addEventListener('click',()=>renameSavedProject(record.id,record.title||'Untitled Project'));const download=document.createElement('button');download.textContent='Download';download.addEventListener('click',()=>downloadSavedProject(record));const del=document.createElement('button');del.textContent='Delete';del.addEventListener('click',()=>deleteSavedProject(record.id,record.title));actions.append(open,rename,download,del);card.append(meta,actions);list.appendChild(card)}}catch(err){console.error(err);list.innerHTML='<div class="saved-project-empty">Saved Projects could not be opened: '+String(err.message||err).replace(/[<>&]/g,'')+'</div>'}}
 async function openSavedProjects(){await autosaveCurrentProject('open-menu');$('savedProjectsOverlay').classList.add('open');await refreshSavedProjects()}
-async function openSavedProject(id){try{const record=await projectStore('readonly',store=>store.get(id));if(!record||!record.data)throw new Error('That saved project could not be found.');if(objects.length&&!confirm('Open “'+(record.title||'Untitled Project')+'”? Your current work is autosaved first.'))return;await autosaveCurrentProject('before-open');setCurrentProjectIdentity(record.id,record.title);const file=new File([record.data],(record.title||'Prisma Project')+'.json',{type:'application/json'});const transfer=new DataTransfer();transfer.items.add(file);openingStoredProject=true;$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));$('savedProjectsOverlay').classList.remove('open');$('projectMenuOverlay').classList.remove('open')}catch(err){console.error(err);msg('Could not open saved project: '+(err.message||err))}}
+async function openSavedProject(id){try{const record=await projectStore('readonly',store=>store.get(id));if(!record||!record.data)throw new Error('That saved project could not be found.');if(objects.length&&!confirm('Open “'+(record.title||'Untitled Project')+'”? Your current work is autosaved first.'))return;await autosaveCurrentProject('before-open');setCurrentProjectIdentity(record.id,record.title);const file=new File([record.data],(record.title||'Prisma Project')+'.json',{type:'application/json'});const transfer=new DataTransfer();transfer.items.add(file);openingStoredProject=true;$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));$('savedProjectsOverlay').classList.remove('open')}catch(err){console.error(err);msg('Could not open saved project: '+(err.message||err))}}
 async function renameSavedProject(id,oldTitle){const next=prompt('Enter a new project name:',oldTitle);if(next===null)return;const title=next.trim();if(!title){msg('Project name cannot be empty.');return}try{const record=await projectStore('readonly',store=>store.get(id));if(!record)throw new Error('Project not found');record.title=title;record.updatedAt=Date.now();await projectStore('readwrite',store=>store.put(record));if(id===currentSavedProjectId)setCurrentProjectIdentity(id,title);await refreshSavedProjects();msg('Project renamed to '+title)}catch(err){msg('Could not rename project: '+(err.message||err))}}
 async function deleteSavedProject(id,title){if(id===currentSavedProjectId){msg('This project is currently open. Start a new project first, then delete this saved copy.');return}if(!confirm('Delete “'+(title||'Untitled Project')+'”? This cannot be undone.'))return;try{await projectStore('readwrite',store=>store.delete(id));await refreshSavedProjects();msg('Saved project deleted.')}catch(err){msg('Could not delete project: '+(err.message||err))}}
 function downloadSavedProject(record){try{const blob=new Blob([record.data],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=(record.title||'Prisma3D-Lite-Project').replace(/[^a-z0-9_-]+/gi,'_')+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}catch(err){msg('Could not download backup: '+(err.message||err))}}
@@ -1804,12 +1855,26 @@ setTimeout(restoreOrStartAutosave,2500);
 setInterval(()=>{if(!document.hidden)autosaveCurrentProject('timer')},12000);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')autosaveCurrentProject('hidden')});
 window.addEventListener('pagehide',()=>{autosaveCurrentProject('pagehide')});
-function openProjectMenu(){$('projectMenuOverlay').classList.add('open')}
-function closeProjectMenu(){$('projectMenuOverlay').classList.remove('open')}
-$('projectMenuBtn').onclick=openProjectMenu;$('closeProjectMenu').onclick=closeProjectMenu;$('menuContinue').onclick=closeProjectMenu;$('menuSaveProject').onclick=downloadCurrentProject;$('menuSavedProjects').onclick=openSavedProjects;$('closeSavedProjects').onclick=()=>$('savedProjectsOverlay').classList.remove('open');$('savedProjectsOverlay').addEventListener('click',e=>{if(e.target===$('savedProjectsOverlay'))$('savedProjectsOverlay').classList.remove('open')});$('menuProjectFile').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const transfer=new DataTransfer();transfer.items.add(f);$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));closeProjectMenu();e.target.value=''});
+function openProjectMenu(){window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}
+function closeProjectMenu(){const m=$('p3dlMainMenu');if(m){m.classList.add('p3dl-menu-exit');setTimeout(()=>{m.style.display='none'},950)}}
+$('backToMainMenu').addEventListener('click',async()=>{try{await autosaveCurrentProject('before-main-menu')}catch(e){console.warn('Autosave before returning to menu failed',e)}if(window.p3dlShowMainMenu)window.p3dlShowMainMenu()});
+$('closeSavedProjects').onclick=()=>{$('savedProjectsOverlay').classList.remove('open');if(window.p3dlSavedProjectsReturnToMenu){window.p3dlSavedProjectsReturnToMenu=false;window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}};$('savedProjectsOverlay').addEventListener('click',e=>{if(e.target===$('savedProjectsOverlay')){$('savedProjectsOverlay').classList.remove('open');if(window.p3dlSavedProjectsReturnToMenu){window.p3dlSavedProjectsReturnToMenu=false;window.p3dlShowMainMenu&&window.p3dlShowMainMenu()}}});
 function startNewProject(skipConfirm=false){if(!skipConfirm&&objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;gizmo.detach();clearBoneMarkers();for(const o of objects){if(o.parent)o.parent.remove(o);disposeObjectTree(o)}objects.length=0;multiSelected.clear();selected=null;selectedBone=null;selectedAttachmentBone=null;animationTracks.clear();selectedKeyframe=null;timelineFrame=0;timelinePlaying=false;$('tlPlay').textContent='▶ Play';$('tlFrame').value='0';$('tlRange').value='0';if(presetMapGroup){scene.remove(presetMapGroup);presetMapGroup=null;presetMapName=''}camera.position.set(7,6,9);controls.target.set(0,1,0);camera.up.set(0,1,0);camera.fov=50;camera.updateProjectionMatrix();controls.update();dustOn=false;dustPoints.visible=false;$('dustToggle').textContent='Dust FX: Off';$('dustToggle').classList.remove('active');$('dustToggle').setAttribute('aria-pressed','false');$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;$('keyLight').value='1.7';$('lightColor').value='#ffffff';$('lightX').value='7';$('lightY').value='12';$('lightZ').value='8';env();updateKeyLight();select(null);refresh();syncProps();syncTimelineTimeUI();renderTimeline();closeProjectMenu();setCurrentProjectIdentity(makeProjectId(),'Untitled Project');autosaveCurrentProject('new-project');msg('New blank project started. Your Saved Models library is still available.')}
-$('menuNewProject').onclick=startNewProject;
-$('projectMenuOverlay').addEventListener('click',e=>{if(e.target===$('projectMenuOverlay'))closeProjectMenu()});
+// Public bridge for the main-menu script. Scene data stays private to this editor IIFE.
+window.p3dlMainMenuApi={
+ async startNewProject(){
+  if(objects.length&&!confirm('Start a new project? Your current project will be saved in Saved Projects. Your Saved Models library will not be deleted.'))return false;
+  const saved=await autosaveCurrentProject('before-new-project');
+  if(!saved){msg('Your current project could not be saved, so New Project was cancelled to protect your work. Check the Autosave status and try again.');return false;}
+  startNewProject(true);
+  return true;
+ },
+ openSavedProjects,
+ openProjectMenu,
+ downloadCurrentProject,
+ async openProjectFile(file){if(!file)return false;const transfer=new DataTransfer();transfer.items.add(file);$('projectFile').files=transfer.files;$('projectFile').dispatchEvent(new Event('change'));return true},
+ async continueEditing(){const saved=await autosaveCurrentProject('continue-editing');return saved!==false}
+};
 function updateDustBounds(){if(selected){const b=new THREE.Box3().setFromObject(selected);if(!b.isEmpty()){dustCenter.copy(b.getCenter(new THREE.Vector3()));dustRadius=Math.max(1.2,Math.min(5,b.getSize(new THREE.Vector3()).length()*.65));}}else{dustCenter.copy(controls.target);dustRadius=2.6;}for(let i=0;i<DUST_COUNT;i++){dustPositions[i*3]=(Math.random()-.5)*dustRadius*2;dustPositions[i*3+1]=Math.random()*dustRadius*1.8;dustPositions[i*3+2]=(Math.random()-.5)*dustRadius*2;}dustGeometry.attributes.position.needsUpdate=true;}
 $('dustToggle').onclick=()=>{dustOn=!dustOn;dustPoints.visible=dustOn;$('dustToggle').textContent=dustOn?'Dust FX: On':'Dust FX: Off';$('dustToggle').classList.toggle('active',dustOn);$('dustToggle').setAttribute('aria-pressed',String(dustOn));if(dustOn){updateDustBounds();msg('Dust particles enabled — click Dust FX again to turn them off')}else msg('Dust particles disabled')};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{if(selectedBone){setBoneTransformMode(b.dataset.mode);return;}gizmo.setMode(b.dataset.mode);setGizmoSize(b.dataset.mode==='rotate'?1.15:.68);document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));msg(b.textContent.replace(/ \([MRS]\)/,'')+' mode — drag the smaller handles on the selected object')});
@@ -1836,25 +1901,25 @@ $('r'+a).onchange=()=>{if(selected){pushUndo();selected.rotation[a]=THREE.Math.d
 $('s'+a).onchange=()=>{if(selected){pushUndo();selected.scale[a]=Math.max(.01,Number($('s'+a).value)||.01);syncProps();updateCurrentKeyIfPresent()}};
 }
 function fit(o){const b=new THREE.Box3().setFromObject(o),s=b.getSize(new THREE.Vector3()),max=Math.max(s.x,s.y,s.z)||1;o.scale.multiplyScalar(3/max);const b2=new THREE.Box3().setFromObject(o);o.position.y-=b2.min.y}
-function finishModelImport(o,name){if(!o)throw new Error('No model object was created');o.name=name||'Imported model';const shrunk=limitModelMemory(o);fit(o);add(o,o.name);const b=new THREE.Box3().setFromObject(o),center=b.getCenter(new THREE.Vector3());controls.target.copy(center);controls.update();const tris=countTriangles(o);msg('Model imported: '+o.name+(tris>0?' ('+fmtTris(tris)+' triangles)':'')+(shrunk?'. '+shrunk+' large texture(s) were shrunk to save memory':''))}
-function loadUrl(url){msg('Loading model…');PrismaBusy.show('Please wait…','Loading '+(url.split('/').pop().split('?')[0]||'model'));loader.load(url,g=>{try{finishModelImport(g.scene||g.scenes&&g.scenes[0],url.split('/').pop().split('?')[0]||'Imported model');PrismaBusy.done()}catch(err){console.error(err);const m='Could not import model: '+err.message;msg(m);PrismaBusy.error(m,err.stack)}},ev=>{if(ev&&ev.lengthComputable)PrismaBusy.progress(ev.loaded/ev.total,'Downloading…')},e=>{console.error(e);const m='Could not load URL. Use a direct .glb/.gltf file URL, or download the model and import it locally.';msg(m);PrismaBusy.error(m,e&&e.message)})}
+function finishModelImport(o,name,fileBytes){if(!o)throw new Error('No model object was created');o.name=name||'Imported model';o.userData=o.userData||{};if(Number(fileBytes)>0)o.userData.prismaLiteImport={fileBytes:Number(fileBytes),fileName:String(name||'Imported model')};const shrunk=limitModelMemory(o);fit(o);add(o,o.name);updateProjectLoadPressure();const b=new THREE.Box3().setFromObject(o),center=b.getCenter(new THREE.Vector3());controls.target.copy(center);controls.update();const tris=countTriangles(o);msg('Model imported: '+o.name+(tris>0?' ('+fmtTris(tris)+' triangles)':'')+(shrunk?'. '+shrunk+' large texture(s) were shrunk to save memory':''))}
+function loadUrl(url){let downloadedBytes=0;msg('Loading model…');PrismaBusy.show('Please wait…','Loading '+(url.split('/').pop().split('?')[0]||'model'));loader.load(url,g=>{try{finishModelImport(g.scene||g.scenes&&g.scenes[0],url.split('/').pop().split('?')[0]||'Imported model',downloadedBytes);PrismaBusy.done()}catch(err){console.error(err);const m='Could not import model: '+err.message;msg(m);PrismaBusy.error(m,err.stack)}},ev=>{if(ev&&ev.lengthComputable){downloadedBytes=ev.total;PrismaBusy.progress(ev.loaded/ev.total,'Downloading…')}},e=>{console.error(e);const m='Could not load URL. Use a direct .glb/.gltf file URL, or download the model and import it locally.';msg(m);PrismaBusy.error(m,e&&e.message)})}
 $('loadUrl').onclick=()=>{const u=$('url').value.trim();if(u)loadUrl(u);else msg('Paste a direct model URL first')};
 let importBusy=false;
 async function importModelFile(f){
  if(importBusy){msg('Still importing the last file. Please wait…');return}
  if(gpuLost){PrismaBusy.show('Please wait…','Waiting for the graphics to come back');await new Promise(r=>setTimeout(r,1200));if(gpuLost){PrismaBusy.error('The graphics memory was reset and has not come back. Please reload the page (save your project first if you can), then import with a lower Texture detail.','');return}PrismaBusy.done()}
- importBusy=true;PrismaBusy.show('Please wait…','Importing '+f.name);
+ importBusy=true;updateProjectLoadPressure(f.size||0);PrismaBusy.show('Please wait…','Importing '+f.name);
  try{await PrismaBusy.frame();await importModelFileCore(f)}
  catch(err){console.error(err);PrismaBusy.error('Import failed: '+(err&&err.message?err.message:'unknown error'),err&&err.stack)}
- finally{importBusy=false;PrismaBusy.done();const mn=memoryNote();if(mn)msg($('status').textContent+mn)}
+ finally{importBusy=false;updateProjectLoadPressure();PrismaBusy.done();const mn=memoryNote();if(mn)msg($('status').textContent+mn)}
 }
 async function importModelFileCore(f){const name=f.name,ext=name.split('.').pop().toLowerCase();msg('Importing '+name+'…');try{
- if(ext==='glb'||ext==='gltf'){const u=URL.createObjectURL(f);try{await new Promise((resolve,reject)=>loader.load(u,g=>{try{finishModelImport(g.scene||g.scenes&&g.scenes[0],name);resolve()}catch(err){reject(err)}},ev=>{if(ev&&ev.lengthComputable)PrismaBusy.progress(ev.loaded/ev.total,'Reading the model…')},reject))}finally{URL.revokeObjectURL(u)};return}
- if(ext==='fbx'){if(!THREE.FBXLoader)throw new Error('FBX loader did not load. Check your internet connection and refresh.');const o=new THREE.FBXLoader().parse(await f.arrayBuffer(),'');finishModelImport(o,name);return}
- if(ext==='obj'){if(!THREE.OBJLoader)throw new Error('OBJ loader did not load. Check your internet connection and refresh.');const o=new THREE.OBJLoader().parse(await f.text());finishModelImport(o,name);msg('Imported '+name+'. If it looks plain, the OBJ may need its MTL/material textures imported with it.');return}
- if(ext==='stl'){if(!THREE.STLLoader)throw new Error('STL loader did not load.');const geo=new THREE.STLLoader().parse(await f.arrayBuffer());geo.computeVertexNormals();const o=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xb9c6d8,metalness:.1,roughness:.75}));finishModelImport(o,name);return}
- if(ext==='ply'){if(!THREE.PLYLoader)throw new Error('PLY loader did not load.');const geo=new THREE.PLYLoader().parse(await f.arrayBuffer());geo.computeVertexNormals();const hasColor=!!geo.getAttribute('color');const o=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xb9c6d8,vertexColors:hasColor,roughness:.8}));finishModelImport(o,name);return}
- if(ext==='prisma'){if(!window.PrismaImporter)throw new Error('The Prisma package importer did not load.');const r=await PrismaImporter.importFile(f,{importLights:!$('importLights')||$('importLights').checked,onProgress:(p,t)=>PrismaBusy.progress(p,t),maxTextureSize:importTexCap().cap,textureBudgetPixels:importTexCap().budget||undefined}),rp=r.report;finishModelImport(r.object,r.name);r.object.updateMatrixWorld(true);PrismaImporter.syncLightRanges(r.object);scanLights();msg('Imported '+r.name+': '+rp.meshes+' meshes ('+rp.skinnedMeshes+' skinned), '+rp.bones+' bones, '+rp.texturesLoaded.length+' textures'+(rp.triangles?', '+fmtTris(rp.triangles)+' triangles':'')+(rp.lightsImported?', '+rp.lightsImported+' light'+(rp.lightsImported>1?'s':''):'')+(rp.texturesMissing.length?', '+rp.texturesMissing.length+' texture(s) missing':'')+(rp.texturesDownscaled&&rp.texturesDownscaled.length?', '+rp.texturesDownscaled.length+' large texture(s) shrunk to 2048px':'')+(rp.warnings.length?'. Note: '+rp.warnings[0]:'')+(rp.lightsImported?'. If it looks too bright, lower Key light or Ambient':'')+'.');return}
+ if(ext==='glb'||ext==='gltf'){const u=URL.createObjectURL(f);try{await new Promise((resolve,reject)=>loader.load(u,g=>{try{finishModelImport(g.scene||g.scenes&&g.scenes[0],name,f.size);resolve()}catch(err){reject(err)}},ev=>{if(ev&&ev.lengthComputable)PrismaBusy.progress(ev.loaded/ev.total,'Reading the model…')},reject))}finally{URL.revokeObjectURL(u)};return}
+ if(ext==='fbx'){if(!THREE.FBXLoader)throw new Error('FBX loader did not load. Check your internet connection and refresh.');const o=new THREE.FBXLoader().parse(await f.arrayBuffer(),'');finishModelImport(o,name,f.size);return}
+ if(ext==='obj'){if(!THREE.OBJLoader)throw new Error('OBJ loader did not load. Check your internet connection and refresh.');const o=new THREE.OBJLoader().parse(await f.text());finishModelImport(o,name,f.size);msg('Imported '+name+'. If it looks plain, the OBJ may need its MTL/material textures imported with it.');return}
+ if(ext==='stl'){if(!THREE.STLLoader)throw new Error('STL loader did not load.');const geo=new THREE.STLLoader().parse(await f.arrayBuffer());geo.computeVertexNormals();const o=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xb9c6d8,metalness:.1,roughness:.75}));finishModelImport(o,name,f.size);return}
+ if(ext==='ply'){if(!THREE.PLYLoader)throw new Error('PLY loader did not load.');const geo=new THREE.PLYLoader().parse(await f.arrayBuffer());geo.computeVertexNormals();const hasColor=!!geo.getAttribute('color');const o=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:0xb9c6d8,vertexColors:hasColor,roughness:.8}));finishModelImport(o,name,f.size);return}
+ if(ext==='prisma'){if(!window.PrismaImporter)throw new Error('The Prisma package importer did not load.');const r=await PrismaImporter.importFile(f,{importLights:!$('importLights')||$('importLights').checked,onProgress:(p,t)=>PrismaBusy.progress(p,t),maxTextureSize:importTexCap().cap,textureBudgetPixels:importTexCap().budget||undefined}),rp=r.report;finishModelImport(r.object,r.name,f.size);r.object.updateMatrixWorld(true);PrismaImporter.syncLightRanges(r.object);scanLights();msg('Imported '+r.name+': '+rp.meshes+' meshes ('+rp.skinnedMeshes+' skinned), '+rp.bones+' bones, '+rp.texturesLoaded.length+' textures'+(rp.triangles?', '+fmtTris(rp.triangles)+' triangles':'')+(rp.lightsImported?', '+rp.lightsImported+' light'+(rp.lightsImported>1?'s':''):'')+(rp.texturesMissing.length?', '+rp.texturesMissing.length+' texture(s) missing':'')+(rp.texturesDownscaled&&rp.texturesDownscaled.length?', '+rp.texturesDownscaled.length+' large texture(s) shrunk to 2048px':'')+(rp.warnings.length?'. Note: '+rp.warnings[0]:'')+(rp.lightsImported?'. If it looks too bright, lower Key light or Ambient':'')+'.');return}
  if(ext==='dae'||ext==='3ds')throw new Error('This format is not enabled in this build. If possible, convert it to GLB or FBX.');
  throw new Error('Unsupported file type. Use GLB, GLTF, FBX, OBJ, STL, PLY or PRISMA.');
  }catch(err){console.error(err);const m='Import failed: '+(err&&err.message?err.message:'unsupported or damaged model file');msg(m);PrismaBusy.error(m,err&&err.stack)}}
@@ -1890,7 +1955,7 @@ function renderTimeline(){
  for(const entry of visibleTargets){const target=entry.target,frames=trackFor(target)||[],lane=document.createElement('div');lane.className='tl-lane'+(activeTarget===target?' selected':'')+(target===selectedBone?' focused-bone':'');lane.dataset.timelineUuid=target.uuid;const label=document.createElement('button');label.className='tl-lane-label';label.textContent=entry.label;label.title='Select '+(target.isBone?'bone':'model')+' track';label.onclick=()=>selectTimelineTarget(target);lane.appendChild(label);const strip=document.createElement('div');strip.className='tl-lane-strip';const playhead=document.createElement('div');playhead.className='tl-playhead';playhead.style.left=(timelineFrame/timelineMaxFrame()*100)+'%';strip.appendChild(playhead);if(target.userData&&target.userData.prismaEffect){const fx=target.userData.prismaEffect,bar=document.createElement('div');bar.className='tl-effect-span';const left=Math.max(0,Math.min(100,(Number(fx.start)||0)/duration*100)),right=Math.max(left,Math.min(100,(Number(fx.end)||0)/duration*100));bar.style.left=left+'%';bar.style.width=Math.max(0.8,right-left)+'%';bar.title=(fx.label||'Effect')+' · '+(Number(fx.start)||0).toFixed(2)+'s to '+(Number(fx.end)||0).toFixed(2)+'s';strip.appendChild(bar)}
   frames.slice().sort((a,b)=>a.frame-b.frame).forEach(k=>{const marker=document.createElement('button');const isActive=!!selectedKeyframe&&selectedKeyframe.uuid===target.uuid&&Math.abs(selectedKeyframe.frame-k.frame)<.0001;marker.className='tl-key'+(isActive?' active':'');marker.style.left=(Math.max(0,Math.min(100,(k.frame/fps)/duration*100)))+'%';marker.title=(isActive?'Selected keyframe · ':'Select keyframe · ')+(k.frame/fps).toFixed(3)+' seconds';marker.setAttribute('aria-label',(isActive?'Selected keyframe at ':'Select keyframe at ')+(k.frame/fps).toFixed(3)+' seconds');marker.setAttribute('aria-pressed',isActive?'true':'false');marker.onclick=e=>{e.stopPropagation();selectTimelineTarget(target);selectedKeyframe={uuid:target.uuid,frame:k.frame};setTimelineFrame(k.frame);renderTimeline()};strip.appendChild(marker)});strip.onclick=()=>selectTimelineTarget(target);lane.appendChild(strip);track.appendChild(lane);
  }
- const target=timelineTarget(),frames=trackFor(target)||[];const label=target?(target.isBone?((target.name||'Unnamed bone')+' · independent bone track'):((target.name||'Selected model')+' · model track')):'Select a model or one of its bones';$('tlLabel').textContent=label+' · '+frames.length+' keyframe(s)'+(selectedKeyframe&&selectedKeyframe.uuid===target?.uuid?' · selected key at '+(selectedKeyframe.frame/fps).toFixed(3)+'s':'');$('tlDeleteKey').disabled=!(selectedKeyframe&&target&&selectedKeyframe.uuid===target.uuid&&frames.some(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001));
+ const target=timelineTarget(),frames=trackFor(target)||[];const label=target?(target.isBone?((target.name||'Unnamed bone')+' · independent bone track'):((target.name||'Selected model')+' · model track')):'Select a model or one of its bones';$('tlLabel').textContent=label+' · '+frames.length+' keyframe(s)'+(selectedKeyframe&&selectedKeyframe.uuid===target?.uuid?' · selected key at '+(selectedKeyframe.frame/fps).toFixed(3)+'s':'');const hasSelected=!!(selectedKeyframe&&target&&selectedKeyframe.uuid===target.uuid&&frames.some(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001));$('tlDeleteKey').disabled=!hasSelected;$('tlCopyKey').disabled=!hasSelected;$('tlDuplicateKey').disabled=!hasSelected;$('tlMoveKeyBack').disabled=!hasSelected||selectedKeyframe.frame<1;$('tlMoveKeyForward').disabled=!hasSelected||selectedKeyframe.frame>=timelineMaxFrame();$('tlPasteKey').disabled=!keyframeClipboard||!target;
 }
 function focusTimelineTarget(target=timelineTarget()){
  if(!target){msg('Select a model or bone first.');return}
@@ -1932,6 +1997,12 @@ $('tlKey').onclick=()=>{
  for(const boneTarget of targets){if(!boneTarget)continue;const frames=trackFor(boneTarget,true);const key=captureTransform(boneTarget,timelineFrame);if(boneTarget.isBone)key.quaternion=boneTarget.quaternion.toArray();const idx=frames.findIndex(k=>Math.abs(k.frame-key.frame)<.0001);if(idx>=0)frames[idx]=key;else frames.push(key);frames.sort((a,b)=>a.frame-b.frame);recorded++;if(boneTarget===target)primaryKey=key;}
  const key=primaryKey||captureTransform(target,timelineFrame);selectedKeyframe={uuid:target.uuid,frame:key.frame};renderTimeline();msg((rigMode==='IK'&&selectedBone?'IK pose recorded for '+recorded+' connected bones':'Keyframe recorded for '+(target.name||'selected target'))+' at '+(key.frame/timelineFps()).toFixed(3)+' seconds')
 };
+function getSelectedKeyframeRecord(){const target=timelineTarget();if(!target||!selectedKeyframe||selectedKeyframe.uuid!==target.uuid)return null;const frames=trackFor(target)||[];const key=frames.find(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001);return key?{target,key}:null}
+$('tlCopyKey').onclick=()=>{const found=getSelectedKeyframeRecord();if(!found){msg('Select a keyframe marker first.');return}keyframeClipboard=JSON.parse(JSON.stringify(found.key));$('tlPasteKey').disabled=false;msg('Keyframe copied. Move the playhead and choose Paste at playhead.')};
+$('tlPasteKey').onclick=()=>{const target=timelineTarget();if(!target||!keyframeClipboard){msg('Copy a keyframe first, then select a target track.');return}pushUndo();const frames=trackFor(target,true),key=JSON.parse(JSON.stringify(keyframeClipboard));key.frame=Math.max(0,Math.min(timelineMaxFrame(),timelineFrame));const existing=frames.findIndex(k=>Math.abs(k.frame-key.frame)<.0001);if(existing>=0)frames[existing]=key;else frames.push(key);frames.sort((a,b)=>a.frame-b.frame);selectedKeyframe={uuid:target.uuid,frame:key.frame};applyAllTimelineTracks(timelineFrame);renderTimeline();msg('Keyframe pasted at '+(key.frame/timelineFps()).toFixed(3)+'s.')};
+$('tlDuplicateKey').onclick=()=>{const found=getSelectedKeyframeRecord();if(!found){msg('Select a keyframe marker first.');return}const target=found.target,frames=trackFor(target),newFrame=Math.min(timelineMaxFrame(),found.key.frame+timelineFps());if(Math.abs(newFrame-found.key.frame)<.0001){msg('There is no room to duplicate this keyframe later in the timeline.');return}pushUndo();const copy=JSON.parse(JSON.stringify(found.key));copy.frame=newFrame;const existing=frames.findIndex(k=>Math.abs(k.frame-newFrame)<.0001);if(existing>=0)frames[existing]=copy;else frames.push(copy);frames.sort((a,b)=>a.frame-b.frame);selectedKeyframe={uuid:target.uuid,frame:newFrame};setTimelineFrame(newFrame);msg('Keyframe duplicated one second later.')};
+function nudgeSelectedKeyframe(direction){const found=getSelectedKeyframeRecord();if(!found)return;const target=found.target,frames=trackFor(target),oldFrame=found.key.frame,newFrame=Math.max(0,Math.min(timelineMaxFrame(),oldFrame+direction));if(Math.abs(newFrame-oldFrame)<.0001)return;pushUndo();const collision=frames.findIndex(k=>Math.abs(k.frame-newFrame)<.0001);if(collision>=0){msg('A keyframe already exists at that frame.');undoStack.pop();$('tlUndo').disabled=undoStack.length===0;return}found.key.frame=newFrame;frames.sort((a,b)=>a.frame-b.frame);selectedKeyframe={uuid:target.uuid,frame:newFrame};setTimelineFrame(newFrame);msg('Keyframe moved to '+(newFrame/timelineFps()).toFixed(3)+'s.')}
+$('tlMoveKeyBack').onclick=()=>nudgeSelectedKeyframe(-1);$('tlMoveKeyForward').onclick=()=>nudgeSelectedKeyframe(1);
 $('tlDeleteKey').onclick=()=>{const target=timelineTarget();if(!target||!selectedKeyframe||selectedKeyframe.uuid!==target.uuid){msg('Select an individual keyframe marker first');return}const frames=trackFor(target);if(!frames)return;const idx=frames.findIndex(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001);if(idx<0){msg('That keyframe no longer exists');selectedKeyframe=null;renderTimeline();return}pushUndo();const time=(frames[idx].frame/timelineFps()).toFixed(3);frames.splice(idx,1);selectedKeyframe=null;if(!frames.length)animationTracks.delete(target.uuid);renderTimeline();msg('Deleted selected keyframe at '+time+'s')};
 $('tlClear').onclick=()=>{const target=timelineTarget();if(!target){msg('Select a model or bone first');return}if(!animationTracks.has(target.uuid)){msg('This target has no keyframes');return}pushUndo();animationTracks.delete(target.uuid);selectedKeyframe=null;renderTimeline();msg('Keyframes cleared for '+(target.name||'selected target'))};
 $('tlPrev').onclick=()=>setTimelineFrame(timelineFrame-1);$('tlNext').onclick=()=>setTimelineFrame(timelineFrame+1);
@@ -1994,12 +2065,17 @@ $('exportAnimation').addEventListener('click',async()=>{
    stream=renderer.domElement.captureStream(fps);
    videoTrack=stream.getVideoTracks()[0]||null;
   }
-  // Prefer MP4/H.264 where available, with WebM as the browser fallback.
+  // Prefer broadly compatible MP4/H.264 Baseline. Try explicit H.264
+  // profiles before allowing the browser to choose an MP4 codec.
+  // WebM remains an honest fallback when this browser cannot encode MP4.
   const mimeCandidates=[
+   'video/mp4;codecs=avc1.42E01E',
    'video/mp4;codecs="avc1.42E01E"',
+   'video/mp4;codecs=avc1.4D401E',
+   'video/mp4;codecs=avc1.640028',
    'video/mp4',
-   'video/webm;codecs=vp9',
    'video/webm;codecs=vp8',
+   'video/webm;codecs=vp9',
    'video/webm'
   ];
   const supportedMimes=typeof MediaRecorder.isTypeSupported==='function'
@@ -2037,11 +2113,23 @@ $('exportAnimation').addEventListener('click',async()=>{
   recorder.stop();await stopped;stream.getTracks().forEach(t=>t.stop());
   const actualMime=(recorder.mimeType||selectedMime||'video/webm').toLowerCase();
   const isMp4=actualMime.includes('mp4');
+  const isWebm=actualMime.includes('webm');
+  if(!isMp4&&!isWebm)throw new Error('The browser returned an unrecognized video format ('+actualMime+'). Please try a current version of Chrome, Edge, or Safari.');
   const fileExtension=isMp4?'mp4':'webm';
   const blob=new Blob(chunks,{type:actualMime});
   if(!blob.size)throw new Error('The exported video was empty.');
+  // Check the container signature before assigning a familiar file extension.
+  const header=new Uint8Array(await blob.slice(0,64).arrayBuffer());
+  const headerText=Array.from(header.slice(0,64),b=>String.fromCharCode(b)).join('');
+  const hasMp4Signature=headerText.includes('ftyp');
+  const hasWebmSignature=header.length>=4&&header[0]===0x1A&&header[1]===0x45&&header[2]===0xDF&&header[3]===0xA3;
+  if((isMp4&&!hasMp4Signature)||(isWebm&&!hasWebmSignature))throw new Error('The recorded video container did not pass its format check. No file was downloaded; please retry with another browser.');
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Prisma3D_Lite_Animation_'+new Date().toISOString().replace(/[:.]/g,'-')+'.'+fileExtension;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-  msg(isMp4?'Animation exported as MP4 (H.264), ready for compatible video platforms.':'Animation exported as WebM. This browser does not offer MP4 recording here; convert to MP4 before uploading to platforms that require it.');
+  if(isMp4){
+   msg('Exported an MP4 video. This browser selected its supported MP4 codec; H.264 is preferred for broad device compatibility.');
+  }else{
+   msg('This browser cannot record MP4/H.264 here, so the export is WebM. WebM may appear as a still image or fail to play in some apps/devices. For widest sharing compatibility, export from a browser/device that supports MP4/H.264.');
+  }
   if(confirm('Your animation has been exported. Would you like to rewatch your animation?'))showExportReplay(blob);
  }catch(err){
   if(recorder&&recorder.state!=='inactive')try{recorder.stop()}catch(_){}
@@ -2098,8 +2186,11 @@ function setViewMode(mode){
  if(mode!=='editor'&&!usableCam()){msg('Add or select a camera first.');return}
  camMode=mode;const inCam=mode!=='editor',clean=mode==='render',wasClean=prev==='render';
  controls.enabled=!inCam;gizmo.enabled=!inCam;if(inCam)gizmo.visible=false;else if(gizmo.object)gizmo.visible=true;
- if(clean&&!wasClean){camSaved.rig=showRigBones;camSaved.ik=ikMarker.visible;showRigBones=false;ikMarker.visible=false;grid.visible=false;setCameraIconsVisible(false)}
- if(!clean&&wasClean){showRigBones=camSaved.rig;ikMarker.visible=camSaved.ik;grid.visible=$('gridToggle').checked;setCameraIconsVisible(true)}
+ // Camera body, lens and frustum are editor-only helpers. Hide them in BOTH
+ // camera-preview and render modes so the active camera cannot see its own lens.
+ setCameraIconsVisible(!inCam);
+ if(clean&&!wasClean){camSaved.rig=showRigBones;camSaved.ik=ikMarker.visible;showRigBones=false;ikMarker.visible=false;grid.visible=false}
+ if(!clean&&wasClean){showRigBones=camSaved.rig;ikMarker.visible=camSaved.ik;grid.visible=$('gridToggle').checked}
  syncCameraUI();
  msg(mode==='editor'?'Back to the editor view':(clean?'Render view through '+activeCamObj.name+'. Esc exits, Space plays or pauses.':'Looking through '+activeCamObj.name+'. Esc exits.'));
 }
@@ -2117,7 +2208,11 @@ function renderFrame(){
  cam.aspect=r.w/r.h;cam.updateProjectionMatrix();
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);renderer.setClearColor(0x000000,1);renderer.clear();renderer.setClearColor(0x252a31,1);
  renderer.setScissorTest(true);renderer.setViewport(r.x,r.y,r.w,r.h);renderer.setScissor(r.x,r.y,r.w,r.h);
- renderer.render(scene,cam);
+ // Defensive per-frame guard: even if a UI transition or fullscreen resize
+ // leaves a helper visible, never draw camera helper meshes through a scene camera.
+ const hiddenCameraHelpers=[];
+ scene.traverse(node=>{if(node.userData&&(node.userData.cameraIcon||node.userData.cameraFrustum)){hiddenCameraHelpers.push([node,node.visible]);node.visible=false;}});
+ try{renderer.render(scene,cam)}finally{for(const [node,wasVisible] of hiddenCameraHelpers)node.visible=wasVisible;}
  renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);
 }
 $('addCamera').onclick=addCamera;
@@ -2186,11 +2281,11 @@ function updateBoneMarkers(){
   _bmP.setFromMatrixPosition(m.bone.matrixWorld);m.ball.position.copy(_bmP);m.outline.position.copy(_bmP);
   m.radius=boneRadius(_bmC.distanceTo(_bmP),vc.fov,stage.clientHeight,diag,BONE_PX,boneSizeMul);
   if(m.line&&m.bone.parent&&m.bone.parent.isBone){_bmQ.setFromMatrixPosition(m.bone.parent.matrixWorld);const a=m.line.geometry.attributes.position;a.setXYZ(0,_bmQ.x,_bmQ.y,_bmQ.z);a.setXYZ(1,_bmP.x,_bmP.y,_bmP.z);a.needsUpdate=true;m.line.visible=showRigBones}
-  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone;
-  m.ball.material.color.set(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff));
-  m.ball.scale.setScalar(m.radius*(attachFocus?1.9:(poseFocus?1.35:1)));
-  m.outline.scale.setScalar(m.radius*(attachFocus?2.35:1.22));
-  m.outline.material.color.set(attachFocus?0x087f95:0x252a32);
+  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=absoluteIKAnchors.has(m.bone);
+  m.ball.material.color.set(anchored?0x39e6a2:(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff)));
+  m.ball.scale.setScalar(m.radius*(anchored?1.65:(attachFocus?1.9:(poseFocus?1.35:1))));
+  m.outline.scale.setScalar(m.radius*(anchored?2.05:(attachFocus?2.35:1.22)));
+  m.outline.material.color.set(anchored?0x087b58:(attachFocus?0x087f95:0x252a32));
   m.ball.visible=showRigBones;m.outline.visible=showRigBones;
  }
 }
@@ -2289,9 +2384,10 @@ $('addPointLight').onclick=()=>addSceneLight('point');$('addSpotLight').onclick=
 syncLightUI();
 
 // ===== Big models: keep memory in check, free it on delete, survive a graphics reset =====
-function importTexCap(){const v=($('importTexSize')&&$('importTexSize').value)||'auto';return v==='auto'?{cap:2048,budget:0}:{cap:+v||2048,budget:160e6}}
 const TEX_KEYS=['map','normalMap','emissiveMap','roughnessMap','metalnessMap','aoMap','alphaMap','bumpMap','displacementMap','lightMap','specularMap'];
 function imgDims(img){return {w:img.naturalWidth||img.videoWidth||img.width||0,h:img.naturalHeight||img.videoHeight||img.height||0}}
+function currentSceneTexturePixels(){const seen=new Set();let total=0;for(const root of objects)root.traverse(n=>{const mats=n.material?(Array.isArray(n.material)?n.material:[n.material]):[];for(const m of mats)for(const k of TEX_KEYS){const t=m&&m[k];if(!t||!t.isTexture||seen.has(t))continue;seen.add(t);const d=imgDims(t.image||{});if(d.w>0&&d.h>0)total+=d.w*d.h}});return total}
+function importTexCap(){const v=($('importTexSize')&&$('importTexSize').value)||'auto',cap=v==='auto'?2048:(+v||2048),totalBudget=v==='auto'?Math.max(16e6,Math.min(96e6,(Number(navigator.deviceMemory)||4)*10e6)):160e6;return {cap,budget:Math.max(1e6,totalBudget-currentSceneTexturePixels())}}
 // Models from other formats (GLB, FBX, OBJ ...) arrive with full-size textures. Shrink the oversized ones so one big import
 // cannot use up the graphics memory and take the whole editor down with it.
 function limitModelMemory(root){
@@ -2299,7 +2395,7 @@ function limitModelMemory(root){
  const opt=importTexCap(),seen=new Set(),list=[];
  root.traverse(n=>{const ms=n.material?(Array.isArray(n.material)?n.material:[n.material]):[];for(const m of ms)for(const k of TEX_KEYS){const t=m[k];if(t&&t.isTexture&&t.image&&!seen.has(t)&&!t.isCompressedTexture&&!t.isDataTexture){seen.add(t);const d=imgDims(t.image);if(d.w>0&&d.h>0)list.push({t,w:d.w,h:d.h})}}});
  if(!list.length)return 0;
- const caps=PrismaImporter._internal.planTextureCaps(list,opt.cap,opt.budget||40e6);let shrunk=0;
+ const caps=PrismaImporter._internal.planTextureCaps(list,opt.cap,opt.budget||Math.max(1e6,40e6-currentSceneTexturePixels()));let shrunk=0;
  list.forEach((x,i)=>{const big=Math.max(x.w,x.h);if(big<=caps[i])return;
   try{const k=caps[i]/big,c=document.createElement('canvas');c.width=Math.max(1,Math.round(x.w*k));c.height=Math.max(1,Math.round(x.h*k));
    const g=c.getContext('2d');g.imageSmoothingQuality='high';g.drawImage(x.t.image,0,0,c.width,c.height);
@@ -2342,7 +2438,7 @@ function updatePerformanceMonitor(now){perfFrames++;const elapsed=now-perfWindow
  const info=renderer.info,renderInfo=info.render||{};let meshCount=0,geoBytes=0;const seenGeometry=new Set();
  for(const root of objects){root.traverse(o=>{if(!o.isMesh)return;meshCount++;const g=o.geometry;if(!g||seenGeometry.has(g))return;seenGeometry.add(g);if(g.attributes)for(const k of Object.keys(g.attributes)){const a=g.attributes[k];if(a&&a.array)geoBytes+=a.array.byteLength}if(g.index&&g.index.array)geoBytes+=g.index.array.byteLength;});}
  $('perfFps').textContent=fps.toFixed(0);$('perfFrame').textContent=frame.toFixed(1)+' ms';$('perfCalls').textContent=String(renderInfo.calls||0);$('perfTriangles').textContent=Number(renderInfo.triangles||0).toLocaleString();$('perfMeshes').textContent=String(meshCount);$('perfResources').textContent=(info.memory&&info.memory.geometries||0)+' / '+(info.memory&&info.memory.textures||0);$('perfGeoMb').textContent=(geoBytes/1048576).toFixed(1)+' MB';
- const hint=$('perfHint');if(performanceMode)hint.textContent='Performance Mode active · model data untouched';else if(fps<24)hint.textContent='Low frame rate detected. Try Standard or Performance Mode.';else if(fps<40)hint.textContent='Moderate frame rate. Standard may feel smoother on this device.';else hint.textContent='Renderer counters · approximate geometry-buffer size only.';
+ const hint=$('perfHint');if(performanceMode)hint.textContent='Manual Performance Mode active · model data untouched';else if(autoPerformanceLevel)hint.textContent='Automatic project-load optimization active · imported model data untouched';else if(fps<24)hint.textContent='Low frame rate detected. Try Standard or Performance Mode.';else if(fps<40)hint.textContent='Moderate frame rate. Standard may feel smoother on this device.';else hint.textContent='Renderer counters · approximate geometry-buffer size only.';
 }
 // ===== Advanced studio lighting =====
 const studioFill=new THREE.PointLight(0x8dbbff,2,0,2);studioFill.position.set(-4,3,3);scene.add(studioFill);
@@ -2410,7 +2506,7 @@ $('fxStart').value='0';$('fxEnd').value='2';$('fxColor').value=fxDefaultColor($(
 }catch(effectInitError){console.warn('Effects Studio controls could not initialize; core editor will continue:',effectInitError);const status=document.getElementById('fxStatus');if(status)status.textContent='Effects controls could not initialize. The rest of the editor is still available.'}
 
 let studioLastTick=performance.now();
-function animate(){requestAnimationFrame(animate);const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
+function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studioLastTick=performance.now();return;}const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
 })();
 </script>
 <script>
@@ -2500,9 +2596,24 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
    window.removeEventListener('pointerdown',unlockAndStart,true);window.removeEventListener('keydown',unlockAndStart,true);
  }
  function exitMenu(){menu.classList.add('p3dl-menu-exit');setTimeout(()=>{menu.style.display='none';},950)}
- $('p3dlMenuNew').addEventListener('click',()=>{if(objects.length&&!confirm('Start a new project? Your current project is automatically saved in Saved Projects. Your Saved Models library will not be deleted.'))return;exitMenu();if(typeof startNewProject==='function')startNewProject(true);else if(typeof closeProjectMenu==='function')closeProjectMenu()});
- $('p3dlMenuSaved').addEventListener('click',()=>{exitMenu();if(typeof openSavedProjects==='function')openSavedProjects();else if(typeof openProjectMenu==='function')openProjectMenu()});
- $('p3dlMenuSettings').addEventListener('click',()=>{exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(typeof openProjectMenu==='function')openProjectMenu()});
+ window.p3dlShowMainMenu=function(){menu.style.display='flex';menu.classList.remove('p3dl-menu-exit');menu.classList.add('character-arrive','menu-reveal');if(audioEnabled&&music&&music.paused)rampIn(music)};
+ $('p3dlMenuNew').addEventListener('click',async()=>{
+   const api=window.p3dlMainMenuApi;
+   if(!api||typeof api.startNewProject!=='function'){console.error('Prisma 3D Lite editor actions are not ready yet.');return;}
+   try{const started=await api.startNewProject();if(started)exitMenu();}
+   catch(err){console.error('Could not start a new project from the main menu:',err);const status=document.getElementById('status');if(status)status.textContent='Could not start a new project: '+(err.message||err);}
+ });
+ $('p3dlMenuSaved').addEventListener('click',async()=>{
+   const api=window.p3dlMainMenuApi;if(!api||typeof api.openSavedProjects!=='function'){console.error('Saved Projects is not ready yet.');return;}
+   window.p3dlSavedProjectsReturnToMenu=true;exitMenu();try{await api.openSavedProjects();}catch(err){window.p3dlSavedProjectsReturnToMenu=false;console.error('Could not open Saved Projects:',err);}
+ });
+ $('p3dlMenuOpen').addEventListener('click',()=>{$('p3dlMenuProjectFile').click()});
+ $('p3dlMenuProjectFile').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;const api=window.p3dlMainMenuApi;if(!api||typeof api.openProjectFile!=='function'){console.error('Project loading is not ready yet.');return;}try{await api.openProjectFile(file);exitMenu()}catch(err){console.error('Could not open project:',err)}finally{e.target.value=''}});
+ $('p3dlMenuDownload').addEventListener('click',()=>{const api=window.p3dlMainMenuApi;if(api&&typeof api.downloadCurrentProject==='function'){api.downloadCurrentProject();}else console.error('Project download is not ready yet.')});
+ $('p3dlMenuContinue').addEventListener('click',async()=>{const api=window.p3dlMainMenuApi;try{if(api&&api.continueEditing)await api.continueEditing();exitMenu()}catch(err){console.error('Could not continue editing:',err)}});
+ $('p3dlMenuSettings').addEventListener('click',()=>{
+   exitMenu();const b=$('mobileToolsBtn');if(b)b.click();else if(window.p3dlMainMenuApi&&window.p3dlMainMenuApi.openProjectMenu)window.p3dlMainMenuApi.openProjectMenu();
+ });
  $('p3dlMenuTutorials').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.add('open')});
  $('p3dlTutorialClose').addEventListener('click',()=>{$('p3dlTutorialOverlay').classList.remove('open')});
  $('p3dlTutorialOverlay').addEventListener('click',e=>{if(e.target===$('p3dlTutorialOverlay'))$('p3dlTutorialOverlay').classList.remove('open')});
@@ -2512,6 +2623,170 @@ function animate(){requestAnimationFrame(animate);const studioNow=performance.no
  startIntro();
  window.addEventListener('pointerdown',unlockAndStart,true);
  window.addEventListener('keydown',unlockAndStart,true);
+})();
+</script>
+
+
+<style id="p3dl-marketplace-styles">
+#p3dlOpenStore{position:fixed;right:20px;bottom:20px;z-index:90000;border:1px solid rgba(120,255,166,.8);border-radius:14px;padding:13px 19px;background:linear-gradient(135deg,#0d8b50,#16b86b);color:#fff;font:800 14px system-ui,sans-serif;letter-spacing:.2px;box-shadow:0 0 12px rgba(33,255,130,.48),0 0 32px rgba(33,255,130,.22);cursor:pointer;display:none;transition:transform .18s,box-shadow .18s}
+#p3dlOpenStore:hover{transform:translateY(-2px);box-shadow:0 0 18px rgba(33,255,130,.7),0 0 42px rgba(33,255,130,.3)}
+#p3dlMarketplace{position:fixed;inset:0;z-index:200000;background:#080d16;color:#edf4ff;display:none;overflow:auto;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+#p3dlMarketplace.open{display:block;animation:p3dlStoreIn .22s ease-out}
+@keyframes p3dlStoreIn{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:scale(1)}}
+#p3dlMarketplace:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 85% 0%,rgba(24,139,100,.17),transparent 42%),radial-gradient(ellipse at 0% 100%,rgba(32,91,150,.16),transparent 48%)}
+.p3dl-store-wrap{position:relative;max-width:1320px;margin:0 auto;padding:25px clamp(16px,3vw,42px) 50px}
+.p3dl-store-top{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #253447;padding-bottom:20px}
+.p3dl-store-brand{font-weight:900;font-size:20px;letter-spacing:.4px}.p3dl-store-brand span{color:#35d889}
+.p3dl-store-back{border:1px solid #43546a;background:#172333;color:#eef5ff;border-radius:10px;padding:10px 15px;font-weight:750;cursor:pointer}.p3dl-store-back:hover{background:#22344a}
+.p3dl-store-hero{padding:42px 0 25px}.p3dl-store-hero h1{font-size:clamp(30px,5vw,52px);line-height:1.04;margin:0 0 12px;letter-spacing:-1.6px}.p3dl-store-hero h1 span{color:#39dc91}.p3dl-store-hero p{color:#9eafc3;margin:0;max-width:660px;line-height:1.6}
+.p3dl-store-tools{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.p3dl-store-search{flex:1 1 260px;min-width:0;border:1px solid #35475e;background:#111b29;color:#f4f7fb;border-radius:11px;padding:13px 15px;font:inherit;outline:none}.p3dl-store-search:focus{border-color:#35d889;box-shadow:0 0 0 3px rgba(53,216,137,.12)}
+.p3dl-store-action{border:1px solid #2e8d66;background:#123d30;color:#dffff0;border-radius:11px;padding:12px 16px;font-weight:800;cursor:pointer}.p3dl-store-action:hover{background:#18533e}
+.p3dl-store-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 22px}.p3dl-store-tab{border:1px solid #34465b;background:#121d2b;color:#b9c7d8;border-radius:999px;padding:8px 14px;cursor:pointer}.p3dl-store-tab.active{background:#164b37;border-color:#39c987;color:#e3fff1}
+.p3dl-store-empty{border:1px dashed #40546a;border-radius:18px;background:rgba(18,29,43,.8);padding:48px 22px;text-align:center}.p3dl-store-empty .symbol{font-size:38px;margin-bottom:12px}.p3dl-store-empty h2{font-size:21px;margin:0 0 9px}.p3dl-store-empty p{color:#9eafc3;max-width:560px;margin:0 auto 18px;line-height:1.6}.p3dl-store-status{font-size:12px;color:#8194aa;margin-top:25px;text-align:center}
+.p3dl-store-info{display:none;margin:18px 0 0;padding:14px 16px;border:1px solid #52627a;border-radius:12px;background:#172333;color:#d9e6f5;line-height:1.55}.p3dl-store-info.open{display:block}
+@media(max-width:650px){#p3dlOpenStore{right:12px;bottom:12px;padding:12px 15px}.p3dl-store-top{align-items:flex-start}.p3dl-store-brand{font-size:17px}.p3dl-store-hero{padding-top:30px}.p3dl-store-empty{padding:35px 17px}}
+</style>
+<button id="p3dlOpenStore" type="button" aria-label="Open Marketplace">🟢 Open Store</button>
+<section id="p3dlMarketplace" aria-label="Prisma 3D Lite Marketplace" aria-hidden="true">
+ <div class="p3dl-store-wrap">
+  <header class="p3dl-store-top"><div class="p3dl-store-brand">◆ PRISMA 3D <span>LITE / MARKETPLACE</span></div><button class="p3dl-store-back" id="p3dlBackToEditor" type="button">← Back to Editor</button></header>
+  <div class="p3dl-store-hero"><h1>THE CREATOR <span>MARKETPLACE.</span></h1><p>Discover models made by the Prisma 3D Lite community. Share your creations, explore other creators' work, and build something new.</p></div>
+  <div class="p3dl-store-tools"><input id="p3dlStoreSearch" class="p3dl-store-search" type="search" placeholder="Search models and creators…" aria-label="Search marketplace"><button id="p3dlStoreUpload" class="p3dl-store-action" type="button">＋ Upload a Model</button><button id="p3dlStoreAccount" class="p3dl-store-action" type="button">My Account</button></div>
+
+  <section id="p3dlSupabaseSetup" class="p3dl-store-info open" style="display:block;margin:18px 0;padding:18px">
+    <h2 style="margin:0 0 8px">Marketplace connection</h2>
+    <p style="margin:0 0 8px;color:#b9c7d8">Prisma 3D Lite connects automatically to the shared Marketplace service. Visitors do not need to enter Supabase settings.</p>
+    <p id="p3dlSupabaseStatus" role="status" aria-live="polite" style="margin:12px 0 0;color:#b9c7d8">Checking Marketplace connection…</p>
+  </section>
+  <section id="p3dlAccountPanel" class="p3dl-store-info" style="display:none;margin:18px 0;padding:18px" aria-label="Marketplace account">
+    <h2 style="margin:0 0 8px">Your Creator Account</h2>
+    <p id="p3dlAccountMessage" role="status" aria-live="polite" style="margin:0 0 14px;color:#b9c7d8">Connect your Supabase project above to create an account or sign in.</p>
+    <div id="p3dlAccountForm">
+      <label for="p3dlAccountEmail" style="display:block;margin:10px 0 5px;font-weight:700">Email address</label>
+      <input id="p3dlAccountEmail" type="email" autocomplete="email" placeholder="you@example.com" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+      <label for="p3dlAccountPassword" style="display:block;margin:12px 0 5px;font-weight:700">Password</label>
+      <input id="p3dlAccountPassword" type="password" autocomplete="current-password" placeholder="Enter your password" style="box-sizing:border-box;width:100%;padding:12px;border-radius:9px;border:1px solid #43546a;background:#0d1724;color:#fff">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <button id="p3dlAccountSignUp" class="p3dl-store-action" type="button">Create Account</button>
+        <button id="p3dlAccountSignIn" class="p3dl-store-back" type="button">Log In</button>
+      </div>
+      <p style="margin:12px 0 0;color:#91a4ba;font-size:13px;line-height:1.5">Supabase may send a confirmation email before you can log in. Your password is handled by Supabase Auth and is not saved in this app.</p>
+    </div>
+    <div id="p3dlAccountSignedIn" style="display:none">
+      <p id="p3dlAccountEmailLabel" style="color:#dffff0;overflow-wrap:anywhere"></p>
+      <button id="p3dlAccountSignOut" class="p3dl-store-back" type="button">Sign Out</button>
+    </div>
+  </section>
+  <nav class="p3dl-store-tabs" aria-label="Marketplace categories"><button class="p3dl-store-tab active" type="button">All Models</button><button class="p3dl-store-tab" type="button">Characters</button><button class="p3dl-store-tab" type="button">Maps & Environments</button><button class="p3dl-store-tab" type="button">Props</button><button class="p3dl-store-tab" type="button">Rigs</button></nav>
+  <div class="p3dl-store-empty"><div class="symbol">◇</div><h2>The Marketplace is being connected</h2><p>The Store screen is ready. Community listings and model uploads are the next development stage. Sign-in uses the shared Marketplace service configured by the site owner. No sample listings are shown as real community content.</p><button id="p3dlStoreSetupInfo" class="p3dl-store-action" type="button">What needs to be connected?</button><div id="p3dlStoreInfo" class="p3dl-store-info">The app uses one shared Supabase project. Each visitor creates their own account; they do not need their own Project URL or API key. The site owner must only place a browser-safe sb_publishable_ key in the app configuration. Never use a sb_secret_ key or database password.</div></div>
+  <div class="p3dl-store-status">PRISMA 3D LITE · COMMUNITY MARKETPLACE · EARLY DEVELOPMENT</div>
+ </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- SITE OWNER SETUP: In the script below, replace PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE with your Supabase key beginning sb_publishable_. Do this once before uploading to GitHub Pages. This publishable key is designed to be visible in browser code. Never insert a sb_secret_ key or database password. -->
+<script id="p3dl-marketplace-script">
+(()=>{
+ const store=document.getElementById('p3dlMarketplace'),openBtn=document.getElementById('p3dlOpenStore'),backBtn=document.getElementById('p3dlBackToEditor');
+ if(!store||!openBtn||!backBtn)return;
+ const menu=document.getElementById('p3dlMainMenu');
+ function editorIsVisible(){return !menu||menu.style.display==='none'||getComputedStyle(menu).display==='none';}
+ function syncButton(){openBtn.style.display=editorIsVisible()&&!store.classList.contains('open')?'block':'none';}
+ function openStore(){window.p3dlStoreOpen=true;store.classList.add('open');store.setAttribute('aria-hidden','false');openBtn.style.display='none';store.scrollTop=0;}
+ function closeStore(){store.classList.remove('open');store.setAttribute('aria-hidden','true');window.p3dlStoreOpen=false;syncButton();}
+ openBtn.addEventListener('click',openStore);backBtn.addEventListener('click',closeStore);
+ document.getElementById('p3dlStoreSetupInfo').addEventListener('click',()=>document.getElementById('p3dlStoreInfo').classList.toggle('open'));
+ document.getElementById('p3dlStoreUpload').addEventListener('click',()=>{const info=document.getElementById('p3dlStoreInfo');info.classList.add('open');info.scrollIntoView({behavior:'smooth',block:'center'});});
+ const accountPanel=document.getElementById('p3dlAccountPanel');
+ document.getElementById('p3dlStoreAccount').addEventListener('click',()=>{accountPanel.style.display=accountPanel.style.display==='none'?'block':'none';accountPanel.scrollIntoView({behavior:'smooth',block:'center'});});
+ document.querySelectorAll('.p3dl-store-tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.p3dl-store-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');}));
+ const observer=new MutationObserver(syncButton);if(menu)observer.observe(menu,{attributes:true,attributeFilter:['style','class']});
+ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&store.classList.contains('open'))closeStore();});
+
+ // Shared public Supabase configuration.
+ // Replace the placeholder below ONCE before publishing this HTML on GitHub Pages.
+ // A sb_publishable_ key is intended for browser use; NEVER use a sb_secret_ key here.
+ const P3DL_SUPABASE_URL = 'https://xowaavkdccjsabiyouxp.supabase.co';
+ const P3DL_SUPABASE_PUBLISHABLE_KEY = 'PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE';
+ const statusEl=document.getElementById('p3dlSupabaseStatus');
+ function setConnectionStatus(message,good=false){if(statusEl){statusEl.textContent=message;statusEl.style.color=good?'#6ee7a8':'#ffd18a';}}
+ function supabaseConfigIsReady(){
+   return /^https:\/\/[a-zA-Z0-9-]+\.supabase\.co$/.test(P3DL_SUPABASE_URL)
+     && P3DL_SUPABASE_PUBLISHABLE_KEY.startsWith('sb_publishable_');
+ }
+ if(!supabaseConfigIsReady()){
+   setConnectionStatus('Marketplace setup is incomplete. The site owner needs to add the Supabase Publishable key to the app configuration before visitors can sign in.',false);
+ }else if(!window.supabase || typeof window.supabase.createClient!=='function'){
+   setConnectionStatus('Could not load the Supabase library. Check the internet connection and reload the app.',false);
+ }else{
+   try{
+     window.p3dlSupabase=window.supabase.createClient(P3DL_SUPABASE_URL,P3DL_SUPABASE_PUBLISHABLE_KEY);
+     setConnectionStatus('Supabase client initialized. Checking access to the Marketplace…',true);
+     window.p3dlSupabase.from('profiles').select('id').limit(1).then(({error})=>{
+       if(error){console.error('Marketplace profile check failed:',error);setConnectionStatus('Supabase is configured, but the profiles table check failed: '+error.message,false);}
+       else setConnectionStatus('Marketplace connected. You can create an account or log in.',true);
+     }).catch(err=>{console.error('Marketplace connection check failed:',err);setConnectionStatus('Could not reach the Marketplace database. Check the connection and reload.',false);});
+   }catch(err){
+     console.error('Supabase initialization failed:',err);
+     setConnectionStatus('Supabase could not start: '+(err.message||'unknown error'),false);
+   }
+ }
+
+ // Supabase Auth: email/password registration, sign-in, and sign-out.
+ const accountMessage=document.getElementById('p3dlAccountMessage');
+ const accountForm=document.getElementById('p3dlAccountForm');
+ const accountSignedIn=document.getElementById('p3dlAccountSignedIn');
+ const accountEmail=document.getElementById('p3dlAccountEmail');
+ const accountPassword=document.getElementById('p3dlAccountPassword');
+ const accountEmailLabel=document.getElementById('p3dlAccountEmailLabel');
+ const signUpBtn=document.getElementById('p3dlAccountSignUp');
+ const signInBtn=document.getElementById('p3dlAccountSignIn');
+ const signOutBtn=document.getElementById('p3dlAccountSignOut');
+ function setAccountMessage(message,good=false){if(accountMessage){accountMessage.textContent=message;accountMessage.style.color=good?'#6ee7a8':'#ffd18a';}}
+ function setAccountBusy(busy){[signUpBtn,signInBtn,signOutBtn].forEach(b=>{if(b)b.disabled=busy;});}
+ function renderAccountSession(session){
+   const user=session&&session.user;
+   accountForm.style.display=user?'none':'block';
+   accountSignedIn.style.display=user?'block':'none';
+   if(user){accountEmailLabel.textContent='Signed in as '+(user.email||'your account');setAccountMessage('You are signed in. Your creator profile is linked to this account.',true);}
+   else if(!window.p3dlSupabase){setAccountMessage('The Marketplace is not configured yet. Please try again later.');}
+   else{setAccountMessage('You are not signed in. Create an account or log in.');}
+ }
+ async function getAuthClient(){
+   if(window.p3dlSupabase)return window.p3dlSupabase;
+   throw new Error('The Marketplace connection is not configured. Please try again later.');
+ }
+ async function runAuthAction(action){
+   const email=(accountEmail.value||'').trim();
+   const password=accountPassword.value||'';
+   if(!email||!accountEmail.checkValidity()){setAccountMessage('Enter a valid email address.');accountEmail.focus();return;}
+   if(!password){setAccountMessage('Enter your password.');accountPassword.focus();return;}
+   setAccountBusy(true);setAccountMessage(action==='signup'?'Creating your account…':'Logging in…');
+   try{
+     const client=await getAuthClient();
+     if(action==='signup'){
+       const {data,error}=await client.auth.signUp({email,password});
+       if(error)throw error;
+       if(data&&data.session){renderAccountSession(data.session);accountPassword.value='';}
+       else{setAccountMessage('Account request received. Check your email for a confirmation link, then return here and log in.',true);accountPassword.value='';}
+     }else{
+       const {data,error}=await client.auth.signInWithPassword({email,password});
+       if(error)throw error;
+       renderAccountSession(data.session);accountPassword.value='';
+     }
+   }catch(err){setAccountMessage((err&&err.message)?err.message:'Account action failed. Please try again.');}
+   finally{setAccountBusy(false);}
+ }
+ signUpBtn.addEventListener('click',()=>runAuthAction('signup'));
+ signInBtn.addEventListener('click',()=>runAuthAction('signin'));
+ signOutBtn.addEventListener('click',async()=>{
+   setAccountBusy(true);setAccountMessage('Signing out…');
+   try{const client=await getAuthClient();const {error}=await client.auth.signOut();if(error)throw error;accountPassword.value='';renderAccountSession(null);}
+   catch(err){setAccountMessage((err&&err.message)?err.message:'Could not sign out. Please try again.');}
+   finally{setAccountBusy(false);}
+ });
+ (async()=>{try{const client=await getAuthClient();const {data,error}=await client.auth.getSession();if(error)throw error;renderAccountSession(data.session);client.auth.onAuthStateChange((_event,session)=>renderAccountSession(session));}catch(err){renderAccountSession(null);if(err&&err.message)setAccountMessage(err.message);}})();
+
+ syncButton();setTimeout(syncButton,1100);
 })();
 </script>
 
