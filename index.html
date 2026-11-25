@@ -1577,61 +1577,27 @@ function toggleFloorContactMode(){
  $('rigInfo').textContent=floorContactSelectMode?'Floor Contact IK selection: click bone handles to add or remove floor collision.':'Floor Contact IK is '+(floorContactBones.size?'active for '+floorContactBones.size+' selected bone(s).':'ready. No bones assigned yet.');
  msg(floorContactSelectMode?'Floor Contact IK selection enabled. Click bones, then press the button again.':'Floor Contact IK selection finished. Assigned bones retain floor collision.');
 }
-
-// ===== Marionette Rig Engine compatibility bridge (ported from the supplied C++11 demo) =====
-// Browser-native adapter: C++ cannot execute directly in this HTML page, and the supplied
-// engine_bridge.h/WebAssembly build was not included. This preserves the engine's CCD idea
-// while operating on Prisma's actual THREE.Bone hierarchy (not a separate hardcoded 4-joint rig).
-const MarionetteEngineBridge = {
-  jointCount(root){
-    let count=0;if(root)root.traverse(n=>{if(n.isBone)count++});return count;
-  },
-  jointParent(bone){let p=bone&&bone.parent;while(p&&!p.isBone)p=p.parent;return p||null;},
-  jointPosition(bone){if(!bone)return new THREE.Vector3();bone.updateWorldMatrix(true,false);return bone.getWorldPosition(new THREE.Vector3());},
-  solveCCD(chainRootToEffector,target,iterations=20){
-    if(!Array.isArray(chainRootToEffector)||chainRootToEffector.length<2)return false;
-    const eff=chainRootToEffector[chainRootToEffector.length-1];
-    if(!eff||!eff.isBone)return false;
-    const targetWorld=target.clone();
-    for(let pass=0;pass<iterations;pass++){
-      for(let i=chainRootToEffector.length-2;i>=0;i--){
-        const joint=chainRootToEffector[i];if(!joint||!joint.isBone)continue;
-        rigRoot.updateMatrixWorld(true);eff.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
-        const jointPos=joint.getWorldPosition(new THREE.Vector3());
-        const endPos=eff.getWorldPosition(new THREE.Vector3());
-        const from=endPos.sub(jointPos),to=targetWorld.clone().sub(jointPos);
-        if(from.lengthSq()<1e-8||to.lengthSq()<1e-8)continue;
-        from.normalize();to.normalize();
-        const qDelta=new THREE.Quaternion().setFromUnitVectors(from,to);
-        const parentWorld=joint.parent?joint.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
-        const desiredWorld=qDelta.multiply(joint.getWorldQuaternion(new THREE.Quaternion()));
-        joint.quaternion.copy(parentWorld.invert().multiply(desiredWorld)).normalize();
-        joint.updateMatrixWorld(true);
-      }
-      rigRoot.updateMatrixWorld(true);eff.updateWorldMatrix(true,false);
-      if(eff.getWorldPosition(new THREE.Vector3()).distanceTo(targetWorld)<.01)return true;
-    }
-    rigRoot.updateMatrixWorld(true);eff.updateWorldMatrix(true,false);
-    return eff.getWorldPosition(new THREE.Vector3()).distanceTo(targetWorld)<.03;
-  }
-};
-
 function solveFloorContactBone(bone){
- if(!bone||!bone.isBone||!bone.parent||!rigRoot)return false;
+ if(!bone||!bone.isBone||!bone.parent)return false;
  rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- const current=MarionetteEngineBridge.jointPosition(bone),floorY=floor.position.y+.045;
+ const current=bone.getWorldPosition(new THREE.Vector3()),floorY=floor.position.y+.045;
  if(current.y>=floorY)return false;
- const target=new THREE.Vector3(current.x,floorY,current.z),chain=[];
- let joint=MarionetteEngineBridge.jointParent(bone);
- while(joint&&chain.length<6){if(isBodyRootBone(joint))break;chain.push(joint);joint=MarionetteEngineBridge.jointParent(joint);}
- if(!chain.length){
-   const parent=bone.parent;parent.updateWorldMatrix(true,false);
-   bone.position.copy(parent.worldToLocal(target));bone.updateMatrixWorld(true);return true;
+ const target=new THREE.Vector3(current.x,floorY,current.z);
+ const chain=[];let joint=bone.parent;while(joint&&joint.isBone&&chain.length<6){if(isBodyRootBone(joint))break;chain.push(joint);joint=joint.parent;}
+ if(!chain.length){const parent=bone.parent;parent.updateWorldMatrix(true,false);bone.position.copy(parent.worldToLocal(target));bone.updateMatrixWorld(true);return true;}
+ for(let pass=0;pass<14;pass++){
+  for(const j of chain){rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);j.updateWorldMatrix(true,false);
+   const jp=j.getWorldPosition(new THREE.Vector3()),ep=bone.getWorldPosition(new THREE.Vector3());
+   const a=ep.sub(jp),v=target.clone().sub(jp);if(a.lengthSq()<1e-9||v.lengthSq()<1e-9)continue;
+   a.normalize();v.normalize();const delta=new THREE.Quaternion().setFromUnitVectors(a,v);
+   const parentQ=j.parent?j.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
+   const desired=delta.multiply(j.getWorldQuaternion(new THREE.Quaternion()));
+   j.quaternion.copy(parentQ.invert().multiply(desired)).normalize();j.updateMatrixWorld(true);
+  }
  }
- const ordered=chain.slice().reverse().concat(bone);
- MarionetteEngineBridge.solveCCD(ordered,target,20);
  rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- // Do not stretch the rig if its limb cannot physically reach the floor.
+ // Keep the limb lengths intact: if the selected chain cannot reach the floor,
+ // leave the endpoint unconstrained rather than stretching the bone hierarchy.
  return bone.getWorldPosition(new THREE.Vector3()).y>=floorY-.02;
 }
 function solveFloorContacts(){
@@ -1651,9 +1617,23 @@ function solveIK(){
     else ikEffectorBone.position.copy(target);
     ikEffectorBone.updateMatrixWorld(true);rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
   }
-  // Solve through the Marionette compatibility bridge using the imported engine's CCD approach.
-  const bridgeChain=chain.slice().reverse().concat(ikEffectorBone);
-  MarionetteEngineBridge.solveCCD(bridgeChain,target,20);
+  // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
+  for(let pass=0;pass<18;pass++){
+    for(const joint of chain){
+      rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
+      const jp=joint.getWorldPosition(new THREE.Vector3());
+      const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
+      const a=ep.sub(jp),v=target.clone().sub(jp);
+      if(a.lengthSq()<1e-8||v.lengthSq()<1e-8)continue;
+      a.normalize();v.normalize();
+      const deltaWorld=new THREE.Quaternion().setFromUnitVectors(a,v);
+      const parentWorldQ=joint.parent?joint.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
+      const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
+      const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
+      joint.quaternion.copy(parentWorldQ.invert().multiply(desiredWorldQ)).normalize();
+      joint.updateMatrixWorld(true);
+    }
+  }
   if(ikPoleEnabled&&chain.length>=2){
     // Pole correction rotates the solved limb around the root-to-end axis,
     // preserving the endpoint while steering the intermediate joint toward the pole.
@@ -2771,6 +2751,44 @@ $('fxApply').addEventListener('click',()=>{const o=selected,fx=o&&o.userData&&o.
 $('fxDelete').addEventListener('click',()=>{if(!selected||!selected.userData||!selected.userData.prismaEffect){msg('Select an effect first.');return}del();syncEffectUI(null)});
 $('fxStart').value='0';$('fxEnd').value='2';$('fxColor').value=fxDefaultColor($('fxPreset').value);syncEffectUI(null);updateTimedEffects();
 }catch(effectInitError){console.warn('Effects Studio controls could not initialize; core editor will continue:',effectInitError);const status=document.getElementById('fxStatus');if(status)status.textContent='Effects controls could not initialize. The rest of the editor is still available.'}
+
+/* ================= SFM-inspired Cinematic Preview =================
+   Browser-native adaptation of the supplied sfm_renderer.cpp ideas.
+   This does not compile or execute the standalone C++ renderer. */
+(function initSfmCinematicPreview(){
+ const section=document.createElement('section');section.className='section';section.id='sfmCinematicSection';
+ section.innerHTML=`<h2>SFM Cinematic Preview</h2>
+ <p class="note">A real-time browser rendering profile inspired by your SFM renderer source. Uses the editor's WebGL renderer, shadows, filmic tone mapping, scene fog, and a subtle camera vignette.</p>
+ <div class="row"><label for="sfmMode">Cinematic preview</label><input id="sfmMode" type="checkbox"></div>
+ <div class="row"><label for="sfmFog">Atmospheric fog</label><input id="sfmFog" type="checkbox" checked></div>
+ <div class="row"><label for="sfmFogDensity">Fog density</label><input id="sfmFogDensity" type="range" min="0" max="0.045" step="0.001" value="0.012"><output id="sfmFogDensityOut">0.012</output></div>
+ <div class="row"><label for="sfmVignette">Lens vignette</label><input id="sfmVignette" type="checkbox" checked></div>
+ <button id="sfmReset" type="button" class="wide">Reset cinematic settings</button>
+ <p class="note" id="sfmStatus" aria-live="polite">Ready. Enable this for a cinematic lighting preview.</p>
+ <p class="note">The original C++ demo's volumetric raymarch, SSAO, accumulation DoF, and shutter motion blur are not yet ported into this live WebGL viewport.</p>`;
+ const lighting=document.getElementById('studioLightingSection');
+ if(lighting&&lighting.parentNode)lighting.parentNode.insertBefore(section,lighting.nextSibling);
+ else {const side=document.querySelector('aside');if(side)side.appendChild(section);}
+ const style=document.createElement('style');style.textContent=`#sfmVignetteOverlay{position:absolute;inset:0;pointer-events:none;z-index:4;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.34) 100%);opacity:0;transition:opacity .18s}#sfmCinematicSection .row{align-items:center}`;document.head.appendChild(style);
+ const overlay=document.createElement('div');overlay.id='sfmVignetteOverlay';
+ if(stage){if(getComputedStyle(stage).position==='static')stage.style.position='relative';stage.appendChild(overlay);}
+ const mode=document.getElementById('sfmMode'),fog=document.getElementById('sfmFog'),density=document.getElementById('sfmFogDensity'),densityOut=document.getElementById('sfmFogDensityOut'),vignette=document.getElementById('sfmVignette'),status=document.getElementById('sfmStatus');
+ let savedProfile=null,savedFog=null,savedTone=null,savedExposure=null;
+ function updateFog(){const d=Number(density.value)||0;densityOut.textContent=d.toFixed(3);if(scene.fog&&scene.fog.isFogExp2){scene.fog.density=fog.checked?d:0;}if(scene.fog&&scene.fog.color)scene.fog.color.set('#252a31');}
+ function toggle(on){
+  if(on){
+   if(savedProfile===null){savedProfile=qualityPreset;savedFog=scene.fog?scene.fog.density:0;savedTone=renderer.toneMapping;savedExposure=renderer.toneMappingExposure;}
+   applyQualityPreset('hyper',false);renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=Math.max(.85,Number($('bright').value)||1);
+   if(scene.fog&&scene.fog.isFogExp2)density.value=String(savedFog||.012);
+   updateFog();overlay.style.opacity=vignette.checked?'.9':'0';status.textContent='Cinematic profile active · Hyper-Realism shadows and ACES filmic tone mapping.';
+  }else{
+   if(savedProfile!==null){applyQualityPreset(savedProfile,false);renderer.toneMapping=savedTone;renderer.toneMappingExposure=savedExposure;if(scene.fog&&scene.fog.isFogExp2)scene.fog.density=savedFog;savedProfile=null;}
+   overlay.style.opacity='0';updateFog();status.textContent='Cinematic preview off. Your previous quality profile was restored.';
+  }
+ }
+ mode.addEventListener('change',()=>toggle(mode.checked));fog.addEventListener('change',updateFog);density.addEventListener('input',updateFog);vignette.addEventListener('change',()=>overlay.style.opacity=mode.checked&&vignette.checked?'.9':'0');
+ document.getElementById('sfmReset').addEventListener('click',()=>{if(mode.checked){mode.checked=false;toggle(false)}fog.checked=true;density.value='0.012';vignette.checked=true;updateFog();overlay.style.opacity='0';status.textContent='Cinematic settings reset.';});
+})();
 
 let studioLastTick=performance.now();
 function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studioLastTick=performance.now();return;}const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(ikPoleMarker.visible)ikPoleMarker.position.copy(ikPoleTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
