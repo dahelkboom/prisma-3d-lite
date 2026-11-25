@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Prisma 3D Lite — Professional Studio</title>
 <meta name="prisma3d-lite-build" content="soft-project-load-350mb">
 <style>
@@ -112,6 +112,16 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 #unparentObjectsButton{background:#303943;border-color:#667585}
 
 .tl-key.auto-x{background:#ff5555!important;box-shadow:0 0 4px 1px #ff555566}.tl-key.auto-y{background:#42d17a!important;box-shadow:0 0 4px 1px #42d17a66}.tl-key.auto-z{background:#4d9cff!important;box-shadow:0 0 4px 1px #4d9cff66}.tl-key.auto-x.active,.tl-key.auto-y.active,.tl-key.auto-z.active{background:#fff!important;outline:2px solid currentColor;box-shadow:0 0 5px 2px currentColor}
+
+/* Animation upgrade: multi-key selection, motion trails and curve editor */
+.tl-extra-tools{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:8px;padding:8px;background:#1a2028;border:1px solid #3d4856;border-radius:6px}
+.tl-extra-tools label{font-size:11px;color:#c4ccd6;display:flex;align-items:center;gap:5px}
+.tl-extra-tools select,.tl-extra-tools button{padding:6px 8px}
+.tl-graph{display:grid;grid-template-columns:minmax(180px,1fr) minmax(160px,260px);gap:10px;align-items:center;margin-top:8px;padding:8px;background:#171b22;border:1px solid #3d4856;border-radius:6px}
+.tl-graph canvas{width:100%;height:94px;display:block;background:#11151b;border:1px solid #303a47;border-radius:4px}
+.tl-graph p{font-size:11px;color:#aeb9c8;margin:0}
+.tl-key.multi-selected{outline:2px solid #55d7ff;outline-offset:3px;box-shadow:0 0 8px #55d7ff}
+@media(max-width:700px){.tl-graph{grid-template-columns:1fr}.tl-graph canvas{height:80px}}
 </style>
 <style>
 #busyOverlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(8,10,14,.74);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
@@ -270,6 +280,87 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 #stageAutoRotateLauncher:focus-visible{outline:3px solid #b7dcff;outline-offset:2px}
 @media(max-width:760px){#stageAutoRotateLauncher{left:9px;bottom:9px;min-height:44px;padding:11px 14px;font-size:13px}.timeline.auto-rotate-focus{max-height:75dvh;overflow-y:auto;overscroll-behavior:contain}}
 </style>
+
+<style id="cross-device-compatibility">
+/* Cross-device layout refinements: desktop layout is unchanged. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { min-width: 320px; }
+button, input, select, textarea, .filebtn { touch-action: manipulation; }
+canvas, img, video { max-width: 100%; }
+.stage, .main, .timeline, aside { min-width: 0; }
+.tl-graph { min-width: 0; }
+.tl-graph canvas { max-width: 100%; }
+
+/* Tablet and phone layouts, including Android Chrome and Samsung Internet. */
+@media (max-width: 900px) {
+  .tl-controls, .tl-auto-tools, .tl-extra-tools, .tl-bone-tools {
+    min-width: 0;
+  }
+  .tl-auto-tools, .tl-extra-tools { row-gap: 9px; }
+  .tl-auto-tools button, .tl-extra-tools button,
+  .tl-bone-tools button { min-height: 38px; }
+  .tl-auto-tools input[type="range"] { min-width: 90px; }
+  .tl-graph { grid-template-columns: minmax(0, 1fr); }
+  .tl-graph canvas { height: 100px; }
+}
+@media (max-width: 760px) {
+  /* Fallback first, then dynamic viewport units where supported. */
+  body { min-height: 100vh; min-height: 100dvh; }
+  .app { min-height: calc(100vh - 48px); min-height: calc(100dvh - 48px); }
+  header { padding-top: max(7px, env(safe-area-inset-top)); }
+  aside { padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
+  .stage {
+    height: 48vh;
+    height: 48dvh;
+    min-height: 220px;
+    max-height: 58vh;
+    max-height: 58dvh;
+  }
+  .timeline {
+    max-height: 52vh;
+    max-height: 52dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  .timeline.mobile-collapsed { max-height: none; overflow: hidden; }
+  .tl-controls { max-width: 100%; }
+  .tl-auto-tools, .tl-extra-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    overflow: visible;
+  }
+  .tl-auto-tools .tl-auto-legend { margin-left: 0; }
+  .tl-extra-tools label { max-width: 100%; }
+  .tl-extra-tools select { max-width: min(100%, 220px); }
+  .tl-track { max-width: 100%; }
+  .tl-graph { grid-template-columns: minmax(0, 1fr); }
+  .tl-graph p { line-height: 1.45; }
+  .tl-graph canvas { width: 100%; height: 88px; }
+  input, select, button { font-size: max(13px, 1em); }
+}
+@media (max-width: 380px) {
+  .tl-auto-tools { gap: 6px; padding: 7px; }
+  .tl-auto-tools button, .tl-extra-tools button { padding: 8px; }
+  .tl-auto-tools input[type="range"] { width: 100px; }
+  .tl-extra-tools select { width: 100%; }
+  .tl-lane-label { flex-basis: 112px; max-width: 112px; }
+}
+@media (pointer: coarse) and (max-width: 900px) {
+  button, .filebtn, input[type="checkbox"], input[type="range"], select {
+    min-height: 40px;
+  }
+  input[type="checkbox"] { min-width: 18px; min-height: 18px; }
+  .tl-key { min-width: 12px; min-height: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+</style>
+
 </head><body>
 
 <div id="p3dlMainMenu" aria-label="Prisma 3D Lite main menu">
@@ -329,7 +420,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <div class="row"><label for="cinematicAtmosphere">Atmospheric haze</label><input id="cinematicAtmosphere" type="range" min="0" max="100" step="5" value="15"><output id="cinematicAtmosphereOut">15%</output></div>
 <button id="resetCinematic" type="button" class="wide">Reset cinematic settings</button>
 <p class="note" id="cinematicStatus" aria-live="polite">Cinematic Mode is off. Motion blur and selective depth of field are not included in this lightweight preview yet.</p></div>
-<div class="section"><h2>Performance & Optimization</h2><div class="performance-actions"><button id="performanceModeBtn" type="button">Enable Performance Mode</button><button id="performanceMonitorBtn" type="button">Hide Monitor</button></div><p class="note">Performance Mode temporarily lowers viewport rendering cost without changing or deleting model geometry, textures, rigs, or animation. The monitor reports renderer counters and an approximate geometry-buffer size, not total device RAM or VRAM.</p><p class="note" id="performanceModeNote" aria-live="polite">Performance Mode is off. Your selected graphics preset is active.</p><p class="note" id="projectLoadStatus" aria-live="polite">Imported model files: 0 MB / 350 MB soft target. This is a source-file-size estimate, not a measurement of device RAM.</p></div>
+<div class="section"><h2>Performance & Optimization</h2><div class="performance-actions"><button id="performanceModeBtn" type="button">Enable Performance Mode</button><button id="performanceMonitorBtn" type="button">Hide Monitor</button></div><p class="note">Performance Mode temporarily lowers viewport rendering cost without changing or deleting model geometry, textures, rigs, or animation. The monitor reports renderer counters and an approximate geometry-buffer size, not total device RAM or VRAM.</p><p class="note" id="performanceModeNote" aria-live="polite">Performance Mode is off. Your selected graphics preset is active.</p><p class="note" id="projectLoadStatus" aria-live="polite">Imported model files: 0 MB / 350 MB soft target. This is a source-file-size estimate, not a measurement of device RAM.</p><div class="row"><label for="smartPlaneDetection">Smart Plane Detection</label><input id="smartPlaneDetection" type="checkbox" checked></div><button id="scanPlanesBtn" type="button" class="wide">Scan Scene for Flat Planes</button><p class="note" id="smartPlaneStatus" aria-live="polite">Smart Plane Detection is on. Flat meshes are checked during import.</p></div>
 <div class="section"><h2>Environment</h2>
 <div class="row"><label for="bg">Background</label><input id="bg" type="color" value="#252a31"></div>
 <div class="row"><label for="floorColor">Floor</label><input id="floorColor" type="color" value="#343a42"></div>
@@ -410,7 +501,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><button id="absoluteIKMode" class="wide" disabled>Absolute IK Mode (AIKM): Off</button><button id="absoluteIKPinSelected" class="wide" disabled>Pin Selected Bone</button><p class="note">With AIKM on, select a bone to make it the active IK target, then use Pin Selected Bone to lock or release it. Pinned bones stay fixed in world space while the rest of the connected rig continues moving.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><div class="pair" style="margin-top:7px"><button id="ikPoleToggle" class="wide" disabled>IK Pole Vector: Off</button><button id="ikPoleMove" class="wide" disabled>Move Pole Target</button></div><p class="note" id="ikPoleHelp">In IK mode, enable Pole Vector to guide an elbow or knee bend. Use Move Pole Target to reposition the guide; switch back to Move IK End Target to move the bone endpoint.</p><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
@@ -441,9 +532,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <div class="preset-overlay" id="movementOverlay" role="dialog" aria-modal="true" aria-labelledby="movementTitle"><div class="preset-dialog"><div class="preset-head"><div><h2 id="movementTitle">Preset Movements</h2><p class="note">Choose a movement for the selected model. Orange Justice is first so you can test whether your character's rig works with it. Motion is generated from bone names, so results vary by rig and bone orientation.</p></div><button id="closeMovements" aria-label="Close preset movements">✕</button></div><div class="preset-cards"><button class="preset-card" data-movement="orange"><span class="preset-art" style="background:linear-gradient(#3b285d,#e69a48)">🕺 🟠</span><strong>Orange Justice</strong><small>Fast cross-body arm pumps, bent elbows, side-to-side torso sway, and knee bounce.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="walk"><span class="preset-art" style="background:linear-gradient(#203b4c,#5797a8)">🚶</span><strong>Realistic Walk</strong><small>Alternating arm and leg swing with a subtle torso bob.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="dance"><span class="preset-art" style="background:linear-gradient(#40294c,#a25c91)">💃</span><strong>Dance Groove</strong><small>Rhythmic shoulder, arm, hip, and torso movement.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="idle"><span class="preset-art" style="background:linear-gradient(#244a3d,#73a98a)">🌬️</span><strong>Idle / Breathing</strong><small>Gentle torso and shoulder motion for a standing character.</small><span class="choose">Apply movement</span></button></div><p class="preset-foot">Applying a movement replaces existing keyframes on the selected model's bone tracks so you can test the preset cleanly. Use the timeline Play button to preview it. Save a project to keep the result.</p></div></div>
 <div class="timeline" id="timeline">
  <div class="tl-controls"><button id="tlPlay">▶ Play</button><button id="tlPrev">◀ Step</button><button id="tlNext">Step ▶</button><button id="tlKey">◆ Keyframe</button><button id="tlDeleteKey">Delete selected key</button><button id="tlCopyKey" type="button" disabled>Copy key</button><button id="tlPasteKey" type="button" disabled>Paste at playhead</button><button id="tlDuplicateKey" type="button" disabled>Duplicate +1s</button><button id="tlMoveKeyBack" type="button" disabled>← Move 1 frame</button><button id="tlMoveKeyForward" type="button" disabled>Move 1 frame →</button><button id="tlUndo">↶ Undo</button><button id="tlClear">Clear target keys</button><button id="tlExportClip">Export clip</button><button id="exportAnimation" class="active">🎬 Export animation</button><label class="filebtn">Import clip<input id="tlImportClip" type="file" accept=".json,application/json"></label><label for="tlInterp">Motion</label><select id="tlInterp"><option value="smooth" selected>Smooth</option><option value="ease">Ease at every key</option><option value="linear">Linear</option></select><label for="tlFrame">Seconds</label><input id="tlFrame" type="number" min="0" max="5" step="0.01" value="0"><label for="tlDuration">Project length (seconds)</label><input id="tlDuration" type="number" min="0.1" max="120" step="0.5" value="5"><label for="tlFps">Playback FPS</label><input id="tlFps" type="number" min="1" max="60" value="24"></div>
- <div class="tl-auto-tools" id="tlAutoTools"><button id="tlAutoMode" type="button" aria-pressed="false" title="Toggle Auto Rotate mode (A)">Auto Rotate: Off (A)</button><span class="auto-label">Axis:</span><button id="tlAutoX" type="button" title="Choose X axis (red)">X</button><button id="tlAutoY" type="button" title="Choose Y axis (green)">Y</button><button id="tlAutoZ" type="button" title="Choose Z axis (blue)">Z</button><span class="auto-label">Speed:</span><input id="tlAutoSpeed" type="range" min="0.05" max="3" step="0.05" value="0.5" aria-label="Auto Rotate speed in rotations per second"><output id="tlAutoSpeedOut">0.50 r/s</output><button id="tlAutoDirection" type="button" title="Change rotation direction">Direction: Forward</button><span class="tl-auto-legend"><span class="x">X red</span> · <span class="y">Y green</span> · <span class="z">Z blue</span></span></div>
+ <div class="tl-auto-tools" id="tlAutoTools"><button id="tlAutoMode" type="button" aria-pressed="false" title="Toggle Auto Rotate mode">Auto Rotate: Off</button><span class="auto-label">Axis:</span><button id="tlAutoX" type="button" title="Choose X axis (red)">X</button><button id="tlAutoY" type="button" title="Choose Y axis (green)">Y</button><button id="tlAutoZ" type="button" title="Choose Z axis (blue)">Z</button><span class="auto-label">Speed:</span><input id="tlAutoSpeed" type="range" min="0.05" max="3" step="0.05" value="0.5" aria-label="Auto Rotate speed in rotations per second"><output id="tlAutoSpeedOut">0.50 r/s</output><button id="tlAutoDirection" type="button" title="Change rotation direction">Direction: Forward</button><span class="tl-auto-legend"><span class="x">X red</span> · <span class="y">Y green</span> · <span class="z">Z blue</span></span></div>
+ <div class="tl-extra-tools" id="tlAdvancedTools"><button id="tlSelectAllKeys" type="button">Select all keys</button><button id="tlDeleteSelectedKeys" type="button" disabled>Delete selected keys</button><button id="tlNudgeSelectedBack" type="button" disabled>← Move selection 1 frame</button><button id="tlNudgeSelectedForward" type="button" disabled>Move selection 1 frame →</button><label><input id="tlMotionTrailToggle" type="checkbox"> Motion trail</label><label>Selected segment easing <select id="tlKeyEasing"><option value="global">Use timeline default</option><option value="linear">Linear</option><option value="ease">Ease in / out</option><option value="easeIn">Ease in</option><option value="easeOut">Ease out</option><option value="easeInOut">Ease in-out</option><option value="smooth">Smooth spline</option></select></label></div>
+ <div class="tl-graph"><canvas id="tlGraphCanvas" width="520" height="150" aria-label="Animation easing curve preview"></canvas><p><strong>Animation Graph</strong><br>Choose a keyframe, then set how motion travels toward the next key. The curve preview updates to show the selected easing.</p></div>
  <div class="tl-slider"><span class="note" id="tlStart">0.00s</span><input id="tlRange" type="range" min="0" max="5" step="0.01" value="0" aria-label="Timeline time in seconds"><span class="note" id="tlEnd">5.00s</span></div><div class="tl-ruler"><span>0s</span><span>1s</span><span>2s</span><span>3s</span><span>4s</span><span>5s</span></div>
- <div class="tl-bone-tools"><input id="tlBoneSearch" type="search" placeholder="Find a bone or model…" aria-label="Search timeline bones and models"><button id="tlFocusSelected" type="button">Find selected bone</button><label><input id="tlSelectedOnly" type="checkbox"> Show selected track only</label></div><div class="tl-track" id="tlTrack" aria-label="Model and bone animation tracks"></div><div class="tl-track-label" id="tlLabel">Select a bone, press A to enable Auto Rotate, choose X/Y/Z, set speed and direction, then press ◆ Keyframe. Add a later normal keyframe to smoothly stop rotation. Each bone has independent axis, speed, and direction settings.</div>
+ <div class="tl-bone-tools"><input id="tlBoneSearch" type="search" placeholder="Find a bone or model…" aria-label="Search timeline bones and models"><button id="tlFocusSelected" type="button">Find selected bone</button><label><input id="tlSelectedOnly" type="checkbox"> Show selected track only</label></div><div class="tl-track" id="tlTrack" aria-label="Model and bone animation tracks"></div><div class="tl-track-label" id="tlLabel">Select a bone, activate Auto Rotate with the viewport button, choose X/Y/Z, set speed and direction, then press ◆ Keyframe. Add a later normal keyframe to smoothly stop rotation. Each bone has independent axis, speed, and direction settings.</div>
 </div><div class="status" id="status">Loading 3D engine…</div></main>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -933,7 +1026,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   }
 
   async function defaultLoadTexture(bytes, mime, maxSize) {
-    const finish = tex => { tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.anisotropy = 4; return tex; };
+    const finish = tex => { tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.anisotropy = 16; return tex; };
     const sz = imageSize(bytes), big = sz ? Math.max(sz.w, sz.h) : 0;
     // decode straight to the smaller size when the picture is bigger than allowed (never holds the full-size pixels)
     if (sz && maxSize > 0 && big > maxSize && typeof createImageBitmap === 'function') {
@@ -1316,22 +1409,22 @@ const qualityProfiles={
  standard:{label:'Standard',pixelRatio:1,shadows:false,shadowSize:512,tone:'none',description:'Standard · Lower rendering resolution and no real-time shadows to help conserve graphics memory.'},
  enhanced:{label:'Enhanced',pixelRatio:1.5,shadows:true,shadowSize:1024,tone:'filmic',description:'Enhanced · Sharper viewport with balanced lighting and soft shadows.'},
  hyper:{label:'Hyper-Realism',pixelRatio:2,shadows:true,shadowSize:2048,tone:'filmic',description:'Hyper-Realism · High preview quality, higher resolution and detailed soft shadows. Requires a capable device.'},
- omega:{label:'Omega Realism',pixelRatio:2.25,shadows:true,shadowSize:3072,tone:'filmic',description:'Omega Realism · Maximum browser preview quality with higher resolution and extra-detailed soft shadows. Very demanding; use only on a powerful device.'}
+ omega:{label:'Omega Realism',pixelRatio:4,shadows:true,shadowSize:8192,tone:'filmic',description:'Omega Realism · Maximum-quality desktop preview: native display resolution up to 4× pixel ratio, hardware-limit-aware 8K shadows, ACES filmic tone mapping, high-performance GPU preference, and maximum texture anisotropy. Requires powerful graphics hardware.'}
 };
 function isLikelyLowPowerDevice(){const mem=Number(navigator.deviceMemory||0);return (mem>0&&mem<=4)||((navigator.maxTouchPoints||0)>1&&Math.min(screen.width||9999,screen.height||9999)<900)}
 let qualityPreset='enhanced';try{const saved=localStorage.getItem(QUALITY_KEY);if(saved&&qualityProfiles[saved])qualityPreset=saved;else if(isLikelyLowPowerDevice())qualityPreset='standard'}catch(e){if(isLikelyLowPowerDevice())qualityPreset='standard'}
-let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:(qualityPreset==='hyper'||qualityPreset==='omega')?'high-performance':'default'})}catch(e){msg('WebGL is unavailable. Try Chrome with hardware acceleration enabled.');return}
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,qualityProfiles[qualityPreset].pixelRatio));renderer.setClearColor(0x252a31);stage.insertBefore(renderer.domElement,stage.firstChild);
+let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'})}catch(e){msg('WebGL is unavailable. Try Chrome with hardware acceleration enabled.');return}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,qualityProfiles[qualityPreset].pixelRatio));renderer.outputEncoding=THREE.sRGBEncoding;renderer.setClearColor(0x252a31);stage.insertBefore(renderer.domElement,stage.firstChild);
 const controls=new THREE.OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.07;controls.target.set(0,1,0);controls.mouseButtons={LEFT:THREE.MOUSE.ROTATE,MIDDLE:THREE.MOUSE.DOLLY,RIGHT:THREE.MOUSE.PAN};
 const hemi=new THREE.HemisphereLight(0xffffff,0x777b84,.8);scene.add(hemi);
 const light=new THREE.DirectionalLight(0xffffff,1.7);light.position.set(7,12,8);light.castShadow=qualityProfiles[qualityPreset].shadows;
 light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.near=.5;light.shadow.camera.far=120;light.shadow.bias=-.00025;light.shadow.normalBias=.02;scene.add(light);
 const floorMat=new THREE.MeshLambertMaterial({color:'#f4f4f4'}),floor=new THREE.Mesh(new THREE.PlaneGeometry(2000,2000),floorMat);floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;scene.add(floor);
 const grid=new THREE.GridHelper(2000,200,0xc9cdd3,0xe3e6eb);grid.position.y=.002;scene.add(grid);
-const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK',absoluteIKEnabled=false;const absoluteIKAnchors=new Map();const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
+const objects=[];const multiSelected=new Set();let editorMode=false;const savedModels=[];const SAVED_MODELS_KEY='prisma3d-lite-saved-models-v1';let savedModelSerial=1;let selected=null,selectedBone=null,selectedAttachmentBone=null,ikEffectorBone=null,showRigBones=true,rigRoot=null,rigMode='FK';let ikPoleEnabled=false,ikPoleEditing=false;const floorContactBones=new Set();let floorContactSelectMode=false;const boneMarkers=[],boneRayTargets=[];let presetMapGroup=null,presetMapName='';
 // Transform-only keyframe animation. Tracks store plain numbers so they are safe to save as JSON.
-const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let autoRotateMode=false,autoRotateAxis="x",autoRotateSpeed=.5,autoRotateDirection=1;let selectedKeyframe=null;let keyframeClipboard=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
-const ikTarget=new THREE.Object3D();scene.add(ikTarget);const fkMoveProxy=new THREE.Object3D();scene.add(fkMoveProxy);let fkMoveLast=new THREE.Vector3();
+const animationTracks=new Map();let timelineFrame=0,timelinePlaying=false,timelineLastTime=0,timelineAccumulator=0;let autoRotateMode=false,autoRotateAxis="x",autoRotateSpeed=.5,autoRotateDirection=1;let selectedKeyframe=null;let keyframeClipboard=null;let selectedKeyframes=new Set();let motionTrailLine=null;const undoStack=[];let undoRestoreInProgress=false;let camMode='editor',activeCamObj=null,frameAspect=16/9,selectedLightNode=null,rigTrueDiag=1,rigBaseScale=1,boneSizeMul=1,motionSyncTick=0;const BONE_PX=3.6,_bmP=new THREE.Vector3(),_bmQ=new THREE.Vector3(),_bmC=new THREE.Vector3();
+const ikTarget=new THREE.Object3D();scene.add(ikTarget);const ikPoleTarget=new THREE.Object3D();scene.add(ikPoleTarget);const fkMoveProxy=new THREE.Object3D();scene.add(fkMoveProxy);let fkMoveLast=new THREE.Vector3();
 // Lightweight animated dust particles; the effect is opt-in and can be toggled from the toolbar.
 const DUST_COUNT=260,dustPositions=new Float32Array(DUST_COUNT*3),dustVelocities=[];let dustCenter=new THREE.Vector3(),dustRadius=2.6,dustOn=false;
 for(let i=0;i<DUST_COUNT;i++){dustPositions[i*3]=(Math.random()-.5)*dustRadius*2;dustPositions[i*3+1]=Math.random()*dustRadius;dustPositions[i*3+2]=(Math.random()-.5)*dustRadius*2;dustVelocities.push(new THREE.Vector3((Math.random()-.5)*.16,.035+Math.random()*.12,(Math.random()-.5)*.16));}
@@ -1339,6 +1432,7 @@ const dustGeometry=new THREE.BufferGeometry();dustGeometry.setAttribute('positio
 const dustCanvas=document.createElement('canvas');dustCanvas.width=dustCanvas.height=32;const dustCtx=dustCanvas.getContext('2d');const dustGrad=dustCtx.createRadialGradient(16,16,1,16,16,15);dustGrad.addColorStop(0,'rgba(255,255,255,1)');dustGrad.addColorStop(.45,'rgba(255,255,255,.7)');dustGrad.addColorStop(1,'rgba(255,255,255,0)');dustCtx.fillStyle=dustGrad;dustCtx.fillRect(0,0,32,32);
 const dustMaterial=new THREE.PointsMaterial({color:0x9b8b6d,size:.075,map:new THREE.CanvasTexture(dustCanvas),transparent:true,opacity:.62,depthWrite:false,sizeAttenuation:true});const dustPoints=new THREE.Points(dustGeometry,dustMaterial);dustPoints.visible=false;dustPoints.renderOrder=2;scene.add(dustPoints);
 const ikMarker=new THREE.Mesh(new THREE.SphereGeometry(.075,16,12),new THREE.MeshBasicMaterial({color:0x35b7ff,depthTest:false}));ikMarker.renderOrder=1000;ikMarker.visible=false;scene.add(ikMarker);
+const ikPoleMarker=new THREE.Mesh(new THREE.OctahedronGeometry(.105,0),new THREE.MeshBasicMaterial({color:0xffb347,depthTest:false}));ikPoleMarker.renderOrder=1001;ikPoleMarker.visible=false;scene.add(ikPoleMarker);
 const loader=new THREE.GLTFLoader(),raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 const gizmo=new THREE.TransformControls(camera,renderer.domElement);let gizmoBaseSize=.68;function setGizmoSize(base){gizmoBaseSize=base;const factor=Math.max(.7,Math.min(2.5,Number($('gizmoSize')?.value)||1));gizmo.setSize(base*factor);const out=$('gizmoSizeOut');if(out)out.textContent=factor.toFixed(1)+'×';}setGizmoSize(.68);scene.add(gizmo);
 function snapshotState(){return {objects:objects.map(o=>({uuid:o.uuid,parent:o.parent&&o.parent!==scene?o.parent.uuid:null,position:o.position.toArray(),quaternion:o.quaternion.toArray(),scale:o.scale.toArray(),bones:(()=>{const a=[];o.traverse(n=>{if(n.isBone)a.push({uuid:n.uuid,position:n.position.toArray(),quaternion:n.quaternion.toArray(),scale:n.scale.toArray()})});return a})()})),tracks:Array.from(animationTracks.entries()).map(([id,frames])=>[id,JSON.parse(JSON.stringify(frames))]),frame:timelineFrame,selectedKeyframe:selectedKeyframe?{...selectedKeyframe}:null}}
@@ -1348,17 +1442,18 @@ function restoreState(st){undoRestoreInProgress=true;for(const x of st.objects){
 function undo(){const st=undoStack.pop();if(!st){msg('Nothing to undo');return}restoreState(st);$('tlUndo').disabled=undoStack.length===0}
 $('tlUndo').disabled=true;$('tlUndo').onclick=undo;
 gizmo.addEventListener('dragging-changed',e=>{controls.enabled=!e.value;if(e.value)pushUndo()});gizmo.addEventListener('change',()=>{
- if(rigMode==='IK'&&selectedBone&&gizmo.object===ikTarget){solveIK();updateCurrentKeyIfPresent();return;}
+ if(!selectedBone&&rigRoot)solveFloorContacts();
+ if(rigMode==='IK'&&selectedBone&&(gizmo.object===ikTarget||gizmo.object===ikPoleTarget)){solveIK();solveFloorContacts();updateCurrentKeyIfPresent();return;}
  if(rigMode==='FK'&&selectedBone&&gizmo.object===fkMoveProxy){const world=fkMoveProxy.position.clone();if(selectedBone.parent){selectedBone.parent.updateWorldMatrix(true,false);selectedBone.position.copy(selectedBone.parent.worldToLocal(world));}else selectedBone.position.copy(world);rigRoot&&rigRoot.updateMatrixWorld(true);selectedBone.updateMatrixWorld(true);for(const o of objects){o.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)n.skeleton.update()})}fkMoveLast.copy(fkMoveProxy.position);updateBoneMarkers();updateCurrentKeyIfPresent();return;}
  if(selectedBone){refreshSkinnedMeshes(rigRoot||selected);updateBoneMarkers();updateCurrentKeyIfPresent();}
 });
 const markerGeo=new THREE.SphereGeometry(1,16,12);
 const boneLineMaterial=new THREE.LineBasicMaterial({color:0x8aa9c8,depthTest:false,transparent:true,opacity:.9});
-function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;absoluteIKAnchors.clear();absoluteIKEnabled=false;if($('absoluteIKMode')){$('absoluteIKMode').disabled=true;$('absoluteIKMode').textContent='Absolute IK Mode (AIKM): Off';$('absoluteIKMode').classList.remove('active')}if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=true;$('absoluteIKPinSelected').textContent='Pin Selected Bone'}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain.'}
+function clearBoneMarkers(){for(const m of boneMarkers){scene.remove(m.outline);scene.remove(m.ball);if(m.line){scene.remove(m.line);m.line.geometry.dispose()}m.ball.material.dispose();m.outline.material.dispose()}boneMarkers.length=0;boneRayTargets.length=0;floorContactBones.clear();floorContactSelectMode=false;ikPoleEnabled=false;ikPoleEditing=false;if($('ikPoleToggle')){$('ikPoleToggle').disabled=true;$('ikPoleToggle').textContent='IK Pole Vector: Off';$('ikPoleToggle').classList.remove('active');$('ikPoleMove').disabled=true;$('ikPoleMove').textContent='Move Pole Target'}ikPoleMarker.visible=false;if($('floorContactIK')){$('floorContactIK').disabled=true;$('floorContactIK').textContent='Floor Contact IK: Off';$('floorContactIK').classList.remove('active')}rigRoot=null;selectedBone=null;ikEffectorBone=null;ikMarker.visible=false;$('showBones').disabled=true;$('hideBones').disabled=true;$('addRootBone').disabled=!selected;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;$('fkMode').disabled=true;$('ikMode').disabled=true;$('fkMode').classList.add('active');$('ikMode').classList.remove('active');rigMode='FK';$('rigInfo').textContent='Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.'}
 function showRigFor(root){clearBoneMarkers();rigRoot=root;const bones=[];root.traverse(o=>{if(o.isBone)bones.push(o)});if(bones.length>2500){const total=bones.length;bones.length=2500;setTimeout(()=>msg('This rig has '+total+' bones. Handles are shown for the first 2500; the animation still uses all of them.'),0)}if(!bones.length){$('rigInfo').textContent='No bones detected. Create a root bone to begin building a rig.';$('addRootBone').disabled=false;$('addChildBone').disabled=true;$('boneBuildInfo').textContent='No skeleton yet. Create a root bone to start.';return}
 const box=new THREE.Box3().setFromObject(root),size=box.getSize(new THREE.Vector3()),diam=Math.max(size.x,size.y,size.z,1),radius=Math.max(.009,Math.min(.052,diam*.0085));rigTrueDiag=Math.max(size.x,size.y,size.z,1e-6);root.updateMatrixWorld(true);rigBaseScale=root.matrixWorld.getMaxScaleOnAxis()||1;
 bones.forEach((bone,i)=>{const outline=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0x252a32,depthTest:false}));outline.scale.setScalar(radius*1.22);outline.renderOrder=998;outline.userData.bone=bone;const ball=new THREE.Mesh(markerGeo,new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false}));ball.scale.setScalar(radius);ball.renderOrder=999;ball.userData.bone=bone;let line=null;if(bone.parent&&bone.parent.isBone){const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]);line=new THREE.Line(geo,boneLineMaterial);line.renderOrder=997;line.frustumCulled=false;scene.add(line)}scene.add(outline,ball);boneMarkers.push({bone,outline,ball,radius,line});boneRayTargets.push(ball)});
-$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('absoluteIKMode').disabled=false;$('absoluteIKPinSelected').disabled=true;$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
+$('showBones').disabled=false;$('hideBones').disabled=false;$('addRootBone').disabled=false;$('addChildBone').disabled=!(selectedBone&&selectedBone.isBone);$('renameBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('deleteBoneButton').disabled=!(selectedBone&&selectedBone.isBone);$('fkMode').disabled=false;$('ikMode').disabled=false;$('ikPoleToggle').disabled=false;$('ikPoleMove').disabled=false;$('floorContactIK').disabled=false;$('floorContactIK').textContent='Floor Contact IK: Off';$('floorContactIK').classList.remove('active');$('rigInfo').textContent='Detected '+bones.length+' bone(s). Select a white bone handle. FK rotates that joint; IK moves the selected bone target and bends its parent chain.';$('boneBuildInfo').textContent=bones.length+' bone(s) in this skeleton. Select a bone to add a connected child.';updateBoneMarkers()}
 
 function topObject(hit){let o=hit;while(o&&o!==scene){if(objects.includes(o))return o;o=o.parent}return null}
 function refresh(){
@@ -1412,7 +1507,7 @@ function selectedMaterials(){const mats=[];if(selected)selected.traverse(o=>{if(
 function syncProps(){syncCameraUI();syncLightUI();enableProps(!!selected);if(!selected)return;$('objName').value=selected.name||'Object';let color='#b9c6d8',rough=.8,metal=0,opacity=1,found=false;selected.traverse(o=>{if(o.isMesh){const m=Array.isArray(o.material)?o.material[0]:o.material;if(m){if(m.color)color='#'+m.color.getHexString();if(!found){rough=Number.isFinite(m.roughness)?m.roughness:rough;metal=Number.isFinite(m.metalness)?m.metalness:metal;opacity=Number.isFinite(m.opacity)?m.opacity:opacity;found=true}}}});$('objColor').value=color;$('matRoughness').value=rough;$('matMetalness').value=metal;$('matOpacity').value=opacity;$('matRoughnessOut').textContent=rough.toFixed(2);$('matMetalnessOut').textContent=metal.toFixed(2);$('matOpacityOut').textContent=opacity.toFixed(2);['x','y','z'].forEach(a=>{$('p'+a).value=selected.position[a].toFixed(2);$('r'+a).value=THREE.Math.radToDeg(selected.rotation[a]).toFixed(1);$('s'+a).value=selected.scale[a].toFixed(2)})}
 function select(o){selected=o;selectedLightNode=null;selectedBone=null;selectedKeyframe=null;if(typeof syncEffectUI==='function'){try{syncEffectUI(o)}catch(effectUiError){console.warn('Effects UI sync skipped:',effectUiError)}}$('addRootBone').disabled=!o;$('addChildBone').disabled=true;$('renameBoneButton').disabled=true;$('deleteBoneButton').disabled=true;if(o&&!multiSelected.has(o)){multiSelected.clear();multiSelected.add(o);}gizmo.detach();if(o){gizmo.attach(o);showRigFor(o)}else clearBoneMarkers();refresh();syncProps();updateBoneMarkers();renderTimeline();syncEditorTools();msg(o?'Selected: '+o.name:'Ready')}
 gizmo.addEventListener('objectChange',()=>{if((selected&&gizmo.object===selected)||(selectedLightNode&&gizmo.object===selectedLightNode))updateCurrentKeyIfPresent()});
-function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&rigMode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);ikMarker.visible=true;}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
+function selectBone(ball){const bone=ball.userData.bone;if(!bone)return;if(floorContactSelectMode){if(floorContactBones.has(bone)){floorContactBones.delete(bone);msg('Floor collision removed from '+(bone.name||'bone'));}else{floorContactBones.add(bone);msg('Floor collision assigned to '+(bone.name||'bone'));}updateBoneMarkers();return;}selectedLightNode=null;selectedAttachmentBone=null;selectedBone=bone;$('addRootBone').disabled=false;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();ikMarker.visible=true;ikPoleMarker.visible=ikPoleEnabled;setIKGizmoTarget(ikPoleEditing);}else{bone.updateWorldMatrix(true,false);bone.getWorldPosition(fkMoveProxy.position);gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);ikMarker.visible=false;}updateBoneMarkers();selectedKeyframe=null;renderTimeline();if($('autoBoneFocus').checked){requestAnimationFrame(()=>focusTimelineTarget(bone));const point=bone.getWorldPosition(new THREE.Vector3());const offset=camera.position.clone().sub(controls.target);if(offset.lengthSq()<0.001)offset.set(0.7,0.45,1);offset.normalize().multiplyScalar(2.8);camera.position.copy(point).add(offset);controls.target.copy(point);controls.update();}document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===(rigMode==='IK'?'translate':'rotate')));$('rigInfo').textContent=(rigMode==='IK'?'IK target for ':'Posing bone: ')+(bone.name||'Unnamed bone')+'. Selected joint turns amber. '+(rigMode==='IK'?'Move the blue target; only the local limb chain should solve.':'Rotate the joint in local space; its connected child bones follow.');refresh();syncEditorTools();msg(($('autoBoneFocus').checked?'Focused bone: ':'Selected bone: ')+(bone.name||'Unnamed bone')+' · '+rigMode+' mode')}
 function isBodyRootBone(bone){
   const n=(bone&&bone.name||'').toLowerCase().replace(/[^a-z0-9]/g,'');
   return /^(root|hips?|pelvis|spine[0-9]*|torso|body|armature|skeleton|mixamorighips|mixamorigspine[0-9]*)$/.test(n)||/(pelvis|hips|spine|torso|armature|skeleton)/.test(n);
@@ -1445,60 +1540,86 @@ function setIKTargetToBone(){
   ikEffectorBone.getWorldPosition(ikTarget.position);
   ikTarget.quaternion.identity();ikTarget.scale.set(1,1,1);
   ikMarker.position.copy(ikTarget.position);
+  initializeIKPole();
 }
-function captureAbsoluteIKAnchor(bone){
- if(!bone||!bone.isBone)return;rigRoot&&rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
- absoluteIKAnchors.set(bone,{position:bone.getWorldPosition(new THREE.Vector3()),quaternion:bone.getWorldQuaternion(new THREE.Quaternion())});
+function initializeIKPole(){
+ if(!selectedBone||!rigRoot)return;
+ const chain=getIKChain(selectedBone,selectedBone);if(!chain.length)return;
+ rigRoot.updateMatrixWorld(true);selectedBone.updateWorldMatrix(true,false);chain[chain.length-1].updateWorldMatrix(true,false);
+ const root=chain[chain.length-1].getWorldPosition(new THREE.Vector3());
+ const end=selectedBone.getWorldPosition(new THREE.Vector3());const axis=end.clone().sub(root);
+ if(axis.lengthSq()<1e-8)return;axis.normalize();
+ const mid=chain[0].getWorldPosition(new THREE.Vector3());let bend=mid.sub(root);bend.addScaledVector(axis,-bend.dot(axis));
+ if(bend.lengthSq()<1e-7){bend.set(0,0,1);bend.addScaledVector(axis,-bend.dot(axis));if(bend.lengthSq()<1e-7){bend.set(1,0,0);bend.addScaledVector(axis,-bend.dot(axis));}}
+ bend.normalize();const distance=Math.max(.35,root.distanceTo(end)*.75);
+ ikPoleTarget.position.copy(root).addScaledVector(bend,distance);ikPoleMarker.position.copy(ikPoleTarget.position);
 }
-function applyAbsoluteIKAnchors(){
- if(!absoluteIKEnabled||!absoluteIKAnchors.size)return;
- for(const [bone,pose] of absoluteIKAnchors){
-  if(!bone||!bone.parent)continue;
-  bone.parent.updateWorldMatrix(true,false);
-  const parentQ=bone.parent.getWorldQuaternion(new THREE.Quaternion());
-  bone.position.copy(bone.parent.worldToLocal(pose.position.clone()));
-  bone.quaternion.copy(parentQ.invert().multiply(pose.quaternion)).normalize();
-  bone.updateMatrixWorld(true);
+function setIKGizmoTarget(pole){
+ ikPoleEditing=!!pole;gizmo.detach();
+ if(ikPoleEditing){gizmo.attach(ikPoleTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.48);$('ikPoleMove').textContent='Move IK End Target';msg('Pole target selected — drag the orange guide to control the bend direction');}
+ else{gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);$('ikPoleMove').textContent='Move Pole Target';msg('IK endpoint selected — drag the blue target');}
+}
+function toggleIKPole(){
+ if(!selectedBone||!rigRoot){msg('Select a bone in a rig first.');return;}
+ ikPoleEnabled=!ikPoleEnabled;$('ikPoleToggle').classList.toggle('active',ikPoleEnabled);$('ikPoleToggle').textContent='IK Pole Vector: '+(ikPoleEnabled?'On':'Off');
+ ikPoleMarker.visible=ikPoleEnabled&&rigMode==='IK';if(ikPoleEnabled)initializeIKPole();else if(ikPoleEditing&&rigMode==='IK')setIKGizmoTarget(false);
+ $('ikPoleHelp').textContent=ikPoleEnabled?'Pole Vector is active. Move the orange pole target to guide the elbow or knee bend; the blue IK endpoint stays separate.':'Pole Vector is off. The IK chain uses its normal bend behavior.';
+ msg('IK Pole Vector '+(ikPoleEnabled?'enabled':'disabled'));
+}
+
+function toggleFloorContactMode(){
+ if(!rigRoot){msg('Select a rigged model first.');return;}
+ floorContactSelectMode=!floorContactSelectMode;
+ const b=$('floorContactIK');
+ b.textContent=floorContactSelectMode?'Floor Contact IK: Finish Selection':'Floor Contact IK: Select Bones';
+ b.classList.toggle('active',floorContactSelectMode);
+ $('floorContactHelp').textContent=floorContactSelectMode?'Selection mode is on. Click any bone handles you want to have floor collision. Press this button again when finished.':'Floor collision assignments remain active. Press the button to select or deselect more bones.';
+ $('rigInfo').textContent=floorContactSelectMode?'Floor Contact IK selection: click bone handles to add or remove floor collision.':'Floor Contact IK is '+(floorContactBones.size?'active for '+floorContactBones.size+' selected bone(s).':'ready. No bones assigned yet.');
+ msg(floorContactSelectMode?'Floor Contact IK selection enabled. Click bones, then press the button again.':'Floor Contact IK selection finished. Assigned bones retain floor collision.');
+}
+function solveFloorContactBone(bone){
+ if(!bone||!bone.isBone||!bone.parent)return false;
+ rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
+ const current=bone.getWorldPosition(new THREE.Vector3()),floorY=floor.position.y+.045;
+ if(current.y>=floorY)return false;
+ const target=new THREE.Vector3(current.x,floorY,current.z);
+ const chain=[];let joint=bone.parent;while(joint&&joint.isBone&&chain.length<6){if(isBodyRootBone(joint))break;chain.push(joint);joint=joint.parent;}
+ if(!chain.length){const parent=bone.parent;parent.updateWorldMatrix(true,false);bone.position.copy(parent.worldToLocal(target));bone.updateMatrixWorld(true);return true;}
+ for(let pass=0;pass<14;pass++){
+  for(const j of chain){rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);j.updateWorldMatrix(true,false);
+   const jp=j.getWorldPosition(new THREE.Vector3()),ep=bone.getWorldPosition(new THREE.Vector3());
+   const a=ep.sub(jp),v=target.clone().sub(jp);if(a.lengthSq()<1e-9||v.lengthSq()<1e-9)continue;
+   a.normalize();v.normalize();const delta=new THREE.Quaternion().setFromUnitVectors(a,v);
+   const parentQ=j.parent?j.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
+   const desired=delta.multiply(j.getWorldQuaternion(new THREE.Quaternion()));
+   j.quaternion.copy(parentQ.invert().multiply(desired)).normalize();j.updateMatrixWorld(true);
+  }
  }
+ rigRoot.updateMatrixWorld(true);bone.updateWorldMatrix(true,false);
+ // Keep the limb lengths intact: if the selected chain cannot reach the floor,
+ // leave the endpoint unconstrained rather than stretching the bone hierarchy.
+ return bone.getWorldPosition(new THREE.Vector3()).y>=floorY-.02;
 }
-function toggleAbsoluteIKAnchor(bone){
- if(!bone||!bone.isBone)return;
- if(absoluteIKAnchors.has(bone)){absoluteIKAnchors.delete(bone);msg('Released pin: '+(bone.name||'Unnamed bone'));}
- else{captureAbsoluteIKAnchor(bone);msg('Pinned in place: '+(bone.name||'Unnamed bone'));}
- if(bone===selectedBone&&$('absoluteIKPinSelected'))$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(bone)?'Release Selected Bone':'Pin Selected Bone';
- updateBoneMarkers();
-}
-function pinSelectedAbsoluteIKBone(){
- if(!absoluteIKEnabled||rigMode!=='IK'||!selectedBone){msg('Enable Absolute IK and select a bone first.');return;}
- toggleAbsoluteIKAnchor(selectedBone);
-}
-function setAbsoluteIKMode(on){
- if(on&&rigMode!=='IK'){msg('Switch to IK Rig before enabling Absolute IK Mode.');return;}
- absoluteIKEnabled=!!on;
- if(!on)absoluteIKAnchors.clear();
- const b=$('absoluteIKMode');if(b){b.textContent='Absolute IK Mode (AIKM): '+(on?'On':'Off');b.classList.toggle('active',on);}
- $('absoluteIKPinSelected').disabled=!(on&&rigMode==='IK'&&!!selectedBone);$('absoluteIKPinSelected').textContent=selectedBone&&absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';
- updateBoneMarkers();
- $('rigInfo').textContent=on?'Absolute IK is active. Select a bone as the IK target, then pin it with the Pin Selected Bone button. Pinned bones stay fixed while connected bones continue to move.':'IK rig: drag the blue target. Enable Absolute IK Mode to pin bones in place.';
- msg(on?'Absolute IK Mode enabled — click bones to anchor them.':'Absolute IK Mode disabled.');
+function solveFloorContacts(){
+ if(!floorContactBones.size||!rigRoot)return;
+ let changed=false;for(const bone of floorContactBones){if(bone&&bone.parent)changed=solveFloorContactBone(bone)||changed;}
+ if(changed){rigRoot.updateMatrixWorld(true);for(const o of objects)o.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)n.skeleton.update()});updateBoneMarkers();}
 }
 function solveIK(){
   if(!selectedBone||!rigRoot||!ikEffectorBone)return;
   const target=ikTarget.position.clone();
-  if(absoluteIKEnabled&&absoluteIKAnchors.has(ikEffectorBone)){ikMarker.position.copy(ikEffectorBone.getWorldPosition(new THREE.Vector3()));$('rigInfo').textContent='This bone is pinned. Select a different bone as the active IK target, or release this pin.';return;}
   const chain=getIKChain(ikEffectorBone,selectedBone);
   if(!chain.length){
     // Root/body bones have no movable parent chain. Move the selected bone itself;
-    // pinned descendants are then held in world space by the anchor pass.
+    // Move the selected endpoint directly when it has no movable parent chain.
     const parent=ikEffectorBone.parent;
     if(parent){parent.updateWorldMatrix(true,false);ikEffectorBone.position.copy(parent.worldToLocal(target.clone()));}
     else ikEffectorBone.position.copy(target);
-    ikEffectorBone.updateMatrixWorld(true);applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
+    ikEffectorBone.updateMatrixWorld(true);rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
   }
   // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
   for(let pass=0;pass<18;pass++){
     for(const joint of chain){
-      if(absoluteIKEnabled&&absoluteIKAnchors.has(joint))continue;
       rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
       const jp=joint.getWorldPosition(new THREE.Vector3());
       const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
@@ -1510,13 +1631,27 @@ function solveIK(){
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
       joint.quaternion.copy(parentWorldQ.invert().multiply(desiredWorldQ)).normalize();
-      joint.updateMatrixWorld(true);applyAbsoluteIKAnchors();
+      joint.updateMatrixWorld(true);
     }
   }
-  applyAbsoluteIKAnchors();rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);
+  if(ikPoleEnabled&&chain.length>=2){
+    // Pole correction rotates the solved limb around the root-to-end axis,
+    // preserving the endpoint while steering the intermediate joint toward the pole.
+    rigRoot.updateMatrixWorld(true);chain[chain.length-1].updateWorldMatrix(true,false);ikEffectorBone.updateWorldMatrix(true,false);
+    const rootJoint=chain[chain.length-1],rootPos=rootJoint.getWorldPosition(new THREE.Vector3()),endPos=ikEffectorBone.getWorldPosition(new THREE.Vector3());
+    const axis=endPos.clone().sub(rootPos);
+    if(axis.lengthSq()>1e-8){axis.normalize();const mid=chain[0].getWorldPosition(new THREE.Vector3());const pole=ikPoleTarget.position.clone();
+      let current=mid.sub(rootPos);current.addScaledVector(axis,-current.dot(axis));let desired=pole.sub(rootPos);desired.addScaledVector(axis,-desired.dot(axis));
+      if(current.lengthSq()>1e-7&&desired.lengthSq()>1e-7){current.normalize();desired.normalize();const angle=Math.atan2(axis.dot(new THREE.Vector3().crossVectors(current,desired)),THREE.MathUtils.clamp(current.dot(desired),-1,1));
+       const worldRot=new THREE.Quaternion().setFromAxisAngle(axis,angle);const parentQ=rootJoint.parent?rootJoint.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
+       rootJoint.quaternion.copy(parentQ.invert().multiply(worldRot).multiply(rootJoint.getWorldQuaternion(new THREE.Quaternion()))).normalize();rootJoint.updateMatrixWorld(true);
+      }
+    }
+  }
+  rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);ikPoleMarker.position.copy(ikPoleTarget.position);
 }
 function setBoneTransformMode(mode){if(!selectedBone)return;if(rigMode==='IK'){gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));msg('IK mode uses Move to drag the blue target');return;}if(mode==='translate'){selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);fkMoveProxy.quaternion.identity();fkMoveProxy.scale.set(1,1,1);fkMoveLast.copy(fkMoveProxy.position);gizmo.attach(fkMoveProxy);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='FK Move: moving this joint changes only this bone and its connected descendants; the character root and unrelated limbs stay put.';msg('FK bone move — only this bone and its descendants should move');}else{gizmo.attach(selectedBone);gizmo.setSpace('local');gizmo.setMode(mode);setGizmoSize(mode==='rotate'?1.15:.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));msg(({rotate:'Rotate',scale:'Scale'})[mode]+' selected bone');}}
-function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;if($('absoluteIKPinSelected')){$('absoluteIKPinSelected').disabled=!(absoluteIKEnabled&&mode==='IK');$('absoluteIKPinSelected').textContent=absoluteIKAnchors.has(selectedBone)?'Release Selected Bone':'Pin Selected Bone';}$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');setGizmoSize(.58);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
+function setRigMode(mode){if(!selectedBone){msg('Select a bone handle first');return}rigMode=mode;$('fkMode').classList.toggle('active',mode==='FK');$('ikMode').classList.toggle('active',mode==='IK');gizmo.detach();if(mode==='FK'){ikMarker.visible=false;ikPoleMarker.visible=false;selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='rotate'));$('rigInfo').textContent='FK rig: rotate a joint in local space; only its child chain follows. Press M to translate this joint and its descendants.';}else{setIKTargetToBone();ikMarker.visible=true;ikPoleMarker.visible=ikPoleEnabled;setIKGizmoTarget(ikPoleEditing);document.querySelectorAll('[data-mode]').forEach(b=>b.classList.toggle('active',b.dataset.mode==='translate'));$('rigInfo').textContent='IK rig: drag the blue target. The selected bone is the endpoint; its parent joints bend to follow it while the torso/root stays protected.';}msg(mode+' rig enabled')}
 function syncEditorTools(){}
 function deleteSelectedBone(){const bone=selectedBone||selectedAttachmentBone;if(!bone||!bone.isBone){msg('Select or focus a bone first.');return}if(!confirm('Delete bone “'+(bone.name||'Unnamed bone')+'”? This edits the rig and can change skinned-mesh deformation. This action cannot be restored with the current Undo button.'))return;const root=topObject(bone);if(!root){msg('Could not find the model that owns this bone.');return}const parent=bone.parent;if(!parent){msg('This bone has no parent and cannot be removed safely.');return}try{const descendants=[];bone.traverse(n=>{if(n.isBone)descendants.push(n)});const skinMeshes=[];root.traverse(n=>{if(n.isSkinnedMesh&&n.skeleton)skinMeshes.push(n)});const handledSkeletons=new Set();for(const mesh of skinMeshes){const sk=mesh.skeleton;if(handledSkeletons.has(sk))continue;handledSkeletons.add(sk);const idx=sk.bones.indexOf(bone);if(idx<0)continue;let fallback=bone.parent;while(fallback&&!fallback.isBone)fallback=fallback.parent;let fallbackIndex=fallback?sk.bones.indexOf(fallback):-1;if(fallbackIndex<0)fallbackIndex=sk.bones.findIndex(b=>b!==bone);if(fallbackIndex<0)fallbackIndex=0;const geoms=new Set();for(const sm of skinMeshes){if(sm.skeleton!==sk||!sm.geometry||geoms.has(sm.geometry))continue;geoms.add(sm.geometry);const attr=sm.geometry.getAttribute('skinIndex');if(attr){for(let i=0;i<attr.count;i++){for(let c=0;c<4;c++){let v=attr.getComponent(i,c);if(v===idx)v=fallbackIndex;if(v>idx)v--;attr.setComponent(i,c,v)}}attr.needsUpdate=true}}sk.bones.splice(idx,1);if(sk.boneInverses&&sk.boneInverses.length>idx)sk.boneInverses.splice(idx,1);for(const sm of skinMeshes)if(sm.skeleton===sk)sk.update()}
 for(const child of [...bone.children])parent.attach(child);parent.remove(bone);for(const b of descendants)animationTracks.delete(b.uuid);if(selectedBone&&descendants.includes(selectedBone))selectedBone=null;if(selectedAttachmentBone&&descendants.includes(selectedAttachmentBone))selectedAttachmentBone=null;selectedKeyframe=null;showRigFor(root);refresh();syncEditorTools();renderTimeline();msg('Deleted bone '+(bone.name||'Unnamed bone')+'. Inspect the rig; some models may need skin-weight adjustments.')}catch(err){console.error(err);msg('Bone deletion failed: '+(err&&err.message?err.message:'unknown error'))}}
@@ -1527,14 +1662,14 @@ function createRigBone(asChild){
  if(!asChild&&existing.length){msg('This model already has a skeleton. Select a bone and use Create Child Bone, or select another model.');return}
  const bone=new THREE.Bone();const raw=($('newBoneName').value||'Bone').trim().slice(0,48);bone.name=raw||'Bone';
  if(parent){parent.add(bone);bone.position.set(0,.55,0)}else{selected.add(bone);bone.position.set(0,0,0)}
- bone.userData.prismaCreatedBone=true;selectedBone=bone;selectedAttachmentBone=null;rigRoot=selected;showRigFor(selected);selectedBone=bone;bone.updateWorldMatrix(true,false);if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);ikMarker.visible=true}else{gizmo.detach();gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15)}
+ bone.userData.prismaCreatedBone=true;selectedBone=bone;selectedAttachmentBone=null;rigRoot=selected;showRigFor(selected);selectedBone=bone;bone.updateWorldMatrix(true,false);if(rigMode==='IK'){setIKTargetToBone();ikMarker.visible=true;ikPoleMarker.visible=ikPoleEnabled;setIKGizmoTarget(ikPoleEditing)}else{gizmo.detach();gizmo.attach(bone);gizmo.setMode('rotate');gizmo.setSpace('local');setGizmoSize(1.15)}
  $('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;updateBoneMarkers();refresh();renderTimeline();syncEditorTools();msg((parent?'Connected child bone ':'Created root bone ')+bone.name);
 }
 $('addRootBone').onclick=()=>createRigBone(false);
 $('addChildBone').onclick=()=>createRigBone(true);
 $('renameBoneButton').onclick=()=>{if(!selectedBone||!selectedBone.isBone){msg('Select a bone first.');return}const name=($('newBoneName').value||'').trim().slice(0,48);if(!name){msg('Enter a bone name first.');return}const renamedBone=selectedBone;renamedBone.name=name;showRigFor(selected);selectedBone=renamedBone;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;updateBoneMarkers();refresh();renderTimeline();msg('Bone renamed to '+name)};
 $('deleteBoneButton').onclick=deleteSelectedBone;
-function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
+function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode&&!n.userData.smartDetectedPlane;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
 function addCube(){const o=new THREE.Mesh(new THREE.BoxGeometry(1.5,1.5,1.5),new THREE.MeshLambertMaterial({color:0xb9c6d8}));o.position.y=.75;add(o,'Cube '+(objects.length+1));msg('Cube added and selected')}
 function del(){if(!selected)return;const doomed=selected;const childObjects=objects.filter(o=>o!==doomed&&o.parent===doomed);if(childObjects.length&&!confirm('Delete '+(doomed.name||'this object')+'? Its '+childObjects.length+' child object(s) will be detached and kept in the scene.'))return;pushUndo();gizmo.detach();clearBoneMarkers();for(const child of childObjects)scene.attach(child);if(doomed.parent)doomed.parent.remove(doomed);disposeObjectTree(doomed);const i=objects.indexOf(doomed);if(i>=0)objects.splice(i,1);updateProjectLoadPressure();multiSelected.clear();selected=null;refresh();syncProps();msg('Selected object deleted. Child objects, if any, were kept in the scene.')}
 function cloneMaterials(root){root.traverse(o=>{if(o.isMesh){if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone();if(o.geometry)o.geometry=o.geometry.clone()}})}
@@ -1604,17 +1739,23 @@ loadSavedModels();addCube();
 function resize(){const w=Math.max(1,stage.clientWidth),h=Math.max(1,stage.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(stage);resize();
 function applyQualityPreset(value,save=true){
  const key=qualityProfiles[value]?value:'standard',profile=qualityProfiles[key];qualityPreset=key;
- const effectiveShadows=profile.shadows&&!performanceMode&&autoPerformanceLevel===0;
- const adaptivePixelCap=autoPerformanceLevel>=2?.75:(autoPerformanceLevel===1?1:profile.pixelRatio);
+ // Omega is intentionally not auto-downgraded by project-size heuristics: on capable
+ // desktop hardware it keeps the selected quality. Only the user's explicit Performance
+ // Mode can lower it. Actual limits are bounded by the GPU's reported texture capability.
+ const omega=key==='omega';
+ const effectiveShadows=profile.shadows&&!performanceMode&& (omega||autoPerformanceLevel===0);
+ const adaptivePixelCap=omega?profile.pixelRatio:(autoPerformanceLevel>=2?.75:(autoPerformanceLevel===1?1:profile.pixelRatio));
  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,performanceMode?1:adaptivePixelCap));
  renderer.shadowMap.enabled=effectiveShadows;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
  renderer.toneMapping=profile.tone==='filmic'?THREE.ACESFilmicToneMapping:THREE.NoToneMapping;
+ renderer.outputEncoding=THREE.sRGBEncoding;
  renderer.toneMappingExposure=+$('bright').value||1;
- light.castShadow=effectiveShadows;light.shadow.mapSize.set(profile.shadowSize,profile.shadowSize);light.shadow.needsUpdate=true;
+ light.castShadow=effectiveShadows;const gpuShadowLimit=Math.max(512,renderer.capabilities.maxTextureSize||4096);const effectiveShadowSize=Math.min(profile.shadowSize,gpuShadowLimit);light.shadow.mapSize.set(effectiveShadowSize,effectiveShadowSize);light.shadow.radius=omega?3:2;light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.updateProjectionMatrix();light.shadow.needsUpdate=true;
  scene.traverse(o=>{if(o.isMesh){o.castShadow=effectiveShadows;o.receiveShadow=effectiveShadows}});
  floor.receiveShadow=effectiveShadows;resize();
  const select=$('qualityPreset'),description=$('qualityDescription');if(select)select.value=key;if(description)description.textContent=profile.description;
  if(typeof refreshEffectQuality==='function')refreshEffectQuality();
+ if(key==='omega'&&!performanceMode){renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,4));}
  if(save){try{localStorage.setItem(QUALITY_KEY,key)}catch(e){}}
  if(!arguments[2])msg('Graphics quality: '+profile.label+'. '+(key==='standard'?'Performance-focused settings enabled.':key==='enhanced'?'Balanced visual settings enabled.':key==='hyper'?'High-quality preview settings enabled.':'Maximum browser preview settings enabled. Expect a significant performance cost.'));
 }
@@ -1652,7 +1793,7 @@ function setPerformanceMode(enabled){performanceMode=!!enabled;applyQualityPrese
 $('performanceModeBtn').addEventListener('click',()=>setPerformanceMode(!performanceMode));
 $('performanceMonitorBtn').addEventListener('click',()=>{showPerformanceMonitor=!showPerformanceMonitor;updatePerformanceButtons()});
 updatePerformanceButtons();updateProjectLoadPressure();
-$('qualityPreset').addEventListener('change',e=>{const requested=e.target.value;if(requested==='omega'){const accepted=confirm('WARNING: Be careful when using Omega Realism. This mode pushes graphics quality to an extremely high level and may make the editor run very slowly or become unstable. If you have a weak phone, tablet, or computer, it is not recommended. Are you sure you want to continue?');if(!accepted){e.target.value=qualityPreset;msg('Omega Realism was not enabled. Your previous quality setting is unchanged.');return;}}applyQualityPreset(requested);});
+$('qualityPreset').addEventListener('change',e=>{const requested=e.target.value;if(requested==='omega'){const accepted=confirm('Omega Realism prioritizes maximum visual quality over speed. It uses the highest shadow resolution supported by your GPU and will not automatically lower quality for large projects. A powerful desktop GPU is recommended. Continue?');if(!accepted){e.target.value=qualityPreset;msg('Omega Realism was not enabled. Your previous quality setting is unchanged.');return;}}applyQualityPreset(requested);});
 applyQualityPreset(qualityPreset,false);
 let down=null;
 renderer.domElement.addEventListener('pointerdown',e=>{if(e.button!==0)return;down={x:e.clientX,y:e.clientY}});
@@ -1717,14 +1858,13 @@ $('presetMapsBtn').onclick=()=>$('presetOverlay').classList.add('open');$('close
 ['bg','floorColor','fog','bright','ambient','gridToggle'].forEach(id=>$(id).addEventListener('input',env));
 $('resetEnv').onclick=()=>{$('bg').value='#ffffff';$('floorColor').value='#f4f4f4';$('fog').value='.012';$('bright').value='1.2';$('ambient').value='.8';$('gridToggle').checked=true;env();msg('Environment reset')};
 $('addCube').onclick=addCube;$('delete').onclick=del;$('duplicate').onclick=duplicate;
-$('fkMode').onclick=()=>{setAbsoluteIKMode(false);setRigMode('FK')};$('ikMode').onclick=()=>setRigMode('IK');$('absoluteIKMode').onclick=()=>setAbsoluteIKMode(!absoluteIKEnabled);$('absoluteIKPinSelected').onclick=pinSelectedAbsoluteIKBone;
+$('fkMode').onclick=()=>setRigMode('FK');$('ikMode').onclick=()=>setRigMode('IK');$('ikPoleToggle').onclick=toggleIKPole;$('ikPoleMove').onclick=()=>{if(!selectedBone||rigMode!=='IK'){msg('Select a bone and switch to IK mode first.');return;}if(!ikPoleEnabled){toggleIKPole();}setIKGizmoTarget(!ikPoleEditing);};$('floorContactIK').onclick=toggleFloorContactMode;
 $('showBones').onclick=()=>{showRigBones=true;updateBoneMarkers();msg('Bone handles shown')};
 $('hideBones').onclick=()=>{showRigBones=false;updateBoneMarkers();msg('Bone handles hidden')};
 document.addEventListener('keydown',e=>{
  const tag=document.activeElement.tagName;
  if(e.ctrlKey||e.metaKey||e.altKey||['INPUT','TEXTAREA','SELECT'].includes(tag))return;
  const key=e.key.toLowerCase();
- if(key==='a'){e.preventDefault();$('tlAutoMode').click();return}
  if(autoRotateMode&&['x','y','z'].includes(key)){e.preventDefault();setAutoRotateAxis(key);return}
  if(key==='d'){e.preventDefault();del();return}
  if(key==='f'){e.preventDefault();setRigMode('FK');return}if(key==='i'){e.preventDefault();setRigMode('IK');return}
@@ -1914,7 +2054,63 @@ $('r'+a).onchange=()=>{if(selected){pushUndo();selected.rotation[a]=THREE.Math.d
 $('s'+a).onchange=()=>{if(selected){pushUndo();selected.scale[a]=Math.max(.01,Number($('s'+a).value)||.01);syncProps();updateCurrentKeyIfPresent()}};
 }
 function fit(o){const b=new THREE.Box3().setFromObject(o),s=b.getSize(new THREE.Vector3()),max=Math.max(s.x,s.y,s.z)||1;o.scale.multiplyScalar(3/max);const b2=new THREE.Box3().setFromObject(o);o.position.y-=b2.min.y}
-function finishModelImport(o,name,fileBytes){if(!o)throw new Error('No model object was created');o.name=name||'Imported model';o.userData=o.userData||{};if(Number(fileBytes)>0)o.userData.prismaLiteImport={fileBytes:Number(fileBytes),fileName:String(name||'Imported model')};const shrunk=limitModelMemory(o);fit(o);add(o,o.name);updateProjectLoadPressure();const b=new THREE.Box3().setFromObject(o),center=b.getCenter(new THREE.Vector3());controls.target.copy(center);controls.update();const tris=countTriangles(o);msg('Model imported: '+o.name+(tris>0?' ('+fmtTris(tris)+' triangles)':'')+(shrunk?'. '+shrunk+' large texture(s) were shrunk to save memory':''))}
+function smartPlaneAlphaInfo(texture){
+ if(!texture||!texture.image)return false;
+ const image=texture.image;
+ try{
+  if(image.data&&image.width&&image.height&&image.data.length>=image.width*image.height*4){
+   const step=Math.max(1,Math.floor(Math.sqrt((image.width*image.height)/4096)));
+   for(let y=0;y<image.height;y+=step)for(let x=0;x<image.width;x+=step){if(image.data[(y*image.width+x)*4+3]<250)return true;}
+   return false;
+  }
+  const w=image.videoWidth||image.naturalWidth||image.width,h=image.videoHeight||image.naturalHeight||image.height;
+  if(!w||!h)return false;
+  const c=document.createElement('canvas');c.width=Math.min(64,w);c.height=Math.min(64,h);
+  const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0,c.width,c.height);
+  const data=ctx.getImageData(0,0,c.width,c.height).data;
+  for(let i=3;i<data.length;i+=4)if(data[i]<250)return true;
+ }catch(e){/* Cross-origin or unreadable texture: leave its material settings unchanged. */}
+ return false;
+}
+function isSmartFlatGeometry(geometry){
+ if(!geometry)return false;
+ if(!geometry.boundingBox)geometry.computeBoundingBox();
+ const b=geometry.boundingBox;if(!b)return false;
+ const size=new THREE.Vector3();b.getSize(size);
+ const dims=[size.x,size.y,size.z].sort((a,b)=>a-b),largest=dims[2];
+ if(!(largest>1e-7))return false;
+ // A true surface has essentially no local thickness. Avoid treating thin boxes/limbs as planes.
+ return dims[0]/largest<0.0015 && dims[1]/largest>0.025;
+}
+function scanSmartPlanes(root,announce=true){
+ if(!root)return {planes:0,alphaPlanes:0};
+ let planes=0,alphaPlanes=0;
+ root.traverse(node=>{
+  if(!node.isMesh||!isSmartFlatGeometry(node.geometry))return;
+  planes++;node.userData=node.userData||{};node.userData.smartDetectedPlane=true;
+  // Plane surfaces are often viewed from both sides. Keep floors opaque unless their texture has real alpha.
+  const hadMaterialArray=Array.isArray(node.material);
+  const materials=(hadMaterialArray?node.material:[node.material]).map(material=>{
+   if(!material)return material;
+   material.side=THREE.DoubleSide;
+   const hasAlpha=smartPlaneAlphaInfo(material.map);
+   if(hasAlpha){material.transparent=true;material.depthWrite=false;material.alphaTest=Math.max(Number(material.alphaTest)||0,0.001);alphaPlanes++;}
+   material.needsUpdate=true;return material;
+  });
+  node.material=hadMaterialArray?materials:materials[0];
+  // Flat effect cards should not cast large rectangular shadows onto the character or floor.
+  node.castShadow=false;
+ });
+ if(announce){const status=$('smartPlaneStatus');if(status)status.textContent='Scan complete: '+planes+' flat plane mesh(es) detected; '+alphaPlanes+' have transparent texture pixels. Opaque planes were not made transparent.';}
+ return {planes,alphaPlanes};
+}
+$('smartPlaneDetection').addEventListener('change',()=>{
+ const enabled=$('smartPlaneDetection').checked;
+ $('smartPlaneStatus').textContent=enabled?'Smart Plane Detection is on. New imports and the current scene will be scanned.':'Smart Plane Detection is off. Existing material changes are not automatically reverted.';
+ if(enabled){let total=0,alpha=0;for(const obj of objects){const r=scanSmartPlanes(obj,false);total+=r.planes;alpha+=r.alphaPlanes;}$('smartPlaneStatus').textContent='Detection enabled: '+total+' flat plane mesh(es) found in the current scene; '+alpha+' use texture transparency.';}
+});
+$('scanPlanesBtn').addEventListener('click',()=>{if(!$('smartPlaneDetection').checked){$('smartPlaneDetection').checked=true;}let total=0,alpha=0;for(const obj of objects){const r=scanSmartPlanes(obj,false);total+=r.planes;alpha+=r.alphaPlanes;}$('smartPlaneStatus').textContent='Scene scan complete: '+total+' flat plane mesh(es) detected; '+alpha+' have transparent texture pixels. Opaque planes remain opaque.';msg('Smart Plane Detection found '+total+' flat plane mesh(es).');});
+function finishModelImport(o,name,fileBytes){if(!o)throw new Error('No model object was created');o.name=name||'Imported model';o.userData=o.userData||{};if(Number(fileBytes)>0)o.userData.prismaLiteImport={fileBytes:Number(fileBytes),fileName:String(name||'Imported model')};const shrunk=limitModelMemory(o);if($('smartPlaneDetection')&&$('smartPlaneDetection').checked)scanSmartPlanes(o,false);fit(o);add(o,o.name);updateProjectLoadPressure();const b=new THREE.Box3().setFromObject(o),center=b.getCenter(new THREE.Vector3());controls.target.copy(center);controls.update();const tris=countTriangles(o);msg('Model imported: '+o.name+(tris>0?' ('+fmtTris(tris)+' triangles)':'')+(shrunk?'. '+shrunk+' large texture(s) were shrunk to save memory':''))}
 function loadUrl(url){let downloadedBytes=0;msg('Loading model…');PrismaBusy.show('Please wait…','Loading '+(url.split('/').pop().split('?')[0]||'model'));loader.load(url,g=>{try{finishModelImport(g.scene||g.scenes&&g.scenes[0],url.split('/').pop().split('?')[0]||'Imported model',downloadedBytes);PrismaBusy.done()}catch(err){console.error(err);const m='Could not import model: '+err.message;msg(m);PrismaBusy.error(m,err.stack)}},ev=>{if(ev&&ev.lengthComputable){downloadedBytes=ev.total;PrismaBusy.progress(ev.loaded/ev.total,'Downloading…')}},e=>{console.error(e);const m='Could not load URL. Use a direct .glb/.gltf file URL, or download the model and import it locally.';msg(m);PrismaBusy.error(m,e&&e.message)})}
 $('loadUrl').onclick=()=>{const u=$('url').value.trim();if(u)loadUrl(u);else msg('Paste a direct model URL first')};
 let importBusy=false;
@@ -1953,22 +2149,27 @@ function selectTimelineTarget(target){
  let root=target;while(root.parent&&root.parent!==scene&&!objects.includes(root))root=root.parent;
  if(objects.includes(root)&&root!==selected)select(root);
  selectedBone=target.isBone?target:null;$('addRootBone').disabled=!selected;$('addChildBone').disabled=!selectedBone;$('renameBoneButton').disabled=!selectedBone;$('deleteBoneButton').disabled=!selectedBone;
- if(selectedBone){gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();gizmo.attach(ikTarget);gizmo.setSpace('world');gizmo.setMode('translate');ikMarker.visible=true;}else{selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');ikMarker.visible=false;}}
+ if(selectedBone){gizmo.detach();if(rigMode==='IK'){setIKTargetToBone();ikMarker.visible=true;ikPoleMarker.visible=ikPoleEnabled;setIKGizmoTarget(ikPoleEditing);}else{selectedBone.updateWorldMatrix(true,false);selectedBone.getWorldPosition(fkMoveProxy.position);gizmo.attach(selectedBone);gizmo.setMode('rotate');gizmo.setSpace('local');ikMarker.visible=false;}}
  else if(selected){gizmo.detach();gizmo.attach(selected);}
- selectedKeyframe=null;updateBoneMarkers();syncProps();renderTimeline();if(target.isBone&&$('autoBoneFocus').checked)requestAnimationFrame(()=>focusTimelineTarget(target));
+ selectedKeyframe=null;selectedKeyframes.clear();updateBoneMarkers();syncProps();renderTimeline();if(target.isBone&&$('autoBoneFocus').checked)requestAnimationFrame(()=>focusTimelineTarget(target));
 }
 function syncAutoRotateUI(){
- const mode=$('tlAutoMode');if(mode){mode.textContent='Auto Rotate: '+(autoRotateMode?'On':'Off')+' (A)';mode.classList.toggle('active',autoRotateMode);mode.setAttribute('aria-pressed',String(autoRotateMode));}
+ const mode=$('tlAutoMode');if(mode){mode.textContent='Auto Rotate: '+(autoRotateMode?'On':'Off');mode.classList.toggle('active',autoRotateMode);mode.setAttribute('aria-pressed',String(autoRotateMode));}
  ['x','y','z'].forEach(axis=>{const b=$('tlAuto'+axis.toUpperCase());if(b){b.classList.toggle('active',autoRotateAxis===axis);b.style.borderColor=autoRotateAxis===axis?({x:'#ff5555',y:'#42d17a',z:'#4d9cff'}[axis]):'';}});
  $('tlAutoSpeed').value=String(autoRotateSpeed);$('tlAutoSpeedOut').textContent=autoRotateSpeed.toFixed(2)+' r/s';$('tlAutoDirection').textContent='Direction: '+(autoRotateDirection>0?'Forward':'Reverse');$('tlAutoDirection').classList.toggle('active',autoRotateDirection<0);
  const found=getSelectedKeyframeRecord&&getSelectedKeyframeRecord();if(found&&found.key.autoRotate){const a=found.key.autoRotate;autoRotateAxis=['x','y','z'].includes(a.axis)?a.axis:autoRotateAxis;autoRotateSpeed=Math.max(.05,Math.min(3,Number(a.speed)||.5));autoRotateDirection=a.direction===-1?-1:1;$('tlAutoSpeed').value=String(autoRotateSpeed);$('tlAutoSpeedOut').textContent=autoRotateSpeed.toFixed(2)+' r/s';$('tlAutoDirection').textContent='Direction: '+(autoRotateDirection>0?'Forward':'Reverse');$('tlAutoDirection').classList.toggle('active',autoRotateDirection<0);['x','y','z'].forEach(axis=>$('tlAuto'+axis.toUpperCase()).classList.toggle('active',autoRotateAxis===axis));}
 }
-function setAutoRotateAxis(axis){if(!autoRotateMode){msg('Press A to activate Auto Rotate before choosing an axis.');return}if(!selectedBone){msg('Select a bone track before choosing an Auto Rotate axis.');return}autoRotateAxis=axis;const found=getSelectedKeyframeRecord();if(found){pushUndo();found.key.autoRotate={axis, speed:autoRotateSpeed, direction:autoRotateDirection};renderTimeline();msg('Selected keyframe set to Auto Rotate '+axis.toUpperCase()+' axis.')}else{syncAutoRotateUI();msg('Auto Rotate axis set to '+axis.toUpperCase()+'. Press ◆ Keyframe to add it to this bone.')}syncAutoRotateUI()}
-$('tlAutoMode').onclick=()=>{autoRotateMode=!autoRotateMode;syncAutoRotateUI();msg(autoRotateMode?'Auto Rotate mode enabled. Select a bone, choose X, Y, or Z, then add a keyframe.':'Auto Rotate mode disabled. Add a normal keyframe to end the active rotation for this bone.')};
+function setAutoRotateAxis(axis){if(!autoRotateMode){msg('Activate Auto Rotate with the viewport button before choosing an axis.');return}if(!selectedBone){msg('Select a bone track before choosing an Auto Rotate axis.');return}autoRotateAxis=axis;const found=getSelectedKeyframeRecord();if(found){pushUndo();found.key.autoRotate={axis, speed:autoRotateSpeed, direction:autoRotateDirection};renderTimeline();msg('Selected keyframe set to Auto Rotate '+axis.toUpperCase()+' axis.')}else{syncAutoRotateUI();msg('Auto Rotate axis set to '+axis.toUpperCase()+'. Press ◆ Keyframe to add it to this bone.')}syncAutoRotateUI()}
+function toggleAutoRotateMode(){autoRotateMode=!autoRotateMode;syncAutoRotateUI();msg(autoRotateMode?'Auto Rotate mode enabled. Select a bone, choose X, Y, or Z, then add a keyframe.':'Auto Rotate mode disabled. Add a normal keyframe to end the active rotation for this bone.')}
+$('tlAutoMode').onclick=toggleAutoRotateMode;
 $('tlAutoX').onclick=()=>setAutoRotateAxis('x');$('tlAutoY').onclick=()=>setAutoRotateAxis('y');$('tlAutoZ').onclick=()=>setAutoRotateAxis('z');
 $('tlAutoSpeed').addEventListener('pointerdown',()=>{if(getSelectedKeyframeRecord()?.key.autoRotate)pushUndo()});
 $('tlAutoSpeed').addEventListener('input',()=>{autoRotateSpeed=Math.max(.05,Math.min(3,Number($('tlAutoSpeed').value)||.5));const found=getSelectedKeyframeRecord();if(found&&found.key.autoRotate)found.key.autoRotate.speed=autoRotateSpeed;syncAutoRotateUI();if(found&&found.key.autoRotate)renderTimeline()});
 $('tlAutoDirection').onclick=()=>{const found=getSelectedKeyframeRecord();if(found&&found.key.autoRotate)pushUndo();autoRotateDirection*=-1;if(found&&found.key.autoRotate){found.key.autoRotate.direction=autoRotateDirection;renderTimeline()}syncAutoRotateUI();msg(autoRotateDirection>0?'Auto Rotate direction: Forward':'Auto Rotate direction: Reverse')};
+function keySelectionKey(uuid,frame){return uuid+'@'+Number(frame).toFixed(4)}
+function selectedKeyRecords(){const out=[];for(const token of selectedKeyframes){const at=token.lastIndexOf('@'),uuid=token.slice(0,at),frame=Number(token.slice(at+1)),target=findUuid(uuid),frames=target?trackFor(target)||[]:[],key=frames.find(k=>Math.abs(k.frame-frame)<.0001);if(target&&key)out.push({target,key})}return out}
+function drawTimelineGraph(){const canvas=$('tlGraphCanvas');if(!canvas)return;const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#354252';ctx.lineWidth=1;for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(w*i/4,0);ctx.lineTo(w*i/4,h);ctx.stroke();ctx.beginPath();ctx.moveTo(0,h*i/4);ctx.lineTo(w,h*i/4);ctx.stroke()}ctx.strokeStyle='#78899d';ctx.beginPath();ctx.moveTo(12,h-12);ctx.lineTo(w-12,12);ctx.stroke();const found=getSelectedKeyframeRecord(),mode=found?(found.key.interp||'global'):'global';if($('tlKeyEasing'))$('tlKeyEasing').value=mode;const ease=t=>{switch(mode){case'ease':case'easeInOut':return t*t*(3-2*t);case'easeIn':return t*t;case'easeOut':return 1-(1-t)*(1-t);case'linear':return t;case'smooth':return t*t*(3-2*t);default:return t}};ctx.strokeStyle='#55c7ff';ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=100;i++){const x=i/100,y=ease(x),px=12+x*(w-24),py=h-12-y*(h-24);if(!i)ctx.moveTo(px,py);else ctx.lineTo(px,py)}ctx.stroke();ctx.fillStyle='#dce8f5';ctx.font='11px sans-serif';ctx.fillText(mode==='global'?'Timeline default':mode,14,15)}
+function updateMotionTrail(){const enabled=!!$('tlMotionTrailToggle')?.checked,target=timelineTarget(),frames=target?(trackFor(target)||[]):[];if(motionTrailLine){scene.remove(motionTrailLine);motionTrailLine.geometry.dispose();motionTrailLine.material.dispose();motionTrailLine=null}if(!enabled||!target||frames.length<2)return;target.updateWorldMatrix(true,false);const pts=[];for(const k of sortedFrames(frames)){const v=new THREE.Vector3(...k.position);if(target.parent)target.parent.localToWorld(v);pts.push(v)}const geo=new THREE.BufferGeometry().setFromPoints(pts),mat=new THREE.LineBasicMaterial({color:0x55d7ff,transparent:true,opacity:.9,depthTest:false});motionTrailLine=new THREE.Line(geo,mat);motionTrailLine.renderOrder=999;scene.add(motionTrailLine)}
 function renderTimeline(){
  const track=$('tlTrack');if(!track)return;track.replaceChildren();const fps=timelineFps(),duration=timelineDuration();
  const targets=[];for(const o of objects){targets.push({target:o,label:'▸ '+(o.name||'Model'),depth:0,owner:o});o.traverse(n=>{if(n.isBone)targets.push({target:n,label:'　↳ '+(n.name||'Unnamed bone'),depth:1,owner:o})})}
@@ -1978,9 +2179,9 @@ function renderTimeline(){
  if(!targets.length){const empty=document.createElement('div');empty.className='tl-lane-label';empty.textContent='Import a model to create independent model and bone tracks.';track.appendChild(empty)}else if(!visibleTargets.length){const empty=document.createElement('div');empty.className='tl-track-label';empty.style.padding='12px';empty.textContent=onlySelected?'No selected track available. Select a model or bone first.':'No bones or models match that search.';track.appendChild(empty)}
  if(hiddenLanes){const info=document.createElement('div');info.className='tl-track-label';info.style.padding='8px 12px';info.textContent='Showing the first '+LANE_CAP+' of '+(LANE_CAP+hiddenLanes)+' tracks. Type in the search box to find any other bone.';track.appendChild(info)}
  for(const entry of visibleTargets){const target=entry.target,frames=trackFor(target)||[],lane=document.createElement('div');lane.className='tl-lane'+(activeTarget===target?' selected':'')+(target===selectedBone?' focused-bone':'');lane.dataset.timelineUuid=target.uuid;const label=document.createElement('button');label.className='tl-lane-label';label.textContent=entry.label;label.title='Select '+(target.isBone?'bone':'model')+' track';label.onclick=()=>selectTimelineTarget(target);lane.appendChild(label);const strip=document.createElement('div');strip.className='tl-lane-strip';const playhead=document.createElement('div');playhead.className='tl-playhead';playhead.style.left=(timelineFrame/timelineMaxFrame()*100)+'%';strip.appendChild(playhead);if(target.userData&&target.userData.prismaEffect){const fx=target.userData.prismaEffect,bar=document.createElement('div');bar.className='tl-effect-span';const left=Math.max(0,Math.min(100,(Number(fx.start)||0)/duration*100)),right=Math.max(left,Math.min(100,(Number(fx.end)||0)/duration*100));bar.style.left=left+'%';bar.style.width=Math.max(0.8,right-left)+'%';bar.title=(fx.label||'Effect')+' · '+(Number(fx.start)||0).toFixed(2)+'s to '+(Number(fx.end)||0).toFixed(2)+'s';strip.appendChild(bar)}
-  frames.slice().sort((a,b)=>a.frame-b.frame).forEach(k=>{const marker=document.createElement('button');const isActive=!!selectedKeyframe&&selectedKeyframe.uuid===target.uuid&&Math.abs(selectedKeyframe.frame-k.frame)<.0001;marker.className='tl-key'+(k.autoRotate&&['x','y','z'].includes(k.autoRotate.axis)?' auto-'+k.autoRotate.axis:'')+(isActive?' active':'');marker.style.left=(Math.max(0,Math.min(100,(k.frame/fps)/duration*100)))+'%';marker.title=(isActive?'Selected keyframe · ':'Select keyframe · ')+(k.frame/fps).toFixed(3)+' seconds'+(k.autoRotate?' · Auto Rotate '+k.autoRotate.axis.toUpperCase()+' · '+Number(k.autoRotate.speed||.5).toFixed(2)+' rotations/sec · '+(k.autoRotate.direction===-1?'reverse':'forward'):'');marker.setAttribute('aria-label',(isActive?'Selected keyframe at ':'Select keyframe at ')+(k.frame/fps).toFixed(3)+' seconds');marker.setAttribute('aria-pressed',isActive?'true':'false');marker.onclick=e=>{e.stopPropagation();selectTimelineTarget(target);selectedKeyframe={uuid:target.uuid,frame:k.frame};setTimelineFrame(k.frame);renderTimeline()};strip.appendChild(marker)});strip.onclick=()=>selectTimelineTarget(target);lane.appendChild(strip);track.appendChild(lane);
+  frames.slice().sort((a,b)=>a.frame-b.frame).forEach(k=>{const marker=document.createElement('button');const isActive=!!selectedKeyframe&&selectedKeyframe.uuid===target.uuid&&Math.abs(selectedKeyframe.frame-k.frame)<.0001,isMulti=selectedKeyframes.has(keySelectionKey(target.uuid,k.frame));marker.className='tl-key'+(k.autoRotate&&['x','y','z'].includes(k.autoRotate.axis)?' auto-'+k.autoRotate.axis:'')+(isActive?' active':'')+(isMulti?' multi-selected':'');marker.style.left=(Math.max(0,Math.min(100,(k.frame/fps)/duration*100)))+'%';marker.title=(isActive?'Selected keyframe · ':'Select keyframe · ')+(k.frame/fps).toFixed(3)+' seconds'+(k.autoRotate?' · Auto Rotate '+k.autoRotate.axis.toUpperCase()+' · '+Number(k.autoRotate.speed||.5).toFixed(2)+' rotations/sec · '+(k.autoRotate.direction===-1?'reverse':'forward'):'');marker.setAttribute('aria-label',(isActive?'Selected keyframe at ':'Select keyframe at ')+(k.frame/fps).toFixed(3)+' seconds');marker.setAttribute('aria-pressed',isActive?'true':'false');marker.onclick=e=>{e.stopPropagation();if(e.shiftKey){if(timelineTarget()!==target)selectTimelineTarget(target);const token=keySelectionKey(target.uuid,k.frame);if(selectedKeyframes.has(token))selectedKeyframes.delete(token);else selectedKeyframes.add(token);selectedKeyframe={uuid:target.uuid,frame:k.frame};setTimelineFrame(k.frame);renderTimeline();return}selectedKeyframes.clear();selectedKeyframes.add(keySelectionKey(target.uuid,k.frame));selectTimelineTarget(target);selectedKeyframe={uuid:target.uuid,frame:k.frame};setTimelineFrame(k.frame);renderTimeline()};strip.appendChild(marker)});strip.onclick=()=>selectTimelineTarget(target);lane.appendChild(strip);track.appendChild(lane);
  }
- const target=timelineTarget(),frames=trackFor(target)||[];const label=target?(target.isBone?((target.name||'Unnamed bone')+' · independent bone track'):((target.name||'Selected model')+' · model track')):'Select a model or one of its bones';$('tlLabel').textContent=label+' · '+frames.length+' keyframe(s)'+(selectedKeyframe&&selectedKeyframe.uuid===target?.uuid?' · selected key at '+(selectedKeyframe.frame/fps).toFixed(3)+'s':'');const hasSelected=!!(selectedKeyframe&&target&&selectedKeyframe.uuid===target.uuid&&frames.some(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001));$('tlDeleteKey').disabled=!hasSelected;$('tlCopyKey').disabled=!hasSelected;$('tlDuplicateKey').disabled=!hasSelected;$('tlMoveKeyBack').disabled=!hasSelected||selectedKeyframe.frame<1;$('tlMoveKeyForward').disabled=!hasSelected||selectedKeyframe.frame>=timelineMaxFrame();$('tlPasteKey').disabled=!keyframeClipboard||!target;syncAutoRotateUI();
+ const target=timelineTarget(),frames=trackFor(target)||[];const label=target?(target.isBone?((target.name||'Unnamed bone')+' · independent bone track'):((target.name||'Selected model')+' · model track')):'Select a model or one of its bones';$('tlLabel').textContent=label+' · '+frames.length+' keyframe(s)'+(selectedKeyframe&&selectedKeyframe.uuid===target?.uuid?' · selected key at '+(selectedKeyframe.frame/fps).toFixed(3)+'s':'');const hasSelected=!!(selectedKeyframe&&target&&selectedKeyframe.uuid===target.uuid&&frames.some(k=>Math.abs(k.frame-selectedKeyframe.frame)<.0001));$('tlDeleteKey').disabled=!hasSelected;$('tlCopyKey').disabled=!hasSelected;$('tlDuplicateKey').disabled=!hasSelected;$('tlMoveKeyBack').disabled=!hasSelected||selectedKeyframe.frame<1;$('tlMoveKeyForward').disabled=!hasSelected||selectedKeyframe.frame>=timelineMaxFrame();$('tlPasteKey').disabled=!keyframeClipboard||!target;const multi=selectedKeyRecords();$('tlDeleteSelectedKeys').disabled=!multi.length;$('tlNudgeSelectedBack').disabled=!multi.length||multi.some(x=>x.key.frame<1);$('tlNudgeSelectedForward').disabled=!multi.length||multi.some(x=>x.key.frame>=timelineMaxFrame());$('tlSelectAllKeys').disabled=!frames.length;syncAutoRotateUI();drawTimelineGraph();updateMotionTrail();
 }
 function focusTimelineTarget(target=timelineTarget()){
  if(!target){msg('Select a model or bone first.');return}
@@ -2005,6 +2206,12 @@ $('tlBoneSearch').addEventListener('input',()=>renderTimeline());
 $('tlSelectedOnly').addEventListener('change',()=>renderTimeline());
 $('tlFocusSelected').addEventListener('click',()=>focusTimelineTarget());
 
+$('tlSelectAllKeys').onclick=()=>{const target=timelineTarget(),frames=target?trackFor(target)||[]:[];selectedKeyframes.clear();for(const k of frames)selectedKeyframes.add(keySelectionKey(target.uuid,k.frame));if(frames.length){selectedKeyframe={uuid:target.uuid,frame:frames[0].frame};setTimelineFrame(frames[0].frame)}renderTimeline();msg('Selected '+frames.length+' keyframes on this track.')};
+$('tlDeleteSelectedKeys').onclick=()=>{const records=selectedKeyRecords();if(!records.length)return;pushUndo();const byTarget=new Map();for(const r of records){if(!byTarget.has(r.target))byTarget.set(r.target,trackFor(r.target));const arr=byTarget.get(r.target),i=arr.findIndex(k=>Math.abs(k.frame-r.key.frame)<.0001);if(i>=0)arr.splice(i,1)}for(const [target,arr] of byTarget)if(!arr.length)animationTracks.delete(target.uuid);selectedKeyframes.clear();selectedKeyframe=null;renderTimeline();msg('Deleted '+records.length+' selected keyframes.')};
+function nudgeKeySelection(dir){const records=selectedKeyRecords();if(!records.length)return;const delta=dir;for(const r of records){const nf=r.key.frame+delta,arr=trackFor(r.target)||[];if(nf<0||nf>timelineMaxFrame()||arr.some(k=>k!==r.key&&Math.abs(k.frame-nf)<.0001)){msg('The selection cannot move because one or more keys would overlap or leave the timeline.');return}}pushUndo();selectedKeyframes.clear();for(const r of records){r.key.frame+=delta;selectedKeyframes.add(keySelectionKey(r.target.uuid,r.key.frame));}for(const r of records)(trackFor(r.target)||[]).sort((a,b)=>a.frame-b.frame);if(records.length===1)selectedKeyframe={uuid:records[0].target.uuid,frame:records[0].key.frame};setTimelineFrame(Math.max(0,Math.min(timelineMaxFrame(),timelineFrame+delta)));renderTimeline();msg('Moved '+records.length+' keyframes by one frame.')}
+$('tlNudgeSelectedBack').onclick=()=>nudgeKeySelection(-1);$('tlNudgeSelectedForward').onclick=()=>nudgeKeySelection(1);
+$('tlKeyEasing').addEventListener('change',()=>{const found=getSelectedKeyframeRecord();if(!found){msg('Select a keyframe to edit its outgoing segment.');drawTimelineGraph();return}pushUndo();if($('tlKeyEasing').value==='global')delete found.key.interp;else found.key.interp=$('tlKeyEasing').value;drawTimelineGraph();msg('Selected keyframe easing updated.')});
+$('tlMotionTrailToggle').addEventListener('change',updateMotionTrail);
 function applyTimelineFrame(frame){const target=timelineTarget();applyTrackToTarget(target,frame,trackFor(target)||[]);syncProps();updateBoneMarkers()}
 
 function ikPoseBones(){if(rigMode!=='IK'||!selectedBone||!selectedBone.isBone)return[];const chain=getIKChain(selectedBone,selectedBone);return [selectedBone,...chain].filter((b,i,a)=>b&&a.indexOf(b)===i)}
@@ -2033,7 +2240,7 @@ $('tlClear').onclick=()=>{const target=timelineTarget();if(!target){msg('Select 
 $('tlPrev').onclick=()=>setTimelineFrame(timelineFrame-1);$('tlNext').onclick=()=>setTimelineFrame(timelineFrame+1);
 $('tlPlay').onclick=()=>{timelinePlaying=!timelinePlaying;timelineLastTime=0;timelineAccumulator=0;$('tlPlay').textContent=timelinePlaying?'❚❚ Pause':'▶ Play';if(!timelinePlaying)renderTimeline();msg(timelinePlaying?'Timeline playback started':'Timeline paused')};
 $('tlFps').addEventListener('change',()=>{syncTimelineTimeUI();renderTimeline()});
-function tickTimeline(now){if(!timelinePlaying)return;if(!timelineLastTime)timelineLastTime=now;const dt=Math.min(.1,Math.max(0,(now-timelineLastTime)/1000));timelineLastTime=now;timelineFrame+=dt*timelineFps();if(timelineFrame>timelineMaxFrame())timelineFrame=timelineFrame%timelineMaxFrame();syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);updateTimedEffects();updatePlayheads()}
+function tickTimeline(now){if(!timelinePlaying)return;if(!timelineLastTime)timelineLastTime=now;const dt=Math.min(.1,Math.max(0,(now-timelineLastTime)/1000));timelineLastTime=now;timelineFrame+=dt*timelineFps();if(timelineFrame>timelineMaxFrame())timelineFrame=timelineFrame%timelineMaxFrame();syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);solveFloorContacts();updateTimedEffects();updatePlayheads()}
 // ===== Animation video export =====
 let lastExportVideoUrl=null;
 function showExportReplay(blob){
@@ -2283,7 +2490,7 @@ function applyTrackToTarget(target,frame,frames,defer){
  if(frame>=frames[last].frame){applyKey(target,frames[last],defer);const autoOffset=autoRotateOffset(frames,frame);if(Math.abs(autoOffset.x)+Math.abs(autoOffset.y)+Math.abs(autoOffset.z)>1e-10)target.quaternion.multiply(autoOffset);return}
  let i=0;while(i<last-1&&frame>=frames[i+1].frame)i++;
  const a=frames[i],b=frames[i+1];if(b.frame===a.frame){applyKey(target,a,defer);return}
- const h=b.frame-a.frame,t=(frame-a.frame)/h,mode=motionMode();
+ const h=b.frame-a.frame,t=(frame-a.frame)/h,mode=(a.interp&&a.interp!=='global')?a.interp:motionMode();
  if(mode==='smooth'){
   const P=frames[i-1],N=frames[i+2],hp=P?a.frame-P.frame:0,hn=N?N.frame-b.frame:0,usePrev=!!P&&hp>0,useNext=!!N&&hn>0;
   for(let c=0;c<3;c++){
@@ -2295,7 +2502,7 @@ function applyTrackToTarget(target,frame,frames,defer){
   const l=Math.hypot(o[0],o[1],o[2],o[3])||1;target.quaternion.set(o[0]/l,o[1]/l,o[2]/l,o[3]/l);
   if(target.isPerspectiveCamera&&Number.isFinite(a.fov)&&Number.isFinite(b.fov)){target.fov=splineSeg(usePrev&&Number.isFinite(P.fov)?P.fov:null,a.fov,b.fov,useNext&&Number.isFinite(N.fov)?N.fov:null,hp,h,hn,t);target.updateProjectionMatrix();updateCameraFrustum(target)}
  }else{
-  const e=mode==='ease'?t*t*(3-2*t):t;
+  const e=mode==='ease'||mode==='easeInOut'?t*t*(3-2*t):mode==='easeIn'?t*t:mode==='easeOut'?1-(1-t)*(1-t):t;
   for(let c=0;c<3;c++){target.position.setComponent(c,a.position[c]+(b.position[c]-a.position[c])*e);target.scale.setComponent(c,a.scale[c]+(b.scale[c]-a.scale[c])*e)}
   const qa=new THREE.Quaternion().fromArray(keyQuat(a)),qb=new THREE.Quaternion().fromArray(keyQuat(b));qa.slerp(qb,e);target.quaternion.copy(qa);applyCameraInterp(target,a,b,e);
  }
@@ -2321,7 +2528,7 @@ function updateBoneMarkers(){
   _bmP.setFromMatrixPosition(m.bone.matrixWorld);m.ball.position.copy(_bmP);m.outline.position.copy(_bmP);
   m.radius=boneRadius(_bmC.distanceTo(_bmP),vc.fov,stage.clientHeight,diag,BONE_PX,boneSizeMul);
   if(m.line&&m.bone.parent&&m.bone.parent.isBone){_bmQ.setFromMatrixPosition(m.bone.parent.matrixWorld);const a=m.line.geometry.attributes.position;a.setXYZ(0,_bmQ.x,_bmQ.y,_bmQ.z);a.setXYZ(1,_bmP.x,_bmP.y,_bmP.z);a.needsUpdate=true;m.line.visible=showRigBones}
-  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=absoluteIKAnchors.has(m.bone);
+  const attachFocus=m.bone===selectedAttachmentBone,poseFocus=m.bone===selectedBone,anchored=floorContactBones.has(m.bone);
   m.ball.material.color.set(anchored?0x39e6a2:(attachFocus?0x45f5ff:(poseFocus?0xffb52e:0xffffff)));
   m.ball.scale.setScalar(m.radius*(anchored?1.65:(attachFocus?1.9:(poseFocus?1.35:1))));
   m.outline.scale.setScalar(m.radius*(anchored?2.05:(attachFocus?2.35:1.22)));
@@ -2546,7 +2753,7 @@ $('fxStart').value='0';$('fxEnd').value='2';$('fxColor').value=fxDefaultColor($(
 }catch(effectInitError){console.warn('Effects Studio controls could not initialize; core editor will continue:',effectInitError);const status=document.getElementById('fxStatus');if(status)status.textContent='Effects controls could not initialize. The rest of the editor is still available.'}
 
 let studioLastTick=performance.now();
-function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studioLastTick=performance.now();return;}const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
+function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studioLastTick=performance.now();return;}const studioNow=performance.now();updateStudioEffects((studioNow-studioLastTick)/1000);studioLastTick=studioNow;bindLightTargets();tickTimeline(studioNow);updateTimedEffects();controls.update();if(camMode!=='editor')gizmo.visible=false;updateLightIcons();updateBoneMarkers();if(ikMarker.visible)ikMarker.position.copy(ikTarget.position);if(ikPoleMarker.visible)ikPoleMarker.position.copy(ikPoleTarget.position);if(dustOn){const a=dustGeometry.attributes.position;for(let i=0;i<DUST_COUNT;i++){const j=i*3,v=dustVelocities[i];dustPositions[j]+=v.x*.016;dustPositions[j+1]+=v.y*.016;dustPositions[j+2]+=v.z*.016;if(dustPositions[j+1]>dustRadius*1.8){dustPositions[j+1]=0;dustPositions[j]=(Math.random()-.5)*dustRadius*2;dustPositions[j+2]=(Math.random()-.5)*dustRadius*2;}if(Math.abs(dustPositions[j])>dustRadius){dustPositions[j]*=-.92;}if(Math.abs(dustPositions[j+2])>dustRadius){dustPositions[j+2]*=-.92;}}a.needsUpdate=true;dustPoints.position.copy(dustCenter);}renderFrame();updatePerformanceMonitor(performance.now())}syncTimelineTimeUI();animate();env();msg('3D scene ready');openProjectMenu();
 })();
 </script>
 <script>
@@ -2583,26 +2790,21 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
 
 <script id="auto-rotate-launcher-controller">
 (function(){
-  const launcher=document.getElementById('stageAutoRotateLauncher');
-  const timeline=document.getElementById('timeline');
-  const timelineButton=document.getElementById('mobileTimelineBtn');
-  const controls=document.getElementById('tlAutoTools');
-  if(!launcher||!timeline||!controls)return;
-  launcher.addEventListener('click',function(){
-    if(timeline.classList.contains('mobile-collapsed')){
-      timeline.classList.remove('mobile-collapsed');
-      if(timelineButton){timelineButton.setAttribute('aria-expanded','true');timelineButton.textContent='Hide Timeline ▴';}
-    }
-    timeline.classList.add('auto-rotate-focus');
-    launcher.setAttribute('aria-expanded','true');
-    controls.scrollIntoView({behavior:'smooth',block:'nearest'});
-    const mode=document.getElementById('tlAutoMode');
-    if(mode)mode.focus({preventScroll:true});
-  });
-  const mobileQuery=window.matchMedia('(max-width:760px)');
-  function syncLabel(){launcher.textContent=mobileQuery.matches?'⟳ Auto Rotate':'⟳ Auto Rotate Controls';}
-  syncLabel();
-  if(mobileQuery.addEventListener)mobileQuery.addEventListener('change',syncLabel);else mobileQuery.addListener(syncLabel);
+ const launcher=document.getElementById('stageAutoRotateLauncher');
+ const mode=document.getElementById('tlAutoMode');
+ if(!launcher||!mode)return;
+ function syncButton(){
+  const enabled=mode.getAttribute('aria-pressed')==='true';
+  launcher.textContent=enabled?'⟳ Auto Rotate: On':'⟳ Auto Rotate: Off';
+  launcher.setAttribute('aria-pressed',String(enabled));
+  launcher.setAttribute('aria-label',enabled?'Turn Auto Rotate off':'Turn Auto Rotate on');
+  launcher.title=enabled?'Auto Rotate is active. Click to turn it off.':'Click to activate Auto Rotate immediately.';
+  launcher.style.background=enabled?'#245b3c':'#172b43eF';
+  launcher.style.borderColor=enabled?'#68d391':'#6d9fd6';
+ }
+ launcher.addEventListener('click',function(){mode.click();syncButton();});
+ new MutationObserver(syncButton).observe(mode,{attributes:true,attributeFilter:['aria-pressed']});
+ syncButton();
 })();
 </script>
 
