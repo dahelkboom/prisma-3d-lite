@@ -409,7 +409,7 @@ canvas, img, video { max-width: 100%; }
 <div class="section quality-section"><h2>Graphics Quality</h2>
 <div class="row"><label for="qualityPreset">Quality preset</label><select id="qualityPreset"><option value="standard">Standard</option><option value="enhanced">Enhanced</option><option value="hyper">Hyper-Realism</option><option value="omega">Omega Realism</option></select></div>
 <p class="note" id="qualityDescription" aria-live="polite">Standard · Lower rendering resolution and no real-time shadows to help conserve graphics memory.</p>
-<p class="note">This changes viewport rendering only. It does not reduce the detail stored in your original model or change project data. For large models, keep Texture detail on import set to Auto or Low.</p></div>
+<p class="note">This changes viewport rendering only. It does not reduce the detail stored in your original model or change project data. For large models, keep Texture detail on import set to Auto or Low.</p><div class="row"><label for="pbrUpgradeToggle">PBR material upgrade</label><input id="pbrUpgradeToggle" type="checkbox"></div><p class="note">Converts older Lambert and Phong materials to physically based Standard materials while keeping their main textures and colors. Existing GLTF PBR materials are left unchanged. This is reversible during the current editing session.</p></div>
 <div class="section" id="cinematicSection"><h2>Cinematic Graphics Mode</h2>
 <div class="row"><label for="cinematicEnabled">Enable Cinematic Mode</label><input id="cinematicEnabled" type="checkbox"></div>
 <p class="note">Adds a movie-style preview look independently of your Standard, Enhanced, Hyper-Realism, or Omega Realism preset. These are lightweight browser effects designed to keep the editor usable.</p>
@@ -501,7 +501,7 @@ canvas, img, video { max-width: 100%; }
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><div class="pair" style="margin-top:7px"><button id="ikPoleToggle" class="wide" disabled>IK Pole Vector: Off</button><button id="ikPoleMove" class="wide" disabled>Move Pole Target</button></div><p class="note" id="ikPoleHelp">In IK mode, enable Pole Vector to guide an elbow or knee bend. Use Move Pole Target to reposition the guide; switch back to Move IK End Target to move the bone endpoint.</p><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK moves a selected bone target and solves its parent chain with FABRIK-style forward/backward passes adapted from THREE.IK. Pole Vector guides the bend; Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><div class="pair" style="margin-top:7px"><button id="ikPoleToggle" class="wide" disabled>IK Pole Vector: Off</button><button id="ikPoleMove" class="wide" disabled>Move Pole Target</button></div><p class="note" id="ikPoleHelp">In IK mode, enable Pole Vector to guide an elbow or knee bend. Use Move Pole Target to reposition the guide; switch back to Move IK End Target to move the bone endpoint.</p><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
@@ -1617,16 +1617,55 @@ function solveIK(){
     else ikEffectorBone.position.copy(target);
     ikEffectorBone.updateMatrixWorld(true);rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
   }
-  // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
-  for(let pass=0;pass<18;pass++){
-    for(const joint of chain){
-      rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
-      const jp=joint.getWorldPosition(new THREE.Vector3());
-      const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
-      const a=ep.sub(jp),v=target.clone().sub(jp);
-      if(a.lengthSq()<1e-8||v.lengthSq()<1e-8)continue;
-      a.normalize();v.normalize();
-      const deltaWorld=new THREE.Quaternion().setFromUnitVectors(a,v);
+  // THREE.IK-inspired FABRIK solve (forward/backward positional passes).
+  // The repository's example uses this same chain/target concept; this inline
+  // adaptation avoids a separate module loader and fits Prisma's existing rig.
+  const rootToEnd=chain.slice().reverse();
+  const points=[];
+  rigRoot.updateMatrixWorld(true);
+  for(const bone of rootToEnd){bone.updateWorldMatrix(true,false);points.push(bone.getWorldPosition(new THREE.Vector3()));}
+  ikEffectorBone.updateWorldMatrix(true,false);
+  points.push(ikEffectorBone.getWorldPosition(new THREE.Vector3()));
+  const segmentLengths=[];let totalReach=0;
+  for(let i=0;i<points.length-1;i++){const len=points[i].distanceTo(points[i+1]);segmentLengths.push(len);totalReach+=len;}
+  const rootAnchor=points[0].clone();
+  if(points.length>1&&totalReach>1e-8){
+    const rootToTarget=target.clone().sub(rootAnchor),targetDistance=rootToTarget.length();
+    if(targetDistance>=totalReach-1e-7){
+      const direction=targetDistance>1e-8?rootToTarget.normalize():new THREE.Vector3(0,1,0);
+      for(let i=1;i<points.length;i++)points[i].copy(points[i-1]).addScaledVector(direction,segmentLengths[i-1]);
+    }else{
+      const tolerance=Math.max(1e-4,totalReach*0.001);
+      for(let pass=0;pass<24;pass++){
+        // Backward reach: pin the endpoint to the user's target.
+        points[points.length-1].copy(target);
+        for(let i=points.length-2;i>=0;i--){
+          const dir=points[i].clone().sub(points[i+1]);
+          if(dir.lengthSq()<1e-10)dir.set(0,1,0);else dir.normalize();
+          points[i].copy(points[i+1]).addScaledVector(dir,segmentLengths[i]);
+        }
+        // Forward reach: pin the chain root and restore each bone length.
+        points[0].copy(rootAnchor);
+        for(let i=0;i<points.length-1;i++){
+          const dir=points[i+1].clone().sub(points[i]);
+          if(dir.lengthSq()<1e-10)dir.set(0,1,0);else dir.normalize();
+          points[i+1].copy(points[i]).addScaledVector(dir,segmentLengths[i]);
+        }
+        if(points[points.length-1].distanceToSquared(target)<=tolerance*tolerance)break;
+      }
+    }
+    // Convert solved segment directions back into each real bone's local
+    // quaternion, using its actual child direction (not a guessed model axis).
+    for(let i=0;i<rootToEnd.length;i++){
+      const joint=rootToEnd[i],child=rootToEnd[i+1]||ikEffectorBone;
+      rigRoot.updateMatrixWorld(true);joint.updateWorldMatrix(true,false);child.updateWorldMatrix(true,false);
+      const jointPos=joint.getWorldPosition(new THREE.Vector3());
+      const currentChildPos=child.getWorldPosition(new THREE.Vector3());
+      const currentDir=currentChildPos.sub(jointPos);
+      const desiredDir=points[i+1].clone().sub(points[i]);
+      if(currentDir.lengthSq()<1e-10||desiredDir.lengthSq()<1e-10)continue;
+      currentDir.normalize();desiredDir.normalize();
+      const deltaWorld=new THREE.Quaternion().setFromUnitVectors(currentDir,desiredDir);
       const parentWorldQ=joint.parent?joint.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
@@ -1669,7 +1708,12 @@ $('addRootBone').onclick=()=>createRigBone(false);
 $('addChildBone').onclick=()=>createRigBone(true);
 $('renameBoneButton').onclick=()=>{if(!selectedBone||!selectedBone.isBone){msg('Select a bone first.');return}const name=($('newBoneName').value||'').trim().slice(0,48);if(!name){msg('Enter a bone name first.');return}const renamedBone=selectedBone;renamedBone.name=name;showRigFor(selected);selectedBone=renamedBone;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;updateBoneMarkers();refresh();renderTimeline();msg('Bone renamed to '+name)};
 $('deleteBoneButton').onclick=deleteSelectedBone;
-function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode&&!n.userData.smartDetectedPlane;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
+const pbrOriginalMaterials=new WeakMap();let pbrUpgradeEnabled=false;try{pbrUpgradeEnabled=localStorage.getItem('prisma3d-lite-pbr-upgrade-v1')==='1'}catch(e){}
+function convertLegacyPBR(material){if(!material||material.isMeshStandardMaterial||material.isMeshPhysicalMaterial)return material;if(!material.isMeshLambertMaterial&&!material.isMeshPhongMaterial)return material;const phong=!!material.isMeshPhongMaterial;const roughness=phong?Math.max(.12,Math.min(1,Math.sqrt(2/(Math.max(0,material.shininess||30)+2)))):.82;const upgraded=new THREE.MeshStandardMaterial({name:material.name||'PBR Material',color:material.color?material.color.clone():new THREE.Color(0xffffff),map:material.map||null,normalMap:material.normalMap||null,normalScale:material.normalScale?material.normalScale.clone():new THREE.Vector2(1,1),aoMap:material.aoMap||null,aoMapIntensity:material.aoMapIntensity===undefined?1:material.aoMapIntensity,emissive:material.emissive?material.emissive.clone():new THREE.Color(0x000000),emissiveMap:material.emissiveMap||null,emissiveIntensity:material.emissiveIntensity===undefined?1:material.emissiveIntensity,alphaMap:material.alphaMap||null,transparent:!!material.transparent,opacity:material.opacity===undefined?1:material.opacity,alphaTest:material.alphaTest||0,side:material.side,vertexColors:!!material.vertexColors,wireframe:!!material.wireframe,roughness:roughness,metalness:phong?.12:.04});upgraded.depthWrite=material.depthWrite;upgraded.depthTest=material.depthTest;upgraded.blending=material.blending;upgraded.flatShading=!!material.flatShading;upgraded.needsUpdate=true;return upgraded}
+function setPBRUpgrade(enabled){pbrUpgradeEnabled=!!enabled;scene.traverse(n=>{if(!n.isMesh||!n.material)return;const current=Array.isArray(n.material)?n.material:[n.material];if(pbrUpgradeEnabled){const next=current.map(m=>{if(m.isMeshStandardMaterial||m.isMeshPhysicalMaterial)return m;if(!pbrOriginalMaterials.has(m))pbrOriginalMaterials.set(m,m);return convertLegacyPBR(m)});n.material=Array.isArray(n.material)?next:next[0]}else{const next=current.map(m=>{for(const [original,upgraded] of pbrPairs){if(m===upgraded)return original}return m});n.material=Array.isArray(n.material)?next:next[0]}});try{localStorage.setItem('prisma3d-lite-pbr-upgrade-v1',pbrUpgradeEnabled?'1':'0')}catch(e){}const t=$('pbrUpgradeToggle');if(t)t.checked=pbrUpgradeEnabled;msg(pbrUpgradeEnabled?'PBR material upgrade enabled for legacy Lambert and Phong materials.':'PBR material upgrade disabled; original legacy materials restored where available.')}
+const pbrPairs=[];
+function upgradePBRForRoot(root){if(!pbrUpgradeEnabled||!root)return;root.traverse(n=>{if(!n.isMesh||!n.material)return;const convert=m=>{if(m.isMeshStandardMaterial||m.isMeshPhysicalMaterial)return m;const upgraded=convertLegacyPBR(m);if(upgraded!==m){pbrPairs.push([m,upgraded]);return upgraded}return m};n.material=Array.isArray(n.material)?n.material.map(convert):convert(n.material)})}
+function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;upgradePBRForRoot(o);o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode&&!n.userData.smartDetectedPlane;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
 function addCube(){const o=new THREE.Mesh(new THREE.BoxGeometry(1.5,1.5,1.5),new THREE.MeshLambertMaterial({color:0xb9c6d8}));o.position.y=.75;add(o,'Cube '+(objects.length+1));msg('Cube added and selected')}
 function del(){if(!selected)return;const doomed=selected;const childObjects=objects.filter(o=>o!==doomed&&o.parent===doomed);if(childObjects.length&&!confirm('Delete '+(doomed.name||'this object')+'? Its '+childObjects.length+' child object(s) will be detached and kept in the scene.'))return;pushUndo();gizmo.detach();clearBoneMarkers();for(const child of childObjects)scene.attach(child);if(doomed.parent)doomed.parent.remove(doomed);disposeObjectTree(doomed);const i=objects.indexOf(doomed);if(i>=0)objects.splice(i,1);updateProjectLoadPressure();multiSelected.clear();selected=null;refresh();syncProps();msg('Selected object deleted. Child objects, if any, were kept in the scene.')}
 function cloneMaterials(root){root.traverse(o=>{if(o.isMesh){if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone();if(o.geometry)o.geometry=o.geometry.clone()}})}
@@ -1750,7 +1794,7 @@ function applyQualityPreset(value,save=true){
  renderer.toneMapping=profile.tone==='filmic'?THREE.ACESFilmicToneMapping:THREE.NoToneMapping;
  renderer.outputEncoding=THREE.sRGBEncoding;
  renderer.toneMappingExposure=+$('bright').value||1;
- light.castShadow=effectiveShadows;const gpuShadowLimit=Math.max(512,renderer.capabilities.maxTextureSize||4096);const effectiveShadowSize=Math.min(profile.shadowSize,gpuShadowLimit);light.shadow.mapSize.set(effectiveShadowSize,effectiveShadowSize);light.shadow.radius=omega?3:2;light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.updateProjectionMatrix();light.shadow.needsUpdate=true;
+ light.castShadow=effectiveShadows;const gpuShadowLimit=Math.max(512,renderer.capabilities.maxTextureSize||4096);const effectiveShadowSize=Math.min(profile.shadowSize,gpuShadowLimit);light.shadow.mapSize.set(effectiveShadowSize,effectiveShadowSize);light.shadow.radius=key==='omega'?4:key==='hyper'?3:key==='enhanced'?2:1;light.shadow.bias=key==='omega'?-0.00012:key==='hyper'?-0.00018:-0.00025;light.shadow.normalBias=key==='omega'?.012:key==='hyper'?.016:.02;light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.updateProjectionMatrix();light.shadow.needsUpdate=true;
  scene.traverse(o=>{if(o.isMesh){o.castShadow=effectiveShadows;o.receiveShadow=effectiveShadows}});
  floor.receiveShadow=effectiveShadows;resize();
  const select=$('qualityPreset'),description=$('qualityDescription');if(select)select.value=key;if(description)description.textContent=profile.description;
@@ -1759,6 +1803,7 @@ function applyQualityPreset(value,save=true){
  if(save){try{localStorage.setItem(QUALITY_KEY,key)}catch(e){}}
  if(!arguments[2])msg('Graphics quality: '+profile.label+'. '+(key==='standard'?'Performance-focused settings enabled.':key==='enhanced'?'Balanced visual settings enabled.':key==='hyper'?'High-quality preview settings enabled.':'Maximum browser preview settings enabled. Expect a significant performance cost.'));
 }
+$('pbrUpgradeToggle').checked=pbrUpgradeEnabled;$('pbrUpgradeToggle').addEventListener('change',e=>setPBRUpgrade(e.target.checked));if(pbrUpgradeEnabled)upgradePBRForRoot(scene);
 const CINEMATIC_KEY='prisma3d-lite-cinematic-v1';
 const cinematicDefaults={enabled:false,bloom:25,vignette:30,grade:35,grain:12,atmosphere:15};
 let cinematicSettings={...cinematicDefaults};
