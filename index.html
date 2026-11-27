@@ -401,7 +401,7 @@ canvas, img, video { max-width: 100%; }
     <button id="acceptDisclaimer" type="button">I Understand — Enter Studio</button>
   </div>
 </div>
-<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="p3dlHelpBtn" type="button">? Shortcuts</button><button id="p3dlAboutBtn" type="button">ⓘ About 1.1</button><button id="backToMainMenu" type="button" style="float:right;margin-top:-4px">⌂ Main Menu</button></header>
+<header>PRISMA 3D LITE <span style="font-weight:500;color:#8f9baa;letter-spacing:.12em;font-size:10px;margin-left:10px">ANIMATION STUDIO · BETA</span> <button id="mobileToolsBtn" type="button" aria-expanded="false">☰ Tools</button><button id="backToMainMenu" type="button" style="float:right;margin-top:-4px">⌂ Main Menu</button></header>
 <button id="mobileToolsBackdrop" type="button" aria-label="Close tools panel"></button>
 <div class="app">
 <aside>
@@ -409,7 +409,7 @@ canvas, img, video { max-width: 100%; }
 <div class="section quality-section"><h2>Graphics Quality</h2>
 <div class="row"><label for="qualityPreset">Quality preset</label><select id="qualityPreset"><option value="standard">Standard</option><option value="enhanced">Enhanced</option><option value="hyper">Hyper-Realism</option><option value="omega">Omega Realism</option></select></div>
 <p class="note" id="qualityDescription" aria-live="polite">Standard · Lower rendering resolution and no real-time shadows to help conserve graphics memory.</p>
-<p class="note">This changes viewport rendering only. It does not reduce the detail stored in your original model or change project data. For large models, keep Texture detail on import set to Auto or Low.</p><div class="row"><label for="pbrUpgradeToggle">PBR material upgrade</label><input id="pbrUpgradeToggle" type="checkbox"></div><p class="note">Converts older Lambert and Phong materials to physically based Standard materials while keeping their main textures and colors. Existing GLTF PBR materials are left unchanged. This is reversible during the current editing session.</p></div>
+<p class="note">This changes viewport rendering only. It does not reduce the detail stored in your original model or change project data. For large models, keep Texture detail on import set to Auto or Low.</p></div>
 <div class="section" id="cinematicSection"><h2>Cinematic Graphics Mode</h2>
 <div class="row"><label for="cinematicEnabled">Enable Cinematic Mode</label><input id="cinematicEnabled" type="checkbox"></div>
 <p class="note">Adds a movie-style preview look independently of your Standard, Enhanced, Hyper-Realism, or Omega Realism preset. These are lightweight browser effects designed to keep the editor usable.</p>
@@ -476,9 +476,8 @@ canvas, img, video { max-width: 100%; }
 <div class="pair"><button id="addCamera" class="wide">+ Add camera here</button><button id="lookCamera" class="wide" disabled>🎥 Look through</button></div>
 <div class="row"><label for="camFov">Field of view</label><input id="camFov" type="range" min="10" max="120" step="1" value="50" disabled><output id="camFovOut">50°</output></div>
 <div class="row"><label for="camAspect">Frame shape</label><select id="camAspect"><option value="1.7778" selected>16:9 video</option><option value="1.3333">4:3</option><option value="1">1:1 square</option><option value="0.5625">9:16 vertical</option><option value="0">Fill window</option></select></div>
-<div class="row"><label for="exportPreset">Export for</label><select id="exportPreset"><option value="universal" selected>Universal MP4 · 1280×720 (Telegram, X/Twitter, Facebook, WhatsApp)</option><option value="youtube">YouTube · 1920×1080</option><option value="vertical">TikTok / Reels / Shorts · 1080×1920 vertical</option><option value="square">Square · 1080×1080 (Facebook, X, Instagram feed)</option><option value="match">Match my frame shape · up to 1080p</option></select></div>
 <div class="pair"><button id="renderView" class="wide" disabled>▶ Render view</button><button id="fullscreenView" class="wide">⛶ Fullscreen</button></div>
-<p class="note" id="camInfo">No camera yet.</p><p class="note">Export creates a real H.264 MP4 at a fixed frame rate with exact, even dimensions and the info at the front of the file, which is what YouTube, TikTok, Telegram, Facebook, X/Twitter, WhatsApp and phone galleries expect. Pick the platform preset under “Export for”. Exports are silent.</p></div>
+<p class="note" id="camInfo">No camera yet.</p><p class="note">Video export prefers MP4 (H.264) when your browser supports it; otherwise it exports WebM with the correct extension. MP4 is the safest general choice for TikTok and other social platforms. YouTube accepts WebM uploads too.</p></div>
 <div class="section" id="lightSection"><h2>Lights</h2><p class="note">Lights from Prisma packages show up as small icons in the viewport. Click one to move, rotate or scale it, then change its color, strength and reach below.</p>
 <div class="pair"><button id="addPointLight" class="wide">+ Point</button><button id="addSpotLight" class="wide">+ Spot</button></div>
 <div class="pair"><button id="addDirLight" class="wide">+ Directional</button></div>
@@ -502,7 +501,7 @@ canvas, img, video { max-width: 100%; }
 <h3>Position</h3><div class="propgrid"><div><label for="px">X</label><input id="px" type="number" step=".1" disabled></div><div><label for="py">Y</label><input id="py" type="number" step=".1" disabled></div><div><label for="pz">Z</label><input id="pz" type="number" step=".1" disabled></div></div>
 <h3>Rotation (degrees)</h3><div class="propgrid"><div><label for="rx">X</label><input id="rx" type="number" step="5" disabled></div><div><label for="ry">Y</label><input id="ry" type="number" step="5" disabled></div><div><label for="rz">Z</label><input id="rz" type="number" step="5" disabled></div></div>
 <h3>Scale</h3><div class="propgrid"><div><label for="sx">X</label><input id="sx" type="number" min=".01" step=".1" disabled></div><div><label for="sy">Y</label><input id="sy" type="number" min=".01" step=".1" disabled></div><div><label for="sz">Z</label><input id="sz" type="number" min=".01" step=".1" disabled></div></div>
-<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK moves a selected bone target and solves its parent chain with FABRIK-style forward/backward passes adapted from THREE.IK. Pole Vector guides the bend; Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><div class="pair" style="margin-top:7px"><button id="ikPoleToggle" class="wide" disabled>IK Pole Vector: Off</button><button id="ikPoleMove" class="wide" disabled>Move Pole Target</button></div><p class="note" id="ikPoleHelp">In IK mode, enable Pole Vector to guide an elbow or knee bend. Use Move Pole Target to reposition the guide; switch back to Move IK End Target to move the bone endpoint.</p><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
+<div class="section" style="margin-top:12px"><h2>Preset Movements</h2><p class="note">Select a model, then apply a ready-made movement. Best results require a rigged character with recognizable arm, leg, and torso bones.</p><button id="openMovements" class="wide">Preset Movements</button><p class="note" id="movementInfo">No movement applied yet.</p></div><div class="section" style="margin-top:12px"><h2>Rigging / Pose</h2><p class="note" id="rigInfo">Select a rigged model to reveal its bones as white handles. FK rotates individual joints; IK lets you move a selected bone target and solve its parent chain. Floor Contact IK assigns floor collision to chosen bones.</p><div class="row"><label for="boneSize">Bone handle size</label><input id="boneSize" type="range" min="0.3" max="3" step="0.1" value="1"><output id="boneSizeOut">1.0×</output></div><div class="pair"><button id="fkMode" class="wide active" disabled>FK Rig (F)</button><button id="ikMode" class="wide" disabled>IK Rig (I)</button></div><div class="pair" style="margin-top:7px"><button id="ikPoleToggle" class="wide" disabled>IK Pole Vector: Off</button><button id="ikPoleMove" class="wide" disabled>Move Pole Target</button></div><p class="note" id="ikPoleHelp">In IK mode, enable Pole Vector to guide an elbow or knee bend. Use Move Pole Target to reposition the guide; switch back to Move IK End Target to move the bone endpoint.</p><button id="floorContactIK" class="wide" disabled>Floor Contact IK: Off</button><p class="note" id="floorContactHelp">Select a model, activate Floor Contact IK, then click any number of bone handles to assign floor collision. Press the button again to finish selecting. Assigned bones keep collision behavior while IK adjusts their connected joints when they reach the floor.</p><button id="showBones" class="wide" disabled>Show bones</button><button id="hideBones" class="wide" disabled>Hide bones</button><div class="pair" style="margin-top:8px"><button id="addRootBone" class="wide" disabled>+ Create Root Bone</button><button id="addChildBone" class="wide" disabled>+ Create Child Bone</button></div><div class="row" style="margin-top:8px"><label for="newBoneName">New bone name</label><input id="newBoneName" type="text" value="Bone" maxlength="48" style="width:120px"></div><button id="renameBoneButton" class="wide" disabled>Rename Selected Bone</button><button id="deleteBoneButton" class="wide" disabled>Delete Selected Bone</button><p class="note">Create a root bone on the selected model, then select a bone and add connected child bones. These create and animate a skeleton hierarchy; they do not automatically paint skin weights onto an unrigged mesh.</p><p class="note" id="boneBuildInfo">Select a model to enable bone creation.</p></div><p class="note">Use M to move, R to rotate, and S to scale. Rotation rings are enlarged for finer, less sensitive posing. Drag the colored handles in the viewport instead of repeatedly changing numbers. D deletes the selected object.</p>
 </div>
 <p class="note">Requires internet access for Three.js. Orbit: left-drag · Pan: right-drag · Zoom: wheel.</p>
 </aside>
@@ -532,7 +531,7 @@ canvas, img, video { max-width: 100%; }
 <div class="preset-overlay" id="savedModelsOverlay" role="dialog" aria-modal="true" aria-labelledby="savedModelsTitle"><div class="preset-dialog" style="width:min(650px,100%)"><div class="preset-head"><div><h2 id="savedModelsTitle">Saved Models</h2><p class="note">Save a selected object to keep a reusable copy in your model library. Rename saved copies here, or add a saved copy back into the scene.</p></div><button id="closeSavedModels" aria-label="Close saved models">✕</button></div><div id="savedModelsList" class="saved-model-list"></div><p class="preset-foot">Your model library is separate from the current project. Save the project as a JSON file to preserve the scene and reopen it later.</p></div></div>
 <div class="preset-overlay" id="movementOverlay" role="dialog" aria-modal="true" aria-labelledby="movementTitle"><div class="preset-dialog"><div class="preset-head"><div><h2 id="movementTitle">Preset Movements</h2><p class="note">Choose a movement for the selected model. Orange Justice is first so you can test whether your character's rig works with it. Motion is generated from bone names, so results vary by rig and bone orientation.</p></div><button id="closeMovements" aria-label="Close preset movements">✕</button></div><div class="preset-cards"><button class="preset-card" data-movement="orange"><span class="preset-art" style="background:linear-gradient(#3b285d,#e69a48)">🕺 🟠</span><strong>Orange Justice</strong><small>Fast cross-body arm pumps, bent elbows, side-to-side torso sway, and knee bounce.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="walk"><span class="preset-art" style="background:linear-gradient(#203b4c,#5797a8)">🚶</span><strong>Realistic Walk</strong><small>Alternating arm and leg swing with a subtle torso bob.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="dance"><span class="preset-art" style="background:linear-gradient(#40294c,#a25c91)">💃</span><strong>Dance Groove</strong><small>Rhythmic shoulder, arm, hip, and torso movement.</small><span class="choose">Apply movement</span></button><button class="preset-card" data-movement="idle"><span class="preset-art" style="background:linear-gradient(#244a3d,#73a98a)">🌬️</span><strong>Idle / Breathing</strong><small>Gentle torso and shoulder motion for a standing character.</small><span class="choose">Apply movement</span></button></div><p class="preset-foot">Applying a movement replaces existing keyframes on the selected model's bone tracks so you can test the preset cleanly. Use the timeline Play button to preview it. Save a project to keep the result.</p></div></div>
 <div class="timeline" id="timeline">
- <div class="tl-controls"><button id="tlPlay">▶ Play</button><button id="p3dlStopPlayback" type="button">■ Stop</button><button id="tlPrev">◀ Step</button><button id="tlNext">Step ▶</button><button id="tlKey">◆ Keyframe</button><button id="tlDeleteKey">Delete selected key</button><button id="tlCopyKey" type="button" disabled>Copy key</button><button id="tlPasteKey" type="button" disabled>Paste at playhead</button><button id="tlDuplicateKey" type="button" disabled>Duplicate +1s</button><button id="tlMoveKeyBack" type="button" disabled>← Move 1 frame</button><button id="tlMoveKeyForward" type="button" disabled>Move 1 frame →</button><button id="tlUndo">↶ Undo</button><button id="tlClear">Clear target keys</button><button id="tlExportClip">Export clip</button><button id="exportAnimation" class="active">🎬 Export animation</button><label class="filebtn">Import clip<input id="tlImportClip" type="file" accept=".json,application/json"></label><label for="tlInterp">Motion</label><select id="tlInterp"><option value="smooth" selected>Smooth</option><option value="ease">Ease at every key</option><option value="linear">Linear</option></select><label for="tlFrame">Seconds</label><input id="tlFrame" type="number" min="0" max="5" step="0.01" value="0"><label for="tlDuration">Project length (seconds)</label><input id="tlDuration" type="number" min="0.1" max="120" step="0.5" value="5"><label for="tlFps">Playback FPS</label><input id="tlFps" type="number" min="1" max="60" value="24"></div>
+ <div class="tl-controls"><button id="tlPlay">▶ Play</button><button id="tlPrev">◀ Step</button><button id="tlNext">Step ▶</button><button id="tlKey">◆ Keyframe</button><button id="tlDeleteKey">Delete selected key</button><button id="tlCopyKey" type="button" disabled>Copy key</button><button id="tlPasteKey" type="button" disabled>Paste at playhead</button><button id="tlDuplicateKey" type="button" disabled>Duplicate +1s</button><button id="tlMoveKeyBack" type="button" disabled>← Move 1 frame</button><button id="tlMoveKeyForward" type="button" disabled>Move 1 frame →</button><button id="tlUndo">↶ Undo</button><button id="tlClear">Clear target keys</button><button id="tlExportClip">Export clip</button><button id="exportAnimation" class="active">🎬 Export animation</button><label class="filebtn">Import clip<input id="tlImportClip" type="file" accept=".json,application/json"></label><label for="tlInterp">Motion</label><select id="tlInterp"><option value="smooth" selected>Smooth</option><option value="ease">Ease at every key</option><option value="linear">Linear</option></select><label for="tlFrame">Seconds</label><input id="tlFrame" type="number" min="0" max="5" step="0.01" value="0"><label for="tlDuration">Project length (seconds)</label><input id="tlDuration" type="number" min="0.1" max="120" step="0.5" value="5"><label for="tlFps">Playback FPS</label><input id="tlFps" type="number" min="1" max="60" value="24"></div>
  <div class="tl-auto-tools" id="tlAutoTools"><button id="tlAutoMode" type="button" aria-pressed="false" title="Toggle Auto Rotate mode">Auto Rotate: Off</button><span class="auto-label">Axis:</span><button id="tlAutoX" type="button" title="Choose X axis (red)">X</button><button id="tlAutoY" type="button" title="Choose Y axis (green)">Y</button><button id="tlAutoZ" type="button" title="Choose Z axis (blue)">Z</button><span class="auto-label">Speed:</span><input id="tlAutoSpeed" type="range" min="0.05" max="3" step="0.05" value="0.5" aria-label="Auto Rotate speed in rotations per second"><output id="tlAutoSpeedOut">0.50 r/s</output><button id="tlAutoDirection" type="button" title="Change rotation direction">Direction: Forward</button><span class="tl-auto-legend"><span class="x">X red</span> · <span class="y">Y green</span> · <span class="z">Z blue</span></span></div>
  <div class="tl-extra-tools" id="tlAdvancedTools"><button id="tlSelectAllKeys" type="button">Select all keys</button><button id="tlDeleteSelectedKeys" type="button" disabled>Delete selected keys</button><button id="tlNudgeSelectedBack" type="button" disabled>← Move selection 1 frame</button><button id="tlNudgeSelectedForward" type="button" disabled>Move selection 1 frame →</button><label><input id="tlMotionTrailToggle" type="checkbox"> Motion trail</label><label>Selected segment easing <select id="tlKeyEasing"><option value="global">Use timeline default</option><option value="linear">Linear</option><option value="ease">Ease in / out</option><option value="easeIn">Ease in</option><option value="easeOut">Ease out</option><option value="easeInOut">Ease in-out</option><option value="smooth">Smooth spline</option></select></label></div>
  <div class="tl-graph"><canvas id="tlGraphCanvas" width="520" height="150" aria-label="Animation easing curve preview"></canvas><p><strong>Animation Graph</strong><br>Choose a keyframe, then set how motion travels toward the next key. The curve preview updates to show the selected easing.</p></div>
@@ -549,7 +548,6 @@ canvas, img, video { max-width: 100%; }
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/exporters/GLTFExporter.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.js"></script>
 <script>
 /*
  * Prisma package (.prisma) importer for Prisma 3D Lite
@@ -1619,55 +1617,16 @@ function solveIK(){
     else ikEffectorBone.position.copy(target);
     ikEffectorBone.updateMatrixWorld(true);rigRoot.updateMatrixWorld(true);updateBoneMarkers();ikMarker.position.copy(target);return;
   }
-  // THREE.IK-inspired FABRIK solve (forward/backward positional passes).
-  // The repository's example uses this same chain/target concept; this inline
-  // adaptation avoids a separate module loader and fits Prisma's existing rig.
-  const rootToEnd=chain.slice().reverse();
-  const points=[];
-  rigRoot.updateMatrixWorld(true);
-  for(const bone of rootToEnd){bone.updateWorldMatrix(true,false);points.push(bone.getWorldPosition(new THREE.Vector3()));}
-  ikEffectorBone.updateWorldMatrix(true,false);
-  points.push(ikEffectorBone.getWorldPosition(new THREE.Vector3()));
-  const segmentLengths=[];let totalReach=0;
-  for(let i=0;i<points.length-1;i++){const len=points[i].distanceTo(points[i+1]);segmentLengths.push(len);totalReach+=len;}
-  const rootAnchor=points[0].clone();
-  if(points.length>1&&totalReach>1e-8){
-    const rootToTarget=target.clone().sub(rootAnchor),targetDistance=rootToTarget.length();
-    if(targetDistance>=totalReach-1e-7){
-      const direction=targetDistance>1e-8?rootToTarget.normalize():new THREE.Vector3(0,1,0);
-      for(let i=1;i<points.length;i++)points[i].copy(points[i-1]).addScaledVector(direction,segmentLengths[i-1]);
-    }else{
-      const tolerance=Math.max(1e-4,totalReach*0.001);
-      for(let pass=0;pass<24;pass++){
-        // Backward reach: pin the endpoint to the user's target.
-        points[points.length-1].copy(target);
-        for(let i=points.length-2;i>=0;i--){
-          const dir=points[i].clone().sub(points[i+1]);
-          if(dir.lengthSq()<1e-10)dir.set(0,1,0);else dir.normalize();
-          points[i].copy(points[i+1]).addScaledVector(dir,segmentLengths[i]);
-        }
-        // Forward reach: pin the chain root and restore each bone length.
-        points[0].copy(rootAnchor);
-        for(let i=0;i<points.length-1;i++){
-          const dir=points[i+1].clone().sub(points[i]);
-          if(dir.lengthSq()<1e-10)dir.set(0,1,0);else dir.normalize();
-          points[i+1].copy(points[i]).addScaledVector(dir,segmentLengths[i]);
-        }
-        if(points[points.length-1].distanceToSquared(target)<=tolerance*tolerance)break;
-      }
-    }
-    // Convert solved segment directions back into each real bone's local
-    // quaternion, using its actual child direction (not a guessed model axis).
-    for(let i=0;i<rootToEnd.length;i++){
-      const joint=rootToEnd[i],child=rootToEnd[i+1]||ikEffectorBone;
-      rigRoot.updateMatrixWorld(true);joint.updateWorldMatrix(true,false);child.updateWorldMatrix(true,false);
-      const jointPos=joint.getWorldPosition(new THREE.Vector3());
-      const currentChildPos=child.getWorldPosition(new THREE.Vector3());
-      const currentDir=currentChildPos.sub(jointPos);
-      const desiredDir=points[i+1].clone().sub(points[i]);
-      if(currentDir.lengthSq()<1e-10||desiredDir.lengthSq()<1e-10)continue;
-      currentDir.normalize();desiredDir.normalize();
-      const deltaWorld=new THREE.Quaternion().setFromUnitVectors(currentDir,desiredDir);
+  // CCD IK: solve the active endpoint while pinned bones remain fixed in world space.
+  for(let pass=0;pass<18;pass++){
+    for(const joint of chain){
+      rigRoot.updateMatrixWorld(true);ikEffectorBone.updateWorldMatrix(true,false);joint.updateWorldMatrix(true,false);
+      const jp=joint.getWorldPosition(new THREE.Vector3());
+      const ep=ikEffectorBone.getWorldPosition(new THREE.Vector3());
+      const a=ep.sub(jp),v=target.clone().sub(jp);
+      if(a.lengthSq()<1e-8||v.lengthSq()<1e-8)continue;
+      a.normalize();v.normalize();
+      const deltaWorld=new THREE.Quaternion().setFromUnitVectors(a,v);
       const parentWorldQ=joint.parent?joint.parent.getWorldQuaternion(new THREE.Quaternion()):new THREE.Quaternion();
       const currentWorldQ=joint.getWorldQuaternion(new THREE.Quaternion());
       const desiredWorldQ=deltaWorld.multiply(currentWorldQ);
@@ -1710,12 +1669,7 @@ $('addRootBone').onclick=()=>createRigBone(false);
 $('addChildBone').onclick=()=>createRigBone(true);
 $('renameBoneButton').onclick=()=>{if(!selectedBone||!selectedBone.isBone){msg('Select a bone first.');return}const name=($('newBoneName').value||'').trim().slice(0,48);if(!name){msg('Enter a bone name first.');return}const renamedBone=selectedBone;renamedBone.name=name;showRigFor(selected);selectedBone=renamedBone;$('addChildBone').disabled=false;$('renameBoneButton').disabled=false;$('deleteBoneButton').disabled=false;updateBoneMarkers();refresh();renderTimeline();msg('Bone renamed to '+name)};
 $('deleteBoneButton').onclick=deleteSelectedBone;
-const pbrOriginalMaterials=new WeakMap();let pbrUpgradeEnabled=false;try{pbrUpgradeEnabled=localStorage.getItem('prisma3d-lite-pbr-upgrade-v1')==='1'}catch(e){}
-function convertLegacyPBR(material){if(!material||material.isMeshStandardMaterial||material.isMeshPhysicalMaterial)return material;if(!material.isMeshLambertMaterial&&!material.isMeshPhongMaterial)return material;const phong=!!material.isMeshPhongMaterial;const roughness=phong?Math.max(.12,Math.min(1,Math.sqrt(2/(Math.max(0,material.shininess||30)+2)))):.82;const upgraded=new THREE.MeshStandardMaterial({name:material.name||'PBR Material',color:material.color?material.color.clone():new THREE.Color(0xffffff),map:material.map||null,normalMap:material.normalMap||null,normalScale:material.normalScale?material.normalScale.clone():new THREE.Vector2(1,1),aoMap:material.aoMap||null,aoMapIntensity:material.aoMapIntensity===undefined?1:material.aoMapIntensity,emissive:material.emissive?material.emissive.clone():new THREE.Color(0x000000),emissiveMap:material.emissiveMap||null,emissiveIntensity:material.emissiveIntensity===undefined?1:material.emissiveIntensity,alphaMap:material.alphaMap||null,transparent:!!material.transparent,opacity:material.opacity===undefined?1:material.opacity,alphaTest:material.alphaTest||0,side:material.side,vertexColors:!!material.vertexColors,wireframe:!!material.wireframe,roughness:roughness,metalness:phong?.12:.04});upgraded.depthWrite=material.depthWrite;upgraded.depthTest=material.depthTest;upgraded.blending=material.blending;upgraded.flatShading=!!material.flatShading;upgraded.needsUpdate=true;return upgraded}
-function setPBRUpgrade(enabled){pbrUpgradeEnabled=!!enabled;scene.traverse(n=>{if(!n.isMesh||!n.material)return;const current=Array.isArray(n.material)?n.material:[n.material];if(pbrUpgradeEnabled){const next=current.map(m=>{if(m.isMeshStandardMaterial||m.isMeshPhysicalMaterial)return m;if(!pbrOriginalMaterials.has(m))pbrOriginalMaterials.set(m,m);return convertLegacyPBR(m)});n.material=Array.isArray(n.material)?next:next[0]}else{const next=current.map(m=>{for(const [original,upgraded] of pbrPairs){if(m===upgraded)return original}return m});n.material=Array.isArray(n.material)?next:next[0]}});try{localStorage.setItem('prisma3d-lite-pbr-upgrade-v1',pbrUpgradeEnabled?'1':'0')}catch(e){}const t=$('pbrUpgradeToggle');if(t)t.checked=pbrUpgradeEnabled;msg(pbrUpgradeEnabled?'PBR material upgrade enabled for legacy Lambert and Phong materials.':'PBR material upgrade disabled; original legacy materials restored where available.')}
-const pbrPairs=[];
-function upgradePBRForRoot(root){if(!pbrUpgradeEnabled||!root)return;root.traverse(n=>{if(!n.isMesh||!n.material)return;const convert=m=>{if(m.isMeshStandardMaterial||m.isMeshPhysicalMaterial)return m;const upgraded=convertLegacyPBR(m);if(upgraded!==m){pbrPairs.push([m,upgraded]);return upgraded}return m};n.material=Array.isArray(n.material)?n.material.map(convert):convert(n.material)})}
-function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;upgradePBRForRoot(o);o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode&&!n.userData.smartDetectedPlane;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
+function add(o,name){o.name=name||'Model';o.userData=o.userData||{};o.userData.prismaSceneObject=true;o.traverse(n=>{if(n.isMesh){n.castShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode&&!n.userData.smartDetectedPlane;n.receiveShadow=qualityProfiles[qualityPreset].shadows&&!performanceMode}});scene.add(o);objects.push(o);select(o)}
 function addCube(){const o=new THREE.Mesh(new THREE.BoxGeometry(1.5,1.5,1.5),new THREE.MeshLambertMaterial({color:0xb9c6d8}));o.position.y=.75;add(o,'Cube '+(objects.length+1));msg('Cube added and selected')}
 function del(){if(!selected)return;const doomed=selected;const childObjects=objects.filter(o=>o!==doomed&&o.parent===doomed);if(childObjects.length&&!confirm('Delete '+(doomed.name||'this object')+'? Its '+childObjects.length+' child object(s) will be detached and kept in the scene.'))return;pushUndo();gizmo.detach();clearBoneMarkers();for(const child of childObjects)scene.attach(child);if(doomed.parent)doomed.parent.remove(doomed);disposeObjectTree(doomed);const i=objects.indexOf(doomed);if(i>=0)objects.splice(i,1);updateProjectLoadPressure();multiSelected.clear();selected=null;refresh();syncProps();msg('Selected object deleted. Child objects, if any, were kept in the scene.')}
 function cloneMaterials(root){root.traverse(o=>{if(o.isMesh){if(Array.isArray(o.material))o.material=o.material.map(m=>m.clone());else if(o.material)o.material=o.material.clone();if(o.geometry)o.geometry=o.geometry.clone()}})}
@@ -1796,7 +1750,7 @@ function applyQualityPreset(value,save=true){
  renderer.toneMapping=profile.tone==='filmic'?THREE.ACESFilmicToneMapping:THREE.NoToneMapping;
  renderer.outputEncoding=THREE.sRGBEncoding;
  renderer.toneMappingExposure=+$('bright').value||1;
- light.castShadow=effectiveShadows;const gpuShadowLimit=Math.max(512,renderer.capabilities.maxTextureSize||4096);const effectiveShadowSize=Math.min(profile.shadowSize,gpuShadowLimit);light.shadow.mapSize.set(effectiveShadowSize,effectiveShadowSize);light.shadow.radius=key==='omega'?4:key==='hyper'?3:key==='enhanced'?2:1;light.shadow.bias=key==='omega'?-0.00012:key==='hyper'?-0.00018:-0.00025;light.shadow.normalBias=key==='omega'?.012:key==='hyper'?.016:.02;light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.updateProjectionMatrix();light.shadow.needsUpdate=true;
+ light.castShadow=effectiveShadows;const gpuShadowLimit=Math.max(512,renderer.capabilities.maxTextureSize||4096);const effectiveShadowSize=Math.min(profile.shadowSize,gpuShadowLimit);light.shadow.mapSize.set(effectiveShadowSize,effectiveShadowSize);light.shadow.radius=omega?3:2;light.shadow.camera.left=-35;light.shadow.camera.right=35;light.shadow.camera.top=35;light.shadow.camera.bottom=-35;light.shadow.camera.updateProjectionMatrix();light.shadow.needsUpdate=true;
  scene.traverse(o=>{if(o.isMesh){o.castShadow=effectiveShadows;o.receiveShadow=effectiveShadows}});
  floor.receiveShadow=effectiveShadows;resize();
  const select=$('qualityPreset'),description=$('qualityDescription');if(select)select.value=key;if(description)description.textContent=profile.description;
@@ -1805,7 +1759,6 @@ function applyQualityPreset(value,save=true){
  if(save){try{localStorage.setItem(QUALITY_KEY,key)}catch(e){}}
  if(!arguments[2])msg('Graphics quality: '+profile.label+'. '+(key==='standard'?'Performance-focused settings enabled.':key==='enhanced'?'Balanced visual settings enabled.':key==='hyper'?'High-quality preview settings enabled.':'Maximum browser preview settings enabled. Expect a significant performance cost.'));
 }
-$('pbrUpgradeToggle').checked=pbrUpgradeEnabled;$('pbrUpgradeToggle').addEventListener('change',e=>setPBRUpgrade(e.target.checked));if(pbrUpgradeEnabled)upgradePBRForRoot(scene);
 const CINEMATIC_KEY='prisma3d-lite-cinematic-v1';
 const cinematicDefaults={enabled:false,bloom:25,vignette:30,grade:35,grain:12,atmosphere:15};
 let cinematicSettings={...cinematicDefaults};
@@ -1835,7 +1788,7 @@ applyCinematicSettings(false);
 
 function updatePerformanceButtons(){const b=$('performanceModeBtn');if(b){b.textContent=performanceMode?'Disable Performance Mode':'Enable Performance Mode';b.classList.toggle('performance-mode-active',performanceMode||autoPerformanceLevel>0)}const n=$('performanceModeNote');if(n)n.textContent=performanceMode?'Manual Performance Mode is on: viewport resolution is capped at 1× and real-time shadows are paused. Your model data is unchanged.':autoPerformanceLevel===2?'Automatic high-load optimization is active: preview resolution is reduced further and real-time shadows are paused. Imported models remain editable.':autoPerformanceLevel===1?'Automatic optimization is active because the project is above the 350 MB soft target: preview resolution is capped at 1× and real-time shadows are paused. Imported models remain editable.':'Performance Mode is off. Your selected graphics preset is active.';const m=$('performanceMonitorBtn');if(m)m.textContent=showPerformanceMonitor?'Hide Monitor':'Show Monitor';const panel=$('performancePanel');if(panel)panel.hidden=!showPerformanceMonitor;}
 function projectImportedBytes(){let total=0;for(const o of objects){const d=o&&o.userData&&o.userData.prismaLiteImport;if(d&&Number.isFinite(d.fileBytes))total+=Math.max(0,d.fileBytes)}return total}
-function updateProjectLoadPressure(extraBytes=0){const bytes=projectImportedBytes()+Math.max(0,Number(extraBytes)||0),mb=bytes/1e6;const ramGB=Number(navigator.deviceMemory)||4;/* deviceMemory is a coarse browser hint, not a guarantee */const softMB=Math.max(350,Math.min(4096,Math.floor(ramGB*1024*.22)));const heavyMB=Math.max(softMB+150,Math.min(8192,Math.floor(ramGB*1024*.38)));const next=mb>heavyMB?2:(mb>softMB?1:0);const changed=next!==autoPerformanceLevel;autoPerformanceLevel=next;const status=$('projectLoadStatus');if(status){const shown=mb>=100?mb.toFixed(0):mb.toFixed(1);status.textContent='Known imported file size: '+shown+' MB · adaptive soft target ~'+softMB+' MB (browser RAM hint: '+ramGB+' GB). '+(next===2?'Heavy-scene preview optimization active; import is not blocked.':next===1?'Adaptive preview optimization active; import is not blocked.':'Below adaptive soft target.')+' File size is not actual decoded GPU/RAM use. No fixed GB ceiling is imposed; hardware/browser limits still apply.';}if(changed){applyQualityPreset(qualityPreset,false,true);updatePerformanceButtons()}else updatePerformanceButtons();}
+function updateProjectLoadPressure(extraBytes=0){const bytes=projectImportedBytes()+Math.max(0,Number(extraBytes)||0),mb=bytes/1e6,next=mb>500?2:(mb>350?1:0);const changed=next!==autoPerformanceLevel;autoPerformanceLevel=next;const status=$('projectLoadStatus');if(status){const shown=mb>=100?mb.toFixed(0):mb.toFixed(1);status.textContent='Known imported model file sizes: '+shown+' MB / 350 MB soft target. '+(next===2?'High-load preview optimization is active; imports are still allowed.':next===1?'Automatic preview optimization is active; imports are still allowed.':'Below the soft target. The app will not block imports at 350 MB.')+' File size is an estimate, not device RAM.';}if(changed){applyQualityPreset(qualityPreset,false,true);updatePerformanceButtons()}else updatePerformanceButtons();}
 function setPerformanceMode(enabled){performanceMode=!!enabled;applyQualityPreset(qualityPreset,false,true);updatePerformanceButtons();msg(performanceMode?'Performance Mode enabled. Model data was not changed.':'Performance Mode disabled. '+(autoPerformanceLevel?'Automatic project-load optimization remains active.':'Restored '+qualityProfiles[qualityPreset].label+' rendering.'));}
 $('performanceModeBtn').addEventListener('click',()=>setPerformanceMode(!performanceMode));
 $('performanceMonitorBtn').addEventListener('click',()=>{showPerformanceMonitor=!showPerformanceMonitor;updatePerformanceButtons()});
@@ -2313,136 +2266,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  if(closeButton)closeButton.addEventListener('click',closeExportReplay);
  if(replayOverlay)replayOverlay.addEventListener('click',e=>{if(e.target===replayOverlay)closeExportReplay()});
 });
-
-// ===== Social-ready MP4 export (WebCodecs H.264 + MP4 muxer) =====
-let p3dlExporting=false,p3dlLastExport=null;
-const EXPORT_PRESETS={
- universal:{w:1280,h:720,aspect:1.7778},
- youtube:{w:1920,h:1080,aspect:1.7778},
- vertical:{w:1080,h:1920,aspect:0.5625},
- square:{w:1080,h:1080,aspect:1}
-};
-function exportSize(){
- const key=($('exportPreset')&&$('exportPreset').value)||'universal';
- if(EXPORT_PRESETS[key])return {key,w:EXPORT_PRESETS[key].w,h:EXPORT_PRESETS[key].h};
- let asp=frameAspect>0?frameAspect:(stage.clientWidth/Math.max(1,stage.clientHeight));
- asp=Math.max(.4,Math.min(2.5,asp||16/9));
- let w,h;if(asp>=1){h=1080;w=1080*asp}else{w=1080;h=1080/asp}
- const k=Math.min(1,1920/Math.max(w,h));
- return {key:'match',w:Math.max(2,Math.round(w*k/2)*2),h:Math.max(2,Math.round(h*k/2)*2)};
-}
-// Keep the preview frame and the chosen preset in agreement.
-document.addEventListener('change',e=>{
- const t=e.target;if(!t||!t.id)return;
- if(t.id==='exportPreset'){
-  const p=EXPORT_PRESETS[t.value];
-  if(p){const a=$('camAspect');if(a&&Math.abs(parseFloat(a.value)-p.aspect)>.001){a.value=String(p.aspect);a.dispatchEvent(new Event('change',{bubbles:true}))}}
- }else if(t.id==='camAspect'){
-  const sel=$('exportPreset'),p=sel&&EXPORT_PRESETS[sel.value];
-  if(p&&Math.abs((parseFloat(t.value)||0)-p.aspect)>.001)sel.value='match';
- }
-});
-function p3dlSleep(ms){return new Promise(r=>setTimeout(r,ms))}
-function loadMp4Muxer(){
- if(window.Mp4Muxer)return Promise.resolve(true);
- const urls=['5.1.3','5.2.1','5.0.0'].map(v=>'https://cdn.jsdelivr.net/npm/mp4-muxer@'+v+'/build/mp4-muxer.js');
- return urls.reduce((p,u)=>p.then(ok=>ok||new Promise(res=>{
-  const sc=document.createElement('script');sc.src=u;
-  sc.onload=()=>res(!!window.Mp4Muxer);sc.onerror=()=>{sc.remove();res(false)};
-  document.head.appendChild(sc);
- })),Promise.resolve(false));
-}
-async function pickH264Config(w,h,fps,bitrate){
- const mbPerSec=Math.ceil(w/16)*Math.ceil(h/16)*fps;
- const level=mbPerSec<=245760?'28':(mbPerSec<=522240?'2a':'33');
- for(const profile of ['4d00','6400','4200']){
-  const cfg={codec:'avc1.'+profile+level,width:w,height:h,bitrate,framerate:fps,avc:{format:'avc'}};
-  try{const r=await VideoEncoder.isConfigSupported(cfg);if(r&&r.supported)return cfg}catch(_){}
- }
- return null;
-}
-function renderExportFrame(cam,W,H){
- cam.aspect=W/H;cam.updateProjectionMatrix();
- renderer.setScissorTest(false);renderer.setViewport(0,0,W,H);renderer.setClearColor(0x252a31,1);
- const hidden=[];
- scene.traverse(n=>{if(n.userData&&(n.userData.cameraIcon||n.userData.cameraFrustum)){hidden.push([n,n.visible]);n.visible=false}});
- try{renderer.render(scene,cam)}finally{for(const [n,v] of hidden)n.visible=v}
-}
-// Returns false (without touching the scene) when this browser cannot make MP4; the older recorder then runs instead.
-async function p3dlTryMp4Export(exportCam){
- if(!(window.VideoEncoder&&window.VideoFrame&&VideoEncoder.isConfigSupported))return false;
- if(!(await loadMp4Muxer()))return false;
- const fps=Math.round(timelineFps()),duration=timelineDuration(),totalFrames=Math.max(1,Math.ceil(fps*duration));
- const size=exportSize(),W=size.w,H=size.h;
- const bitrate=Math.round(Math.max(2.5e6,Math.min(16e6,W*H*fps*.14)));
- const cfg=await pickH264Config(W,H,fps,bitrate);
- if(!cfg)return false;
- const button=$('exportAnimation'),oldText=button.textContent;
- const prior={mode:camMode,cam:activeCamObj,frame:timelineFrame,playing:timelinePlaying,pr:renderer.getPixelRatio()};
- button.disabled=true;button.textContent='Preparing export…';
- p3dlExporting=true;timelinePlaying=false;
- let encoder=null,encError=null,vis=null;
- const canvas=renderer.domElement;
- try{
-  if(exportCam){activeCamObj=exportCam;setViewMode('render')}else{setViewMode('editor')}
-  const cam=exportCam||camera;
-  // Hide editor-only helpers while recording.
-  vis={grid:grid.visible,gizmo:gizmo.visible,rig:showRigBones,ik:ikMarker.visible,icons:showLightIcons};
-  grid.visible=false;gizmo.visible=false;showRigBones=false;ikMarker.visible=false;showLightIcons=false;
-  // Render at the exact export size (even width and height, 1:1 pixels).
-  renderer.setPixelRatio(1);renderer.setSize(W,H,false);
-  const target=new Mp4Muxer.ArrayBufferTarget();
-  const muxer=new Mp4Muxer.Muxer({target,video:{codec:'avc',width:W,height:H,frameRate:fps},fastStart:'in-memory',firstTimestampBehavior:'offset'});
-  encoder=new VideoEncoder({output:(chunk,meta)=>{try{muxer.addVideoChunk(chunk,meta)}catch(e){encError=e}},error:e=>{encError=e}});
-  encoder.configure(cfg);
-  const keyEvery=Math.max(1,fps),maxF=timelineMaxFrame(),frameDur=Math.round(1e6/fps);
-  for(let i=0;i<=totalFrames;i++){
-   if(encError)throw encError;
-   timelineFrame=Math.min(maxF,i*maxF/totalFrames);
-   syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame,true);updateTimedEffects();
-   scene.updateMatrixWorld(true);
-   renderExportFrame(cam,W,H);
-   if(canvas.width!==W||canvas.height!==H)throw new Error('Canvas size mismatch while exporting ('+canvas.width+'×'+canvas.height+').');
-   const vf=new VideoFrame(canvas,{timestamp:Math.round(i*1e6/fps),duration:frameDur});
-   encoder.encode(vf,{keyFrame:i%keyEvery===0});vf.close();
-   while(encoder.encodeQueueSize>8){await p3dlSleep(4);if(encError)throw encError}
-   if(i%3===0){button.textContent='Exporting '+Math.round(i/totalFrames*100)+'%';await p3dlSleep(0)}
-  }
-  await encoder.flush();encoder.close();encoder=null;
-  if(encError)throw encError;
-  muxer.finalize();
-  const blob=new Blob([target.buffer],{type:'video/mp4'});
-  if(!blob.size)throw new Error('The exported video was empty.');
-  const name='Prisma3D_Lite_'+size.key+'_'+W+'x'+H+'_'+new Date().toISOString().replace(/[:.]/g,'-')+'.mp4';
-  p3dlLastExport={blob,name};
-  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-  msg('Exported '+name+' ('+W+'×'+H+', '+fps+' fps, H.264 MP4, '+(blob.size/1048576).toFixed(1)+' MB). Silent video, ready to upload.');
-  if(confirm('Your animation has been exported. Would you like to rewatch your animation?'))showExportReplay(blob);
- }catch(err){
-  console.error('MP4 export failed:',err);
-  if(encoder){try{encoder.close()}catch(_){}}
-  msg('Export failed: '+(err&&err.message?err.message:'unknown encoding error'));
- }finally{
-  if(vis){grid.visible=vis.grid;gizmo.visible=vis.gizmo;showRigBones=vis.rig;ikMarker.visible=vis.ik;showLightIcons=vis.icons}
-  renderer.setPixelRatio(prior.pr);resize();
-  p3dlExporting=false;
-  setViewMode(prior.mode);activeCamObj=prior.cam;syncCameraUI();
-  timelineFrame=prior.frame;syncTimelineTimeUI();applyAllTimelineTracks(timelineFrame);
-  timelinePlaying=prior.playing;timelineLastTime=0;
-  button.disabled=false;button.textContent=oldText;
- }
- return true;
-}
-document.addEventListener('click',e=>{
- const b=e.target&&e.target.closest&&e.target.closest('#exportShareBtn,#exportDownloadBtn');if(!b)return;
- const last=p3dlLastExport;if(!last){msg('Export a video first.');return}
- if(b.id==='exportDownloadBtn'){const url=URL.createObjectURL(last.blob),a=document.createElement('a');a.href=url;a.download=last.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);return}
- try{
-  const f=new File([last.blob],last.name,{type:'video/mp4'});
-  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:'Prisma 3D Lite animation'}).catch(()=>{});
-  else msg('This browser cannot open the share sheet. Use Download, then upload the MP4 in the app.');
- }catch(err){msg('Sharing failed: '+(err.message||err))}
-});
 $('exportAnimation').addEventListener('click',async()=>{
  const button=$('exportAnimation');
  if(typeof MediaRecorder==='undefined'||!renderer.domElement.captureStream){msg('Video export is not supported by this browser. Try a recent version of Chrome.');return}
@@ -2450,8 +2273,6 @@ $('exportAnimation').addEventListener('click',async()=>{
  const priorCamMode=camMode,priorActiveCam=activeCamObj,priorFrame=timelineFrame,priorPlaying=timelinePlaying;
  let exportCam=null;
  if(useCamera){exportCam=pickCamera();if(!exportCam){msg('No scene camera is available. Add a camera first, or export from the normal editor view.');return}}
- if(await p3dlTryMp4Export(exportCam))return;
- msg('MP4 encoding is not available in this browser, so the older recorder is used (it may produce WebM).');
  const fps=timelineFps(),duration=timelineDuration(),totalFrames=Math.max(1,Math.ceil(fps*duration));
  const oldText=button.textContent;button.disabled=true;button.textContent='Preparing export…';
  timelinePlaying=false;
@@ -2612,7 +2433,6 @@ function addCamera(){
  msg('Camera '+n+' placed at your current view. Move or rotate it, then use the timeline to keyframe it.');
 }
 function renderFrame(){
- if(p3dlExporting)return;
  let cam=camMode!=='editor'?usableCam():null;
  if(camMode!=='editor'&&!cam)setViewMode('editor');
  if(!cam){renderer.render(scene,camera);return}
@@ -2977,7 +2797,7 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
 <script>
 (function(){const overlay=document.getElementById('startupDisclaimer');const button=document.getElementById('acceptDisclaimer');if(button&&overlay){button.addEventListener('click',function(){overlay.style.display='none';});button.focus();}})();
 </script>
-<div class="preset-overlay" id="replayOverlay" role="dialog" aria-modal="true" aria-labelledby="replayTitle"><div class="preset-dialog" style="width:min(900px,100%)"><div class="preset-head"><div><h2 id="replayTitle">Would you like to rewatch your animation?</h2><p class="note">Your animation has been exported. You can preview the rendered video here.</p></div><button id="closeReplay" aria-label="Close playback">✕</button></div><video id="exportReplayVideo" controls playsinline style="display:block;width:100%;max-height:65vh;background:#05070a;border-radius:8px;margin-top:12px"></video><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button id="exportShareBtn" type="button">📤 Share / Save to phone</button><button id="exportDownloadBtn" type="button">⬇ Download again</button></div></div></div>
+<div class="preset-overlay" id="replayOverlay" role="dialog" aria-modal="true" aria-labelledby="replayTitle"><div class="preset-dialog" style="width:min(900px,100%)"><div class="preset-head"><div><h2 id="replayTitle">Would you like to rewatch your animation?</h2><p class="note">Your animation has been exported. You can preview the rendered video here.</p></div><button id="closeReplay" aria-label="Close playback">✕</button></div><video id="exportReplayVideo" controls playsinline style="display:block;width:100%;max-height:65vh;background:#05070a;border-radius:8px;margin-top:12px"></video></div></div>
 
 <script id="iphone-layout-controller">
 (function(){
@@ -3273,14 +3093,6 @@ function animate(){requestAnimationFrame(animate);if(window.p3dlStoreOpen){studi
 
  syncButton();setTimeout(syncButton,1100);
 })();
-</script>
-
-
-<!-- Prisma 3D Lite 1.1 quick help and build information -->
-<style>#p3dlQuickOverlay{position:fixed;inset:0;z-index:100050;background:#05080ddd;display:none;align-items:center;justify-content:center;padding:18px}#p3dlQuickOverlay.open{display:flex}#p3dlQuickCard{width:min(600px,96vw);max-height:85vh;overflow:auto;background:#202730;border:1px solid #536276;border-radius:12px;padding:22px;color:#edf4fc;box-shadow:0 20px 80px #000b}#p3dlQuickCard h2{margin:0 0 12px}#p3dlQuickCard li{margin:8px 0;line-height:1.45}#p3dlQuickCard .muted{color:#b5c2d1;font-size:12px;line-height:1.5}</style>
-<div id="p3dlQuickOverlay" role="dialog" aria-modal="true" aria-labelledby="p3dlQuickTitle"><div id="p3dlQuickCard"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2 id="p3dlQuickTitle">Prisma 3D Lite Help</h2><button id="p3dlQuickClose" type="button">Close ✕</button></div><div id="p3dlQuickBody"></div></div></div>
-<script>
-(()=>{const $q=id=>document.getElementById(id),overlay=$q('p3dlQuickOverlay'),body=$q('p3dlQuickBody');function show(kind){if(!overlay||!body)return;body.innerHTML=kind==='about'?'<p><b>Prisma 3D Lite · Version 1.1</b></p><p>Browser-based 3D animation workspace. Built for modeling, posing, keyframing, effects, and animation previews.</p><p class="muted">Creator: DAHELK boom. This build keeps the existing editor and menu intact. Browser/GPU capabilities vary by device; Omega Realism is a maximum-quality preference, not a guarantee of unlimited rendering.</p>':'<ul><li><b>A</b> — Auto Rotate (when enabled in this build)</li><li><b>D</b> — Delete selected object</li><li><b>Timeline</b> — Play/Pause, Stop, step frames, add keyframes</li><li><b>Viewport</b> — Drag to interact with the camera; use the existing transform tools to move, rotate, and scale</li><li><b>Performance</b> — Use the performance monitor and Performance Mode for heavy scenes</li></ul><p class="muted">Shortcut behavior may depend on focus and the active tool. The toolbar remains available for touch users.</p>';overlay.classList.add('open')}function close(){overlay&&overlay.classList.remove('open')}$q('p3dlHelpBtn')?.addEventListener('click',()=>show('help'));$q('p3dlAboutBtn')?.addEventListener('click',()=>show('about'));$q('p3dlQuickClose')?.addEventListener('click',close);overlay?.addEventListener('click',e=>{if(e.target===overlay)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});$q('p3dlStopPlayback')?.addEventListener('click',()=>{if(typeof timelinePlaying!=='undefined'){timelinePlaying=false;timelineFrame=0;timelineLastTime=0;timelineAccumulator=0;const b=$q('tlPlay');if(b)b.textContent='▶ Play';if(typeof syncTimelineTimeUI==='function')syncTimelineTimeUI();if(typeof applyAllTimelineTracks==='function')applyAllTimelineTracks(0);if(typeof renderTimeline==='function')renderTimeline();if(typeof updateTimedEffects==='function')updateTimedEffects();if(typeof msg==='function')msg('Timeline stopped and returned to frame 0.')}});})();
 </script>
 
 </body></html>
